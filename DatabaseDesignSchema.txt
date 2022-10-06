@@ -1,3 +1,40 @@
 This file is the Relational Schema for our database design. 
 It will cover all tables, constraints, and necessary assumptions/deviations from standard assumptions.
 
+User(uid, email, full_name, address, password, balance, cart_id)
+
+key: uid
+
+Sellers(uid, seller)
+
+key:uid
+
+Products(seller_name, product_name, category, description, image, price)
+
+key: seller, name, category, price
+
+Carts(cart_id, name, quantity, unit_price, total_price)
+
+key:cart_id, name
+
+past_orders(cart_id, address, date, quantity, fulfillment)
+
+key:cart_id, date, quantity
+
+orders_for_sellers(cart_id, name, address, date, quantity, fulfillment)
+
+inventory(seller_name, product_name, category, price, quantity)
+
+reviews_products(product_name, seller_name, category, uid, review)
+
+key:uid
+
+This is because users can only submit one review for each product. Therefore the user is unique and a key.
+
+reviews_sellers(seller_name, uid, review)
+
+key:uid
+
+This is because users can only submit one review for each seller. Therefore the user is unique and a key.
+
+Limitation: User can only place review if they have bought from 
