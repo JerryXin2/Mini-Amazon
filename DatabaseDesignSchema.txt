@@ -1,0 +1,3 @@
+This file is the Relational Schema for our database design. 
+It will cover all tables, constraints, and necessary assumptions/deviations from standard assumptions.
+
