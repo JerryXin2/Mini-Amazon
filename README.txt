@@ -14,3 +14,10 @@ Shirley Wang -
 Chris Cameron - 
 Jachin Friday - 
 Henry Huynh - 
+
+Link to access github Repository, with all code: https://gitlab.oit.duke.edu/mx47/mini-amazon-skeleton
+The code to populate the sample database is found under mx47/mini-amazon-skeleton/db/data.
+The three files used to generate the sample data are:
+mx47/mini-amazon-skeleton/db/data/Products.csv
+mx47/mini-amazon-skeleton/db/data/Purchases.csv
+mx47/mini-amazon-skeleton/db/data/Users.csv
