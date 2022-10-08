@@ -17,7 +17,11 @@ Henry Huynh -
 
 Link to access github Repository, with all code: https://gitlab.oit.duke.edu/mx47/mini-amazon-skeleton
 The code to populate the sample database is found under mx47/mini-amazon-skeleton/db/data.
+
 The three files used to generate the sample data are:
 mx47/mini-amazon-skeleton/db/data/Products.csv
 mx47/mini-amazon-skeleton/db/data/Purchases.csv
 mx47/mini-amazon-skeleton/db/data/Users.csv
+
+These have been all edited to create a more comprehensive database that can catch more edge cases and provide an
+overall more reliable set of test cases.
