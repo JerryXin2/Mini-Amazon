@@ -10,10 +10,10 @@ Henry Huynh - Social Guru: responsible for Feedback / Messaging
 
 Updates this week:
 Jerry Xin - Worked on Database Design Schema with Chris
-Shirley Wang - 
+Shirley Wang - Worked on website Design Schema
 Chris Cameron - Worked on Database population within create.sql, load.sql, and gen.py files.
-Jachin Friday - 
-Henry Huynh - 
+Jachin Friday - Helped test Database
+Henry Huynh - Helped Create E/R diagram.
 
 Link to access github Repository, with all code: https://gitlab.oit.duke.edu/mx47/mini-amazon-skeleton
 The code to populate the sample database is found under mx47/mini-amazon-skeleton/db/data.
