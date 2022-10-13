@@ -27,19 +27,11 @@ Restriction: Users can only access, add, and remove items from their own cart_id
 
 
 
-past_orders(cart_id, address, order_time, quantity, fulfillment)
+past_orders(product_id, seller_id, uid, address, order_time, quantity, fulfillment)
 
-key:cart_id, order_time
+key:uid, order_time, quantity
 
-Restriction: Users can only access the previous orders of their own cart_id
-
-
-
-sellers_orders(cart_id, uid, address, order_time, quantity, fulfillment)
-
-key: cart_id, order_time, address
-
-Restriction: Only accessed by Sellers
+Restrictions: Non-sellers can only access the previous orders of their own uid, Sellers can access orders that have their uid OR seller_id
 
 
 
