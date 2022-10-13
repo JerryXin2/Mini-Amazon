@@ -36,6 +36,7 @@ CREATE TABLE Carts (
 
 CREATE TABLE Orders(
     product_id INT NOT NULL REFERENCES Products(product_id),
+    seller_id INT NOT NULL REFERENCES Sellers(uid),
     uid INT NOT NULL REFERENCES Users(uid),
     address VARCHAR(255) NOT NULL,
     order_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),    

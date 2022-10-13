@@ -90,7 +90,7 @@ def gen_carts(num_carts):
         print(f'{num_users} generated')
     return
     
-def gen_orders(num_orders, available_uids, available_pids):
+def gen_orders(num_orders, available_uids, available_pids, available_sids):
     with open('Orders.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Orders...', end=' ', flush = True)
@@ -98,12 +98,13 @@ def gen_orders(num_orders, available_uids, available_pids):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             product_id = fake.random_element(elements = available_pids)
+            seller_id = fake.random_element(elements = available_sids)
             uid = fake.random_element(elements = available_uids)
             address = fake.address()
             order_time = fake.date_time()    
             quantity = fake.random_int(min = 1, max = 9)
             fulfillment = fake.random_element(elements=('true', 'false'))
-            writer.writerow([product_id, uid, address, order_time, quantity, fulfillment])
+            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment])
         print(f'{num_orders} generated')
     return
     
@@ -152,7 +153,7 @@ available_uids = gen_users(num_users)
 available_sids = gen_sellers(num_sellers, available_uids)
 available_pids = gen_products(num_products, available_sids)
 gen_carts(num_carts)
-gen_orders(num_orders, available_uids, available_pids)
+gen_orders(num_orders, available_uids, available_pids, available_sids)
 gen_inventory(available_pids)
 gen_product_reviews(num_product_reviews, available_pids, available_uids)
 gen_seller_reviews(num_seller_reviews, available_sids, available_uids)
