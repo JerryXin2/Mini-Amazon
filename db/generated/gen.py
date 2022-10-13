@@ -22,13 +22,14 @@ def gen_users(num_users):
             if uid % 10 == 0:
                 print(f'{uid}', end=' ', flush=True)
             profile = fake.profile()
+            balance = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
             email = profile['mail']
             plain_password = f'pass{uid}'
             password = generate_password_hash(plain_password)
-            name_components = profile['name'].split(' ')
-            firstname = name_components[0]
-            lastname = name_components[-1]
-            writer.writerow([uid, email, password, firstname, lastname])
+            fullname = profile['name']
+            cart_id = uid
+            address = profile['address']
+            writer.writerow([uid, email, fullname, address, password, balance, cart_id])
         print(f'{num_users} generated')
     return
 
