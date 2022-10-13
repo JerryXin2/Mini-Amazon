@@ -45,9 +45,9 @@ Restriction: Only accessed by Sellers
 
 inventory(product_id, quantity)
 
-key: product_name
+key: product_id
 
-Restriction: Only accessed and edited by Sellers, assume Sellers cannot sell 2 products of the same name
+Restriction: Only accessed and edited by Sellers
 
 
 
