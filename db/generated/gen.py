@@ -8,9 +8,9 @@ num_products = 2000
 num_carts = 100
 num_orders = 2500
 num_product_reviews  = 500
-num_seller_reviews = 100
+num_seller_reviews = 50
 
-Faker.seed(0)
+Faker.seed(1)
 fake = Faker()
 
 
@@ -48,7 +48,7 @@ def gen_sellers(num_sellers, available_uids):
             if i % 10 == 0:
                 print(f'{i}', end=' ', flush=True)
             profile = fake.profile()
-            uid = fake.random_element(elements = available_uids)
+            uid = i #avoid overlaps
             available_sids.append(uid)
             seller = profile['company']
             writer.writerow([uid, seller])
