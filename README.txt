@@ -9,9 +9,9 @@ Jachin Friday - Sellers Guru: responsible for Inventory / Order Fulfillment
 Henry Huynh - Social Guru: responsible for Feedback / Messaging
 
 Updates this week:
-Jerry Xin - 
+Jerry Xin - Worked on Database Design Schema with Chris
 Shirley Wang - 
-Chris Cameron - 
+Chris Cameron - Worked on Database population within create.sql, load.sql, and gen.py files.
 Jachin Friday - 
 Henry Huynh - 
 

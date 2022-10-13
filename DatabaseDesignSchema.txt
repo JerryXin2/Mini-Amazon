@@ -9,41 +9,41 @@ key: uid
 
 Sellers(uid, seller)
 
-key:uid
+key: uid
 
 
 
-Products(seller_name, product_name, category, description, image, price)
+Products(product_id, seller_id, product_name, category, description, image, price, available)
 
-key: seller, name, category, price
+key: pid
 
 
 
-Carts(cart_id, name, quantity, unit_price, total_price)
+Carts(cart_id, product_id, quantity)
 
-key:cart_id, name
+key:cart_id, product_id
 
 Restriction: Users can only access, add, and remove items from their own cart_id
 
 
 
-past_orders(cart_id, address, date, quantity, fulfillment)
+past_orders(cart_id, address, order_time, quantity, fulfillment)
 
-key:cart_id, date, quantity
+key:cart_id, order_time
 
 Restriction: Users can only access the previous orders of their own cart_id
 
 
 
-orders_for_sellers(cart_id, name, address, date, quantity, fulfillment)
+sellers_orders(cart_id, uid, address, order_time, quantity, fulfillment)
 
-key: cart_id, quantity, address, date
+key: cart_id, order_time, address
 
 Restriction: Only accessed by Sellers
 
 
 
-inventory(seller_name, product_name, category, price, quantity)
+inventory(product_id, quantity)
 
 key: product_name
 
@@ -51,9 +51,9 @@ Restriction: Only accessed and edited by Sellers, assume Sellers cannot sell 2 p
 
 
 
-reviews_products(product_name, seller_name, category, uid, review)
+products_reviews(product_id, uid, review)
 
-key:uid
+key:uid, product_id
 
 This is because users can only submit one review for each product. Therefore the user is unique and a key.
 
@@ -61,9 +61,9 @@ Restrictions: User must have bought product, only allow users to submit one revi
 
 
 
-reviews_sellers(seller_name, uid, review)
+sellers_reviews(seller_id, reviewer_id, review)
 
-key:uid
+key:reviewer_id, seller_id
 
 This is because users can only submit one review for each seller. Therefore the user is unique and a key.
 
