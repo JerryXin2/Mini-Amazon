@@ -34,23 +34,14 @@ CREATE TABLE Carts (
     PRIMARY KEY(cart_id, product_id)
 );
 
-CREATE TABLE Past_Orders(
-    cart_id INT NOT NULL REFERENCES Users(cart_id),
-    address VARCHAR(255) NOT NULL,
-    order_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),    
-    quantity INT NOT NULL,
-    fulfillment BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY(cart_id, order_time)
-);
-
-CREATE TABLE Seller_Orders(
-    cart_id INT NOT NULL REFERENCES Users(cart_id),
+CREATE TABLE Orders(
+    product_id INT NOT NULL REFERENCES Products(product_id),
     uid INT NOT NULL REFERENCES Users(uid),
     address VARCHAR(255) NOT NULL,
     order_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),    
     quantity INT NOT NULL,
     fulfillment BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY(cart_id, order_time, address)
+    PRIMARY KEY(uid, order_time, address)
 );
 
 CREATE TABLE Inventory(
