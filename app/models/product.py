@@ -17,13 +17,7 @@ WHERE product_id = :product_id
 ''',
                               id=id)
         return Product(*(rows[0])) if rows is not None else None
-
-    @staticmethod
-    def get_all_orders(id):
-        rows = app.db.execute('''SELECT * FROM Orders WHERE uid = :id''', id = id)
         
-        return Orders(*(rows)) if rows is not None else None
-
     @staticmethod
     def get_all(available=True):
         rows = app.db.execute('''
