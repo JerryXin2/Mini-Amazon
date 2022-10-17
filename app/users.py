@@ -66,6 +66,31 @@ def register():
             return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 
+class OrderHistorySearchForm(FlaskForm):
+    item = StringField('Item Name', validators=[validators.Optional()])
+    seller = StringField('Seller Name', validators=[validators.Optional()])
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[validators.Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[validators.Optional()])
+
+    submit = SubmitField('Search')
+
+
+@bp.route('/orderHistory/:uid', methods=['GET', 'POST'])
+def order_history():
+    if not current_user.is_authenticated:
+        return redirect(url_for('index.index'))
+
+    form = OrderHistorySearchForm()
+
+    seller_name = "" if form.seller.data is None else form.seller.data
+    item_name = "" if form.item.data is None else form.item.data
+    start_date = datetime.datetime(1980, 9, 14, 0, 0, 0) if form.start_date.data is None else form.start_date.data
+    end_date = (datetime.datetime.today() if form.end_date.data is None else form.end_date.data) + datetime.timedelta(
+        days=1)
+    orders = Orders.get_all_by_uid_since(
+        current_user.id, start_date)
+
+    return render_template('order_history.html', order_history=orders, form=form)
 
 @bp.route('/logout')
 def logout():
