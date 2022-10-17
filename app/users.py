@@ -76,7 +76,7 @@ class OrderHistorySearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
-@bp.route('/orderHistory', methods=['GET', 'POST'])
+@bp.route('/orderHistory/:uid', methods=['GET', 'POST'])
 def order_history():
     if not current_user.is_authenticated:
         return redirect(url_for('index.index'))
