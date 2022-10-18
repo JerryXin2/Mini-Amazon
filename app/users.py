@@ -73,12 +73,12 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 class PurchaseHistorySearchForm(FlaskForm):
-item = StringField('Item Name', validators=[validators.Optional()])
-seller = StringField('Seller Name', validators=[validators.Optional()])
-start_date = DateField('Start Date', format='%Y-%m-%d', validators=[validators.Optional()])
-end_date = DateField('End Date', format='%Y-%m-%d', validators=[validators.Optional()])
+    item = StringField('Item Name', validators=[validators.Optional()])
+    seller = StringField('Seller Name', validators=[validators.Optional()])
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[validators.Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[validators.Optional()])
 
-submit = SubmitField('Search')
+    submit = SubmitField('Search')
 
 
 @bp.route('/purchaseHistory', methods=['GET', 'POST'])
