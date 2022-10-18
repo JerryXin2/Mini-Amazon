@@ -90,7 +90,7 @@ class PurchaseHistorySearchForm(FlaskForm):
 
 
 @bp.route('/purchaseHistory', methods=['GET', 'POST'])
-def purchase_history():
+def purchaseHistory():
     if not current_user.is_authenticated:
         return redirect(url_for('index.index'))
 
