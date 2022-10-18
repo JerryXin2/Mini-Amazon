@@ -12,21 +12,8 @@ from .models.purchase import Purchase
 from flask import Blueprint
 
 import datetime
-
-from flask import render_template, redirect, url_for, flash, request, abort
-from werkzeug.urls import url_parse
-from flask_login import login_user, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DateTimeField, validators
 from wtforms.fields.html5 import DateField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-
-from .models.balance_transaction import BalanceTransaction
-from .models.order import Order
-from .models.purchase import Purchase
-from .models.review import SellerReview
-from .models.seller import Seller
-from .models.user import User
 
 bp = Blueprint('users', __name__)
 
