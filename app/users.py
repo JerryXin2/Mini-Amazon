@@ -6,9 +6,28 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
+from .models.purchase import Purchase
 
 
 from flask import Blueprint
+
+import datetime
+
+from flask import render_template, redirect, url_for, flash, request, abort
+from werkzeug.urls import url_parse
+from flask_login import login_user, logout_user, current_user
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DateTimeField, validators
+from wtforms.fields.html5 import DateField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+
+from .models.balance_transaction import BalanceTransaction
+from .models.order import Order
+from .models.purchase import Purchase
+from .models.review import SellerReview
+from .models.seller import Seller
+from .models.user import User
+
 bp = Blueprint('users', __name__)
 
 
@@ -67,7 +86,7 @@ def register():
             return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 
-class OrderHistorySearchForm(FlaskForm):
+class PurchaseHistorySearchForm(FlaskForm):
     item = StringField('Item Name', validators=[validators.Optional()])
     seller = StringField('Seller Name', validators=[validators.Optional()])
     start_date = DateField('Start Date', format='%Y-%m-%d', validators=[validators.Optional()])
@@ -76,22 +95,22 @@ class OrderHistorySearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
-@bp.route('/orderHistory/:uid', methods=['GET', 'POST'])
-def order_history():
+@bp.route('/purchaseHistory', methods=['GET', 'POST'])
+def purchase_history():
     if not current_user.is_authenticated:
         return redirect(url_for('index.index'))
 
-    form = OrderHistorySearchForm()
+    form = PurchaseHistorySearchForm()
 
     seller_name = "" if form.seller.data is None else form.seller.data
     item_name = "" if form.item.data is None else form.item.data
     start_date = datetime.datetime(1980, 9, 14, 0, 0, 0) if form.start_date.data is None else form.start_date.data
     end_date = (datetime.datetime.today() if form.end_date.data is None else form.end_date.data) + datetime.timedelta(
         days=1)
-    orders = Orders.get_all_by_uid_since(
+    purchases = Purchase.get_all_by_uid_since(
         current_user.id, start_date)
 
-    return render_template('order_history.html', order_history=orders, form=form)
+    return render_template('purchase_history.html', purchase_history=purchases, form=form)
 
 
 
