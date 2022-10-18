@@ -73,10 +73,10 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 class PurchaseHistorySearchForm(FlaskForm):
-    item = StringField('Item Name', validators=[validators.Optional()])
-    seller = StringField('Seller Name', validators=[validators.Optional()])
-    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[validators.Optional()])
-    end_date = DateField('End Date', format='%Y-%m-%d', validators=[validators.Optional()])
+    item = StringField('Item Name')
+    seller = StringField('Seller Name')
+    start_date = DateField('Start Date', format='%Y-%m-%d')
+    end_date = DateField('End Date', format='%Y-%m-%d')
 
     submit = SubmitField('Search')
 
