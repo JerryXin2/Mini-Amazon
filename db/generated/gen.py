@@ -32,11 +32,11 @@ def gen_users(num_users):
             email = profile['mail']
             plain_password = f'pass{uid}'
             password = generate_password_hash(plain_password)
-            first_name = profile['name'].split(" ")[0]
-            last_name = profile['name'].split(" ")[1]
+            firstname = profile['name'].split(" ")[0]
+            lastname = profile['name'].split(" ")[1]
             cart_id = uid
             address = profile['address']
-            writer.writerow([uid, email, fullname, address, password, balance, cart_id])
+            writer.writerow([uid, email, firstname, lastname, address, password, balance, cart_id])
         print(f'{num_users} generated')
     return available_uids
 

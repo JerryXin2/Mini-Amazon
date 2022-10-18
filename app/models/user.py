@@ -6,20 +6,16 @@ from .. import login
 
 
 class User(UserMixin):
-    def __init__(self, id, email, firstname, lastname, address, balance, password, cart_id):
+    def __init__(self, id, email, firstname, lastname):
         self.id = id
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
-        self.address = address
-        self.balance = balance
-        self.password = password
-        self.cart_id = cart_id
 
     @staticmethod
     def get_by_auth(email, password):
         rows = app.db.execute("""
-SELECT password, uid, email, first_name, last_name
+SELECT password, id, email, firstname, lastname
 FROM Users
 WHERE email = :email
 """,
@@ -48,7 +44,7 @@ WHERE email = :email
             rows = app.db.execute("""
 INSERT INTO Users(email, password, firstname, lastname)
 VALUES(:email, :password, :firstname, :lastname)
-RETURNING uid
+RETURNING id
 """,
                                   email=email,
                                   password=generate_password_hash(password),
@@ -65,9 +61,9 @@ RETURNING uid
     @login.user_loader
     def get(id):
         rows = app.db.execute("""
-SELECT uid, email, firstname, lastname
+SELECT id, email, firstname, lastname
 FROM Users
-WHERE uid = :uid
+WHERE id = :id
 """,
                               id=id)
         return User(*(rows[0])) if rows else None
