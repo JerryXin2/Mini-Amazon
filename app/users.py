@@ -13,7 +13,6 @@ from flask import Blueprint
 
 import datetime
 from wtforms.fields.html5 import DateField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 bp = Blueprint('users', __name__)
 
