@@ -124,13 +124,19 @@ def gen_product_reviews(num_product_reviews, available_pids, available_uids):
     with open ('Product_Reviews.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Product Reviews...', end=' ', flush = True)
+        set = []
         for id in range(num_product_reviews):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             product_id = fake.random_element(elements = available_pids)
             uid = fake.random_element(elements = available_uids)
-            review = fake.sentence(nb_words = 20) [:-1]
-            writer.writerow([product_id, uid, review])
+            pair = (product_id, uid)
+            if pair not in set:
+                set.append(pair)
+                review = fake.sentence(nb_words = 20) [:-1]
+                writer.writerow([product_id, uid, review])
+            else:
+                continue
         print(f'{num_product_reviews} generated')
     return
     
@@ -138,13 +144,18 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
     with open ('Seller_Reviews.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Seller Reviews...', end=' ', flush = True)
+        set = []
         for id in range(num_seller_reviews):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             seller_id = fake.random_element(elements = available_sids)
             reviewer_id = fake.random_element(elements = available_uids)
-            review = fake.sentence(nb_words = 20) [:-1]
-            writer.writerow([seller_id, reviewer_id, review])
+            pair = (seller_id, reviewer_id)
+            if pair not in set:
+                review = fake.sentence(nb_words = 20) [:-1]
+                writer.writerow([seller_id, reviewer_id, review])
+            else:
+                continue
         print(f'{num_product_reviews} generated')
     return
 
