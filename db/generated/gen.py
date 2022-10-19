@@ -5,7 +5,7 @@ from faker import Faker
 num_users = 100
 num_sellers = 20
 num_products = 2000
-num_carts = 100
+num_carts = num_users
 num_orders = 2500
 num_product_reviews  = 500
 num_seller_reviews = 50
@@ -84,7 +84,7 @@ def gen_carts(num_carts):
         for i in range(num_carts):
             if i % 10 == 0:
                 print(f'{i}', end=' ', flush=True)
-            cart_id = fake.random_element(elements = available_uids) #cid not checked b/c for this example they match uid, will either change this or remove cart_id as a separate id in the future
+            cart_id = i #cid not checked b/c for this example they match uid, will either change this or remove cart_id as a separate id in the future
             product_id = fake.random_element(elements = available_pids) 
             quantity = fake.random_int(min = 1, max = 9)
             writer.writerow([cart_id, product_id, quantity])
