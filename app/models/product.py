@@ -27,3 +27,17 @@ WHERE available = :available
 ''',
                               available=available)
         return [Product(*row) for row in rows]
+
+    @staticmethod
+    def get_k_products(k, available=True):
+        rows = app.db.execute('''
+SELECT product_id, product_name, price, available
+FROM Products
+WHERE available = :available
+ORDER BY price DESC
+LIMIT :k
+''',
+                              k = k,
+                              available=available)
+        return [Product(*row) for row in rows]
+

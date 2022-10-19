@@ -18,9 +18,9 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from flask import Blueprint
 bp = Blueprint('users', __name__)
 
-logger = logging.getLogger('werkzeug') # grabs underlying WSGI logger
-handler = logging.FileHandler('test.log') # creates handler for the log file
-logger.addHandler(handler) # adds handler to the werkzeug WSGI logger
+#logger = logging.getLogger('werkzeug') # grabs underlying WSGI logger
+#handler = logging.FileHandler('test.log') # creates handler for the log file
+#logger.addHandler(handler) # adds handler to the werkzeug WSGI logger
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -64,18 +64,18 @@ class RegistrationForm(FlaskForm):
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
-    logger.info("regist")
+    #logger.info("regist")
     if current_user.is_authenticated:
-        logger.info("user authent")
+        #logger.info("user authent")
         return redirect(url_for('index.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        logger.info("val sub")
+        #logger.info("val sub")
         if User.register(form.email.data,
                          form.password.data,
                          form.firstname.data,
                          form.lastname.data):
-            logger.info("congrats")
+            #logger.info("congrats")
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
@@ -89,22 +89,9 @@ class PurchaseHistorySearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
-@bp.route('/purchaseHistory', methods=['GET', 'POST'])
-def purchaseHistory():
-    if not current_user.is_authenticated:
-        return redirect(url_for('index.index'))
-
-    form = PurchaseHistorySearchForm()
-
-    seller_name = "" if form.seller.data is None else form.seller.data
-    item_name = "" if form.item.data is None else form.item.data
-    start_date = datetime.datetime(1980, 9, 14, 0, 0, 0) if form.start_date.data is None else form.start_date.data
-    end_date = (datetime.datetime.today() if form.end_date.data is None else form.end_date.data) + datetime.timedelta(
-        days=1)
-    purchases = Purchase.get_all_by_uid_since(
-        current_user.id, start_date)
-
-    return render_template('purchase_history.html', purchase_history=purchases, form=form)
+@bp.route('/purchaseHistory/<uid>', methods=['GET', 'POST'])
+def purchaseHistory(uid):
+    return f"Hello User with UID of{uid}!"
 
 @bp.route('/logout')
 def logout():
