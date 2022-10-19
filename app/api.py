@@ -6,11 +6,11 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Integ
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
-#from .models.cart import Cart
+from .models.cart import Cart
 from .models.product import Product
 
 from flask import Blueprint
-bp = Blueprint('hw4', __name__)
+bp = Blueprint('api', __name__)
 
 @bp.route('/api', methods=['GET','POST'])
 def api():
