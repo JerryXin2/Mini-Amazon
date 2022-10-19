@@ -78,66 +78,6 @@
             </tbody>
         </table>
 
-        <div class="container" id="category_pie"
-             style="width: 800px;height:800px; margin-top: 3%;margin-bottom: 3%"></div>
-        <script type="text/javascript">
-
-
-            let echartsObj = echarts.init(document.querySelector('#category_pie'));
-
-
-            let graph_dataset = []
-
-
-            axios.get('/api/purchaseHistory/category').then(resp => {
-
-                console.log(resp.data);
-                for (const obj of resp.data) {
-
-                    graph_dataset.push({"value": obj.category_purchased_times, "name": obj.category_name})
-                }
-                console.log(graph_dataset)
-                option = {
-                    legend: {
-                        top: 'bottom'
-                    },
-                    title: {
-                        text: 'Overall Purchase by category',
-                        textStyle: {
-                            fontFamily: 'lato'
-                        }
-                    },
-                    tooltip: {
-                        trigger: 'item'
-                    },
-                    toolbox: {
-                        feature: {
-                            restore: {},
-                            saveAsImage: {}
-                        }
-                    },
-                    series: [
-                        {
-                            name: 'Purchase by category',
-                            type: 'pie',
-                            radius: [50, 250],
-                            center: ['50%', '50%'],
-                            roseType: 'area',
-                            itemStyle: {
-                                borderRadius: 8
-                            },
-                            data: graph_dataset
-                        }
-                    ]
-                };
-
-                console.log(option)
-                echartsObj.setOption(option)
-            });
-
-
-        </script>
-
     </div>
 {% endblock %}
 
