@@ -11,7 +11,7 @@ class Cart:
     def get(cart_id):
         rows = app.db.execute('''
 SELECT cart_id, product_id, quantity
-FROM Cart
+FROM Carts
 WHERE cart_id = :cart_id
 ''',
                               cart_id= cart_id)
@@ -21,7 +21,7 @@ WHERE cart_id = :cart_id
     def get_all_by_uid_since(cart_id, since):
         rows = app.db.execute('''
 SELECT cart_id, product_id, time_added_to_cart
-FROM Cart
+FROM Carts
 WHERE cart_id = :cart_id
 AND time_added_to_cart >= :since
 ORDER BY time_added_to_cart DESC
@@ -31,10 +31,10 @@ ORDER BY time_added_to_cart DESC
         return [Cart(*row) for row in rows]
     
     @staticmethod
-    def get_items_in_cart_by_id(cart_id):
+    def get_items_in_cart_by_uid(cart_id):
         rows = app.db.execute('''
 SELECT product_id, quantity
-FROM Cart
+FROM Carts
 WHERE cart_id = :cart_id
         ''', cart_id = cart_id)
         return [Cart(*row) for row in rows]

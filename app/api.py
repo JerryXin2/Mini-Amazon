@@ -14,9 +14,8 @@ bp = Blueprint('api', __name__)
 
 @bp.route('/api', methods=['GET','POST'])
 def api():
-    return render_template('api.html', title='API')
+    return render_template('api.html', title='api')
 
-# each guru use one api below
 @bp.route('/users')
 def users():
     return redirect(url_for('index.index'))
@@ -58,9 +57,9 @@ def carts():
     
 
 @bp.route('/sellers')
-def sellers_guru():
+def sellers():
     return redirect(url_for('index.index'))
 
 @bp.route('/social')
-def social_guru():
+def social():
     return redirect(url_for('index.index'))
