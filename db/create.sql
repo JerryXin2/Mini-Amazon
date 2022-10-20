@@ -17,8 +17,7 @@ CREATE TABLE Users (
     lastname VARCHAR(255) NOT NULL,
     address VARCHAR (255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    balance DECIMAL(12,2) NOT NULL,
-    cart_id INT UNIQUE NOT NULL
+    balance DECIMAL(12,2) NOT NULL
 );
 
 CREATE TABLE Sellers(
@@ -38,10 +37,10 @@ CREATE TABLE Products (
 );
 
 CREATE TABLE Carts (
-    cart_id INT NOT NULL REFERENCES Users(cart_id),
+    uid INT NOT NULL REFERENCES Users(uid),
     product_id INT NOT NULL REFERENCES Products(product_id),
     quantity INT NOT NULL,  
-    PRIMARY KEY(cart_id, product_id)
+    PRIMARY KEY(uid, product_id)
 );
 
 CREATE TABLE Orders(

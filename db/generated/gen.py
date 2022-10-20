@@ -34,9 +34,8 @@ def gen_users(num_users):
             password = generate_password_hash(plain_password)
             firstname = profile['name'].split(" ")[0]
             lastname = profile['name'].split(" ")[1]
-            cart_id = uid
             address = profile['address']
-            writer.writerow([uid, email, firstname, lastname, address, password, balance, cart_id])
+            writer.writerow([uid, email, firstname, lastname, address, password, balance])
         print(f'{num_users} generated')
     return available_uids
 
@@ -84,10 +83,10 @@ def gen_carts(num_carts):
         for i in range(num_carts):
             if i % 10 == 0:
                 print(f'{i}', end=' ', flush=True)
-            cart_id = i #cid not checked b/c for this example they match uid, will either change this or remove cart_id as a separate id in the future
+            uid = i 
             product_id = fake.random_element(elements = available_pids) 
             quantity = fake.random_int(min = 1, max = 9)
-            writer.writerow([cart_id, product_id, quantity])
+            writer.writerow([uid, product_id, quantity])
         print(f'{num_users} generated')
     return
     

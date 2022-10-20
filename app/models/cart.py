@@ -2,39 +2,39 @@ from flask import current_app as app
 
 
 class Cart:
-    def __init__(self, cart_id, product_id, quantity):
-        self.cart_id = cart_id
+    def __init__(self, uid, product_id, quantity):
+        self.uid = uid
         self.product_id = product_id
         self.quantity = quantity
 
     @staticmethod
-    def get(cart_id):
+    def get(uid):
         rows = app.db.execute('''
-SELECT cart_id, product_id, quantity
+SELECT uid, product_id, quantity
 FROM Carts
-WHERE cart_id = :cart_id
+WHERE uid = :uid
 ''',
-                              cart_id= cart_id)
+                              uid= uid)
         return Cart(*(rows[0])) if rows else None
 
     @staticmethod
-    def get_all_by_uid_since(cart_id, since):
+    def get_all_by_uid_since(uid, since):
         rows = app.db.execute('''
-SELECT cart_id, product_id, time_added_to_cart
+SELECT uid, product_id, time_added_to_cart
 FROM Carts
-WHERE cart_id = :cart_id
+WHERE uid = :uid
 AND time_added_to_cart >= :since
 ORDER BY time_added_to_cart DESC
 ''',
-                              cart_id=cart_id,
+                              uid=uid,
                               since=since)
         return [Cart(*row) for row in rows]
     
     @staticmethod
-    def get_items_in_cart_by_uid(cart_id):
+    def get_items_in_cart_by_uid(uid):
         rows = app.db.execute('''
 SELECT product_id, quantity
 FROM Carts
-WHERE cart_id = :cart_id
-        ''', cart_id = cart_id)
+WHERE uid = :uid
+        ''', uid = uid)
         return [Cart(*row) for row in rows]
