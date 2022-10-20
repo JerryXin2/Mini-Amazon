@@ -6,27 +6,18 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
-from .models.purchase import Purchase
-
-import logging
-from flask import Flask
-import datetime
-from wtforms.fields.html5 import DateField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 
 from flask import Blueprint
 bp = Blueprint('users', __name__)
 
-#logger = logging.getLogger('werkzeug') # grabs underlying WSGI logger
-#handler = logging.FileHandler('test.log') # creates handler for the log file
-#logger.addHandler(handler) # adds handler to the werkzeug WSGI logger
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
+
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,36 +53,21 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Already a user with this email.')
 
 
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
-    #logger.info("regist")
     if current_user.is_authenticated:
-        #logger.info("user authent")
         return redirect(url_for('index.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        #logger.info("val sub")
         if User.register(form.email.data,
                          form.password.data,
                          form.firstname.data,
                          form.lastname.data):
-            #logger.info("congrats")
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 
-class PurchaseHistorySearchForm(FlaskForm):
-    item = StringField('Item Name')
-    seller = StringField('Seller Name')
-    start_date = DateField('Start Date', format='%Y-%m-%d')
-    end_date = DateField('End Date', format='%Y-%m-%d')
-
-    submit = SubmitField('Search')
-
-
-@bp.route('/purchaseHistory/<uid>', methods=['GET', 'POST'])
-def purchaseHistory(uid):
-    return f"Hello User with UID of{uid}!"
 
 @bp.route('/logout')
 def logout():
