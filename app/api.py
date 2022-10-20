@@ -47,6 +47,8 @@ def carts():
     form = SearchForItemsByUIDForm()
     id = form.id.data
     items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    for item in items_in_cart:
+        item.product_name = item.product_name[0]
     return render_template('cart.html',
                            items = items_in_cart, 
                            form = form)
