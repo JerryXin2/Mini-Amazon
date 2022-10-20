@@ -1,3 +1,4 @@
+from app.models.product_review import Product_Review
 from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
@@ -60,6 +61,17 @@ def carts():
 def sellers():
     return redirect(url_for('index.index'))
 
-@bp.route('/social')
+
+
+class RecentReviewsForm(FlaskForm):
+    uid = StringField('User ID')
+    submit = SubmitField('Get 5 Most Recent Reviews')
+
+@bp.route('/social', methods = ["GET", "POST"])
 def social():
-    return redirect(url_for('index.index'))
+    form = RecentReviewsForm()
+    uid = form.uid.data
+    reviews = Product_Review.get_recent_reviews(uid)
+    return render_template('review.html',
+                           reviews= reviews,
+                           form= form)

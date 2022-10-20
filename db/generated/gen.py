@@ -133,7 +133,8 @@ def gen_product_reviews(num_product_reviews, available_pids, available_uids):
             if pair not in set:
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
-                writer.writerow([product_id, uid, review])
+                review_time = fake.date_time()
+                writer.writerow([product_id, uid, review, review_time])
             else:
                 continue
         print(f'{num_product_reviews} generated')
@@ -151,8 +152,10 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
             reviewer_id = fake.random_element(elements = available_uids)
             pair = (seller_id, reviewer_id)
             if pair not in set:
+                set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
-                writer.writerow([seller_id, reviewer_id, review])
+                review_time = fake.date_time()
+                writer.writerow([seller_id, reviewer_id, review, review_time])
             else:
                 continue
         print(f'{num_product_reviews} generated')
