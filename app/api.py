@@ -55,10 +55,18 @@ def carts():
                            items = items_in_cart, 
                            form = form)
     
+class SearchForInventory(FlaskForm):
+    seller_id = StringField('Seller ID')
+    submit = SubmitField('Get Products')
 
-@bp.route('/sellers')
+@bp.route('/sellers', methods = ["GET", "POST"])
 def sellers():
-    return redirect(url_for('index.index'))
+    form = SearchForInventory()
+    seller_id = form.seller_id.data
+    inventory = Product.get_all_by_seller(seller_id)
+    return render_template('inventory.html',
+                           avail_products = inventory,
+                           form = form)
 
 @bp.route('/social')
 def social():
