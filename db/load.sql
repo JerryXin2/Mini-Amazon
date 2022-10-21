@@ -2,14 +2,21 @@
 -- for auto-generation so next INSERT will not clash with ids loaded above:
 
 \COPY Users FROM 'Users.csv' WITH DELIMITER ',' NULL '' CSV
+SELECT pg_catalog.setval('public.users_uid_seq',
+                         (SELECT MAX(uid)+1 FROM Users),
+                         false);
+
                       
 \COPY Sellers FROM 'Sellers.csv' WITH DELIMITER ',' NULL '' CSV
 
 \COPY Products FROM 'Products.csv' WITH DELIMITER ',' NULL '' CSV
 
+
 \COPY Carts FROM 'Carts.csv' WITH DELIMITER ',' NULL '' CSV
 
 \COPY Orders FROM 'Orders.csv' WITH DELIMITER ',' NULL '' CSV
+
+
 
 \COPY Inventory FROM 'Inventory.csv' WITH DELIMITER ',' NULL '' CSV
 
