@@ -9,6 +9,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from .models.user import User
 from .models.cart import Cart
 from .models.product import Product
+from .models.purchase import Purchase
 
 from flask import Blueprint
 bp = Blueprint('api', __name__)
@@ -17,9 +18,18 @@ bp = Blueprint('api', __name__)
 def api():
     return render_template('api.html', title='api')
 
-@bp.route('/users')
+class PurchaseHistoryForm(FlaskForm):
+    userid = IntegerField('User ID')
+    submit = SubmitField('Find Purchase History')
+
+@bp.route('/users', methods = ["GET", "POST"])
 def users():
-    return redirect(url_for('index.index'))
+    form = PurchaseHistoryForm()
+    uid = form.userid.data
+    purchases = Purchase.get_all_by_uid(uid)
+    return render_template('purchase.html',
+                           purchase_history=purchases,
+                           form=form)
 
 
 class k_HighestPrice_Products(FlaskForm):
