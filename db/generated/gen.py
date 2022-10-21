@@ -1,6 +1,7 @@
 from werkzeug.security import generate_password_hash
 import csv
 from faker import Faker
+import random
 
 num_users = 100
 num_sellers = 20
@@ -80,13 +81,18 @@ def gen_carts(num_carts):
     with open('Carts.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Carts...', end=' ', flush=True)
+        set = []
         for i in range(num_carts):
             if i % 10 == 0:
                 print(f'{i}', end=' ', flush=True)
             uid = i 
-            product_id = fake.random_element(elements = available_pids) 
-            quantity = fake.random_int(min = 1, max = 9)
-            writer.writerow([uid, product_id, quantity])
+            for i in range(random.randint(0,9)):
+                product_id = fake.random_element(elements = available_pids) 
+                quantity = fake.random_int(min = 1, max = 9)
+                pair = (uid, product_id)
+                if pair not in set:
+                    set.append(pair)
+                    writer.writerow([uid, product_id, quantity])
         print(f'{num_users} generated')
     return
     

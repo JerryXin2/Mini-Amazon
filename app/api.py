@@ -8,6 +8,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
 from .models.cart import Cart
+from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
 
@@ -56,12 +57,9 @@ def carts():
     # given a user id, find the items in the cart for that user.
     form = SearchForItemsByUIDForm()
     id = form.id.data
-    if form.validate_on_submit():
-        items_in_cart = Cart.get_items_in_cart_by_uid(id)
-        return render_template('cart.html',
-                           items = items_in_cart, 
-                           form = form)
-    items_in_cart = Cart.get_items_in_cart_by_uid(id)
+    items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    for item in items_in_cart:
+        item.product_name = item.product_name[0]
     return render_template('cart.html',
                            items = items_in_cart, 
                            form = form)
