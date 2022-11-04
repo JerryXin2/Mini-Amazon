@@ -9,8 +9,9 @@
   <h3>Check customer orders:</h3>
     <a id="see-purchases-button" href="{{ url_for('purchase_details.purchase', sid = current_user.id)}}" type="button" class="btn btn-dark">Check Orders</a>
 <br><br>
-    <h3>Check your inventory:</h3>
+  <h3>Change/Check your inventory:</h3>
     <a id="seller-page-inventory-button" href="{{ url_for('inventory.inventory', sid=current_user.id) }}" type="button" class="btn btn-dark">Inventory</a>
+
 <br><br>
 
 
