@@ -1,68 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <title>Mini Amazon</title>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/example.css') }}">
-  <style>
-    body {
-        font-family: "Lato", sans-serif;
-    }
+{% extends "base.html" %}
 
-    .main-head {
-        height: 150px;
-        background: #FFF;
-    }
+{% block content %}
 
-    .sidenav {
-        height: 100%;
-        background-color: #000;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
+<h2>Seller's Page</h2>
+  <h3>Check customer orders:</h3>
+    <a id="see-purchases-button" href="{{ url_for('purchase_details.purchase', sid = current_user.id)}}" type="button" class="btn btn-dark">Check Orders</a>
+<br><br>
+    <h3>Check your inventory:</h3>
+    <a id="seller-page-inventory-button" href="{{ url_for('inventory.inventory', sid=current_user.id) }}" type="button" class="btn btn-dark">Inventory</a>
+<br><br>
 
-    .main {
-        padding: 0px 10px;
-    }
-
-    .login-main-text {
-        margin-top: 20%;
-        padding: 60px;
-        color: #fff;
-    }
-
-    .login-main-text h2 {
-        font-weight: 300;
-    }
-
-    .btn-black {
-        background-color: #000 !important;
-        color: #fff;
-    }
-  </style>
-</head>
-
-<h2>Product Inventory:</h2>
-<table class='table table-hover table-bordered container'>
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Product ID</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in avail_products%}
-      <tr>
-        <th scope="row">{{product.product_id}}</th>
-        <td>{{product.product_name}}</td>
-        <td>{{product.price}}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
 
 </html>
