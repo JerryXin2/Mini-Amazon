@@ -27,8 +27,8 @@ WHERE product_id = :product_id
 SELECT product_id, seller_id, uid, address, order_time, quantity, fulfillment
 FROM Orders
 WHERE uid = :uid
-AND time_purchased >= :since
-ORDER BY time_purchased DESC
+AND order_time >= :since
+ORDER BY order_time DESC
 ''',
                               uid=uid,
                               since=since)
