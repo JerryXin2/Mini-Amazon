@@ -30,11 +30,27 @@ ORDER BY time_added_to_cart DESC
                               since=since)
         return [Cart(*row) for row in rows]
     
+  #  @staticmethod
+  #  def get_items_in_cart_by_uid(uid):
+  #      rows = app.db.execute('''
+#SELECT uid, product_id, quantity
+#FROM Carts
+#WHERE uid = :uid
+ #       ''', uid = uid)
+  #      return [Cart(*row) for row in rows]
+        
+class UserCart:
+    def __init__(self, product_name, quantity):
+        self.product_name = product_name,
+        self.quantity = quantity
+    
     @staticmethod
     def get_items_in_cart_by_uid(uid):
         rows = app.db.execute('''
-SELECT product_id, quantity
-FROM Carts
+SELECT products.product_name, carts.quantity
+FROM Carts, Products
 WHERE uid = :uid
-        ''', uid = uid)
-        return [Cart(*row) for row in rows]
+  AND carts.product_id = products.product_id
+''',
+        uid = uid)
+        return [UserCart(*row) for row in rows]
