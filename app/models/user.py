@@ -1,3 +1,4 @@
+from random import randint
 from flask_login import UserMixin
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,13 +24,15 @@ FROM Users
 WHERE email = :email
 """,
                               email=email)
-        if not rows:  # email not found
+        if not rows: 
+            print("1") # email not found
             return None
-        elif not check_password_hash(rows[0][0], password):
+        elif not check_password_hash(rows[0][5], password):
+            print("0")
             # incorrect password
             return None
         else:
-            return User(*(rows[0][1:]))
+            return User(*(rows[0][0:]))
 
     @staticmethod
     def email_exists(email):
@@ -46,12 +49,12 @@ WHERE email = :email
         try:
             rows = app.db.execute("""
 INSERT INTO Users(uid, email, firstname, lastname, address, password, balance)
-VALUES(uid, email, firstname, lastname, address, password, 0)
+VALUES(:uid, :email, :firstname, :lastname, :address, :password, :balance)
 RETURNING uid
 """,
-                                  email=email,
+                                  uid = randint(0, 244000000), email=email,
                                   password=generate_password_hash(password),
-                                  firstname=firstname, lastname=lastname, address = address)
+                                  firstname=firstname, lastname=lastname, address = address, balance = 0.0)
             uid = rows[0][0]
             return User.get(uid)
         except Exception as e:
