@@ -59,7 +59,7 @@ def withdrawBalance():
 class NameForm(FlaskForm):
     firstname = StringField('New first name', validators=[DataRequired()])
     lastname = StringField('New last name', validators=[DataRequired()])
-    submit = SubmitField('New Account Name')
+    submit = SubmitField('Set New Account Name')
 
 @bp.route('/changeName', methods = ["GET", "POST"])
 def changeName():
@@ -74,7 +74,7 @@ def changeName():
 
 class EmailForm(FlaskForm):
     email = StringField('New Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('New Email')
+    submit = SubmitField('Set New Email')
     def validate_email(self, email):
         if User.email_exists(email.data):
             raise ValidationError('Already a user with this email.')
@@ -88,3 +88,17 @@ def changeEmail():
         return render_template('changeEmail.html',
                            form=form)
     return render_template('changeEmail.html', form=form)
+
+class AddressForm(FlaskForm):
+    address = StringField('New Address', validators=[DataRequired()])
+    submit = SubmitField('Set New Address')
+
+@bp.route('/changeAddress', methods = ["GET", "POST"])
+def changeAddress():
+    form = AddressForm()
+    if form.validate_on_submit():
+        address = form.address.data
+        ret = User.changeAddress(current_user.uid, address)
+        return render_template('changeAddress.html',
+                           form=form)
+    return render_template('changeAddress.html', form=form)
