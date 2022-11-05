@@ -1,28 +1,33 @@
 {% extends "base.html" %}
 
-{% block content %}
 
 <body>
     <div class="sidenav">
       {% block msg %}
-        <h1 style="color:aliceblue">Welcome to your CompSci 316 Mini Amazon Account!</h1>
-        <div style="color: aliceblue; text-align: right; margin-bottom: 25px">
-            Hello {{current_user.firstname}}! 
-            Your account ID is {{current_user.uid}}
-            Your full name is: {{current_user.firstname}} {{current_user.lastname}}! 
+      <h1 style="color:aliceblue">Welcome to CompSci 316 Mini Amazon account!</h1>
+      <div style="color: aliceblue; text-align: right; margin-bottom: 25px">
+        {% if current_user.is_authenticated %}
+          Hello {{current_user.firstname}}! <a href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a>
+        {% else %}
+          <a href="{{ url_for('users.login') }}" type="button" class="btn btn-light">Log in</a>
+        {% endif %}
+          <a href="{{ url_for('api.api') }}" type="button" class="btn btn-light">HW 4</a>
+          <a href="{{ url_for('loginview.loginview') }}" type="button" class="btn btn-light">Profile</a>
+      </div>
+      {% endblock %}
+    </div>
+    <div class="main">
+      {% block content %}
+      <h1 style="color:black"> Hello {{current_user.firstname}}! </h1>
+      <h1 style="color:black"> Your account ID is {{current_user.uid}} </h1>
+      <h1 style="color:black"> Your full name is: {{current_user.firstname}} {{current_user.lastname}} </h1>
+      
+        <div style="color: black; text-align: left; margin-bottom: 50px">
             Your address is: {{current_user.address}}
         </div>
       {% endblock %}
     </div>
-    <div class="main">
-      {% block content %}{% endblock %}
-    </div>
   </body>
 
-<h1>APIs</h1>
-<a href="{{ url_for('api.users') }}" type="button" class="btn btn-default">Users</a><br><br>
-<a href="{{ url_for('api.products') }}" type="button" class="btn btn-default">Products</a><br><br>
-<a href="{{ url_for('api.carts') }}" type="button" class="btn btn-default">Carts</a><br><br>
-<a href="{{ url_for('api.sellers') }}" type="button" class="btn btn-default">Sellers</a><br><br>
-<a href="{{ url_for('api.social') }}" type="button" class="btn btn-default">Social</a>
-{% endblock %}
+
+
