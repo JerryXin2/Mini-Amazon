@@ -19,3 +19,14 @@ bp = Blueprint('loginview', __name__)
 def loginview():
     return render_template('loginview.html', title='loginview')
 
+class AddBalanceForm(FlaskForm):
+    add = IntegerField('Additional Balance')
+    submit = SubmitField('Find Purchase History')
+
+@bp.route('/addBalance', methods = ["GET", "POST"])
+def addBalance():
+    form = AddBalanceForm()
+    additional = form.add.data
+    ret = User.addBalance(current_user.uid, additional)
+    return render_template('addBalance.html',
+                           form=form)

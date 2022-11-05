@@ -71,3 +71,13 @@ WHERE uid = :uid
 """,
                               uid=uid)
         return User(*(rows[0])) if rows else None
+
+    @staticmethod
+    def addBalance(uid, additional):
+        app.db.execute("""
+UPDATE Users
+SET balance = balance + :additional
+WHERE uid = :uid
+""",
+                              uid = uid, additional=additional)
+        return 1
