@@ -17,7 +17,7 @@ CREATE TABLE Users (
     lastname VARCHAR(255) NOT NULL,
     address VARCHAR (255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    balance DECIMAL(12,2) NOT NULL
+    balance DECIMAL(12,2) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Sellers(
