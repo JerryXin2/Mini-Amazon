@@ -4,9 +4,14 @@
 <form class= "search" action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <p>
-    {{ form.add.label }}<br/>
-    {{ form.add(size=32) }}<br/>
-    {% for error in form.add.errors %}
+    {{ form.firstname.label }}<br/>
+    {{ form.firstname(size=32) }}<br/>
+    {% for error in form.firstname.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+    {{ form.lastname.label }}<br/>
+    {{ form.lastname(size=32) }}<br/>
+    {% for error in form.lastname.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
   </p>

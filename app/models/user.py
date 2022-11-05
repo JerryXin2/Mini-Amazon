@@ -1,5 +1,5 @@
 from random import randint
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -73,11 +73,41 @@ WHERE uid = :uid
         return User(*(rows[0])) if rows else None
 
     @staticmethod
-    def addBalance(uid, additional):
+    def addBal(uid, additional):
         app.db.execute("""
 UPDATE Users
 SET balance = balance + :additional
 WHERE uid = :uid
 """,
                               uid = uid, additional=additional)
+        
+        return 1
+    
+    def withdrawBal(uid, less):
+        app.db.execute("""
+UPDATE Users
+SET balance = balance - :less
+WHERE uid = :uid
+""",
+                              uid = uid, less=less)
+        
+        return 1
+    
+    def changeName(uid, firstname, lastname):
+        app.db.execute("""
+UPDATE Users
+SET firstname = :firstname, lastname = :lastname
+WHERE uid = :uid
+""",
+                              uid = uid, firstname = firstname, lastname = lastname)
+        
+        return 1
+
+    def changeEmail(uid, email):
+        app.db.execute("""
+UPDATE Users
+SET email = :email
+WHERE uid = :uid
+""",
+                              uid = uid, email = email)
         return 1
