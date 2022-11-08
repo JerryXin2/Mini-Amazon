@@ -92,7 +92,7 @@ NEW:
 
 Page 6: Payment & Shipping Page
 User enters in info for payment, promos, and shipping
-Vertival layout for step-by-step ease
+Vertical layout for step-by-step ease
 Will display buttons to access user login and register.
 
 CHANGE: Further specified about Item Page.
