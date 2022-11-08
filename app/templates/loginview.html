@@ -13,7 +13,12 @@
         {% endif %}
           <a href="{{ url_for('api.api') }}" type="button" class="btn btn-light">HW 4</a>
           <a href="{{ url_for('loginview.loginview') }}" type="button" class="btn btn-light">Profile</a>
-          <a href="{{ url_for('loginview.addBalance') }}" type="button" class="btn btn-light"> Add Balance</a><br><br>
+          <a href="{{ url_for('loginview.addBalance') }}" type="button" class="btn btn-light"> Add Balance</a>
+          <a href="{{ url_for('loginview.withdrawBalance') }}" type="button" class="btn btn-light"> Withdraw Balance</a><br><br>
+          <a href="{{ url_for('loginview.changeName') }}" type="button" class="btn btn-light"> Change Name</a><br><br>
+          <a href="{{ url_for('loginview.changeEmail') }}" type="button" class="btn btn-light"> Change Email</a><br><br>
+          <a href="{{ url_for('loginview.changeAddress') }}" type="button" class="btn btn-light"> Change Address</a><br><br>
+
       </div>
       {% endblock %}
     </div>
