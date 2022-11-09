@@ -110,7 +110,8 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             order_time = fake.date_time()    
             quantity = fake.random_int(min = 1, max = 9)
             fulfillment = fake.random_element(elements=('true', 'false'))
-            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment])
+            price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
+            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment, price])
         print(f'{num_orders} generated')
     return
     
