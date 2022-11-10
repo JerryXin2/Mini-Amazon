@@ -45,3 +45,12 @@ LIMIT 5
                               uid=uid)
         return [Product_Review(*row) for row in rows]
 
+    @staticmethod
+    def addProductReview(uid, product_id, review, review_time):
+        app.db.execute("""
+INSERT INTO Product_Reviews(uid, product_id, review, review_time)
+VALUES(:uid, :product_id, :review, :review_time)
+""",
+                            uid = uid, product_id=product_id, review=review, review_time = review_time)
+        
+        return 1
