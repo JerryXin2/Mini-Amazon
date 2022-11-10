@@ -51,6 +51,7 @@ CREATE TABLE Orders(
     order_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),    
     quantity INT NOT NULL,
     fulfillment BOOLEAN DEFAULT FALSE,
+    fulfillment_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     price DECIMAL(12, 2) NOT NULL, 
     PRIMARY KEY(uid, order_time, address)
 );

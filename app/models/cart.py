@@ -67,5 +67,5 @@ VALUES(:uid, :product_id, :quantity)
                                 quantity = quantity)
         except Exception as e:
             print("Failed to add to cart")
-        flash("Item Added")
+        #flash("Item Added")
         return None
