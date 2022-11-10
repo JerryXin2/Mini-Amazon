@@ -1,57 +1,60 @@
-{% extends "base.html" %}
+<html>
+<head></head>
+<body>
+	{% extends 'layout.html' %}
+	{% block content %}
+  <div class="main">
+	<div class="row">
+  		<div class="column" style="margin-right:20px">
+  			<img src="{{ url_for('send_file', filename=data.image) }}" class="productImage">
+  		</div>
+  		<div class="column" style="margin-left:5px">
+  			<h2>{{data.item_name}}</h2>
+  			<h4>{{data.description}}</h4>
+  			<p> {% if data.rating == 0 %} No reviews yet
+            {% else %} {{data.rating}} Stars
+            {% endif %}
+          </p>
+  			<table class="results">
+  				<tr>
+  					<th>Seller</th>
+  					<th>Price</th>
+  					<th>Select Quantity</th>
+  					<th>Add to Cart</th>
+				</tr>
+  				{% for seller in data.sellers_list %}
+          <form action="{{url_for('addToCart')}}" id={{seller.username}} method="POST">
+            <input type="hidden" id="seller" name="seller" value={{seller.username}}>
+            <input type="hidden" id="price" name="price" value={{seller.price}}>
+            <input type="hidden" id="itemid" name="itemid" value={{data.item_id}}>
+          </form>
+  				<tr>
+  					<td>{{seller.username}}</td>
+  					<td>{{seller.price}}</td>
+  					<td><input type="number" required form={{seller.username}} id="quantity" name="quantity" min="1" max={{seller.stock}}></td>
+  					<td><input type="submit" form={{seller.username}} value="Add to Cart"></td>
+  				</tr>
+  				{% endfor %}
+  			</table>
+        {% if session['seller'] and  not sellsItem %}
+          <p><a href="{{url_for('addItem', itemid = data.item_id, itemname = data.item_name)}}">Add a listing for this item </a></p>
+        {% endif %}
+  		</div>
+	</div>
+	<h3>Reviews</h3>
+  <p><a href="{{url_for('addreview', itemid = data.item_id)}}">Add a Review</a></p>
+  <div>
+	<table class="results">
+		{% for review in data.reviews_list %}
+		<tr>
+			<td>{{review.username}} </td>
+			<td>{{review.rating}} Stars </td>
+			<td>{{review.content}} </td>
+		</tr>
 
-{% block content %}
-
-
-<form class= "search" action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.k.label }}<br/>
-      {{ form.k(size=32) }}<br/>
-      {% for error in form.k.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-    </p>
-    {{ form.submit(class_="btn btn-black") }}
-    <br><br>
-
-
-<h2>Products for sale:</h2>
-<table class='table table-hover table-bordered container'>
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Product ID</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in avail_products%}
-      <tr>
-        <th scope="row">{{product.product_id}}</th>
-        <td>{{product.product_name}}</td>
-        <td>{{product.price}}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<br><br>
-{% if current_user.is_authenticated %}
-<h2>Your recent purchases:</h2>
-{% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
-{% endif %}
-
-{% endblock %}
+		{% endfor %}
+	</table>
+</div>
+</div>
+	{% endblock %}
+</html>
