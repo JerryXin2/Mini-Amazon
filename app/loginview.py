@@ -113,7 +113,7 @@ def registerSeller():
     form = SellerForm()
     if form.validate_on_submit():
         seller = form.seller.data
-        ret = User.registerSeller(current_user.uid, seller)
+        ret = Seller.registerSeller(current_user.uid, seller)
         return render_template('registerSeller.html',
                            form=form)
     return render_template('registerSeller.html', form=form)

@@ -13,7 +13,7 @@ class Seller(UserMixin):
     def register(uid,seller):
         try:
             rows = app.db.execute("""
-INSERT INTO Users(uid, seller)
+INSERT INTO Sellers(uid, seller)
 VALUES(:uid, :seller)
 RETURNING uid
 """,
