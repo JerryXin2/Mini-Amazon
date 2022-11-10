@@ -18,8 +18,19 @@ from .models.purchase import Purchase
 from flask import Blueprint
 bp = Blueprint('addcart', __name__)
 
+class SearchForItemsByUIDForm(FlaskForm):
+    id = StringField('User ID')
+    submit = SubmitField('Get Cart')
+
 @bp.route('/addcart', methods=['GET','POST'])
 def addcart():
+    #Add to Cart
     product_id = request.args.get('pid')
     UserCart.add_item_to_cart(current_user.uid, product_id)
-    return render_template('index.html', title='addcart')
+    #Load Carts Page
+    id = current_user.uid
+    items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    for item in items_in_cart:
+        item.product_name = item.product_name[0]
+    return render_template('cart.html',
+                           items = items_in_cart)
