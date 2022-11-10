@@ -49,8 +49,8 @@ LIMIT 5
     @staticmethod
     def addProductReview(uid, product_id, review, review_time, rating):
         app.db.execute("""
-    INSERT INTO Product_Reviews(uid, product_id, review, review_time, rating)
-    VALUES(:uid, :product_id, :review, :review_time, :rating)
+    INSERT INTO Product_Reviews(product_id, uid, review, review_time, rating)
+    VALUES(:product_id, :uid, :review, :review_time, :rating)
     """,
                                 uid = uid, product_id=product_id, review=review, review_time = review_time, rating = rating)
             
