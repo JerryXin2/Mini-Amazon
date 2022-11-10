@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .. import login
 
-class Seller(UserMixin):
+class Seller:
     def __init__(self, uid, seller):
         self.uid = uid
         self.seller = seller
