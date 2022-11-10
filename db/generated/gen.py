@@ -3,13 +3,13 @@ import csv
 from faker import Faker
 import random
 
-num_users = 100
-num_sellers = 20
-num_products = 2000
+num_users = 200
+num_sellers = 50
+num_products = 20000
 num_carts = num_users
-num_orders = 2500
-num_product_reviews  = 500
-num_seller_reviews = 50
+num_orders = 25000
+num_product_reviews  = 5000
+num_seller_reviews = 2000
 
 Faker.seed(1)
 fake = Faker()
