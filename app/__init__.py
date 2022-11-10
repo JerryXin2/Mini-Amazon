@@ -24,5 +24,11 @@ def create_app():
     from .api import bp as api_bp
     app.register_blueprint(api_bp)
 
+    from .loginview import bp as loginview_bp
+    app.register_blueprint(loginview_bp)
+
+    from .productsearch import bp as productsearch_bp
+    app.register_blueprint(productsearch_bp)
+
 
     return app

@@ -17,7 +17,7 @@ CREATE TABLE Users (
     lastname VARCHAR(255) NOT NULL,
     address VARCHAR (255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    balance DECIMAL(12,2) NOT NULL
+    balance DECIMAL(12,2) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Sellers(
@@ -51,6 +51,7 @@ CREATE TABLE Orders(
     order_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),    
     quantity INT NOT NULL,
     fulfillment BOOLEAN DEFAULT FALSE,
+    price DECIMAL(12, 2) NOT NULL, 
     PRIMARY KEY(uid, order_time, address)
 );
 
@@ -63,6 +64,7 @@ CREATE TABLE Product_Reviews(
     product_id INT NOT NULL REFERENCES Products(product_id),
     uid INT NOT NULL REFERENCES Users(uid),
     review VARCHAR(65535) NOT NULL,
+    review_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     PRIMARY KEY(uid, product_id)
 );
 
@@ -70,6 +72,7 @@ CREATE TABLE Seller_Reviews(
     seller_id INT NOT NULL REFERENCES Sellers(uid),
     reviewer_id INT NOT NULL REFERENCES Users(uid),
     review VARCHAR(65535) NOT NULL,
+    review_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     PRIMARY KEY(reviewer_id, seller_id)
 );
 

@@ -1,3 +1,4 @@
+from app.models.product_review import Product_Review
 from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
@@ -7,7 +8,9 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
 from .models.cart import Cart
+from .models.cart import UserCart
 from .models.product import Product
+from .models.purchase import Purchase
 
 from flask import Blueprint
 bp = Blueprint('api', __name__)
@@ -16,9 +19,18 @@ bp = Blueprint('api', __name__)
 def api():
     return render_template('api.html', title='api')
 
-@bp.route('/users')
+class PurchaseHistoryForm(FlaskForm):
+    userid = IntegerField('User ID')
+    submit = SubmitField('Find Purchase History')
+
+@bp.route('/users', methods = ["GET", "POST"])
 def users():
-    return redirect(url_for('index.index'))
+    form = PurchaseHistoryForm()
+    uid = form.userid.data
+    purchases = Purchase.get_all_by_uid(uid)
+    return render_template('purchase.html',
+                           purchase_history=purchases,
+                           form=form)
 
 
 class k_HighestPrice_Products(FlaskForm):
@@ -34,7 +46,6 @@ def products():
                            avail_products = products,
                            form = form)
 
-
 class SearchForItemsByUIDForm(FlaskForm):
     id = StringField('User ID')
     submit = SubmitField('Get Cart')
@@ -45,12 +56,9 @@ def carts():
     # given a user id, find the items in the cart for that user.
     form = SearchForItemsByUIDForm()
     id = form.id.data
-    if form.validate_on_submit():
-        items_in_cart = Cart.get_items_in_cart_by_uid(id)
-        return render_template('cart.html',
-                           items = items_in_cart, 
-                           form = form)
-    items_in_cart = Cart.get_items_in_cart_by_uid(id)
+    items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    for item in items_in_cart:
+        item.product_name = item.product_name[0]
     return render_template('cart.html',
                            items = items_in_cart, 
                            form = form)
@@ -68,6 +76,19 @@ def sellers():
                            avail_products = inventory,
                            form = form)
 
-@bp.route('/social')
+
+
+class RecentReviewsForm(FlaskForm):
+    uid = StringField('User ID')
+    submit = SubmitField('Get 5 Most Recent Reviews')
+
+@bp.route('/social', methods = ["GET", "POST"])
 def social():
-    return redirect(url_for('index.index'))
+    form = RecentReviewsForm()
+    uid = form.uid.data
+    reviews = Product_Review.get_recent_reviews(uid)
+    return render_template('review.html',
+                           reviews= reviews,
+                           form= form)
+
+

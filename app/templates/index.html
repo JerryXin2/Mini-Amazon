@@ -11,14 +11,16 @@
       <th scope="col">Product ID</th>
       <th scope="col">Product Name</th>
       <th scope="col">Price</th>
+      <th scope="col"> </th>
     </tr>
   </thead>
   <tbody>
     {% for product in avail_products%}
       <tr>
-        <th scope="row">{{product.id}}</th>
-        <td>{{product.name}}</td>
+        <th scope="row">{{product.product_id}}</th>
+        <td>{{product.product_name}}</td>
         <td>{{product.price}}</td>
+        <td type="button" class="btn btn-light"> Add To Cart </td>
       </tr>
     {% endfor %}
   </tbody>

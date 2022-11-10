@@ -1,14 +1,15 @@
 from werkzeug.security import generate_password_hash
 import csv
 from faker import Faker
+import random
 
-num_users = 100
-num_sellers = 20
-num_products = 2000
+num_users = 200
+num_sellers = 50
+num_products = 20000
 num_carts = num_users
-num_orders = 2500
-num_product_reviews  = 500
-num_seller_reviews = 50
+num_orders = 25000
+num_product_reviews  = 5000
+num_seller_reviews = 2000
 
 Faker.seed(1)
 fake = Faker()
@@ -80,13 +81,18 @@ def gen_carts(num_carts):
     with open('Carts.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Carts...', end=' ', flush=True)
+        set = []
         for i in range(num_carts):
             if i % 10 == 0:
                 print(f'{i}', end=' ', flush=True)
             uid = i 
-            product_id = fake.random_element(elements = available_pids) 
-            quantity = fake.random_int(min = 1, max = 9)
-            writer.writerow([uid, product_id, quantity])
+            for i in range(random.randint(0,9)):
+                product_id = fake.random_element(elements = available_pids) 
+                quantity = fake.random_int(min = 1, max = 9)
+                pair = (uid, product_id)
+                if pair not in set:
+                    set.append(pair)
+                    writer.writerow([uid, product_id, quantity])
         print(f'{num_users} generated')
     return
     
@@ -104,7 +110,8 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             order_time = fake.date_time()    
             quantity = fake.random_int(min = 1, max = 9)
             fulfillment = fake.random_element(elements=('true', 'false'))
-            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment])
+            price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
+            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment, price])
         print(f'{num_orders} generated')
     return
     
@@ -133,7 +140,8 @@ def gen_product_reviews(num_product_reviews, available_pids, available_uids):
             if pair not in set:
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
-                writer.writerow([product_id, uid, review])
+                review_time = fake.date_time()
+                writer.writerow([product_id, uid, review, review_time])
             else:
                 continue
         print(f'{num_product_reviews} generated')
@@ -151,8 +159,10 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
             reviewer_id = fake.random_element(elements = available_uids)
             pair = (seller_id, reviewer_id)
             if pair not in set:
+                set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
-                writer.writerow([seller_id, reviewer_id, review])
+                review_time = fake.date_time()
+                writer.writerow([seller_id, reviewer_id, review, review_time])
             else:
                 continue
         print(f'{num_product_reviews} generated')
