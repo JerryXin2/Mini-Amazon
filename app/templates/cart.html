@@ -8,6 +8,8 @@
     <tr>
       <th scope="col">Product Name</th> 
       <th scope="col">Quantity</th>
+      <th scope="col">Unit Price</th> 
+      <th scope="col">Total Price</th> 
     </tr>
   </thead>
   <tbody>
@@ -15,9 +17,13 @@
       <tr>
         <th scope="row">{{product.product_name}}</th>
         <td>{{product.quantity}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.price*product.quantity}}</td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
+
+<h2>Total: {{total}}</h2>
 
 {% endblock %}

@@ -40,14 +40,15 @@ ORDER BY time_added_to_cart DESC
   #      return [Cart(*row) for row in rows]
         
 class UserCart:
-    def __init__(self, product_name, quantity):
+    def __init__(self, product_name, quantity, price):
         self.product_name = product_name,
         self.quantity = quantity
+        self.price = price
     
     @staticmethod
     def get_items_in_cart_by_uid(uid):
         rows = app.db.execute('''
-SELECT products.product_name, carts.quantity
+SELECT products.product_name, carts.quantity, products.price
 FROM Carts, Products
 WHERE uid = :uid
   AND carts.product_id = products.product_id
