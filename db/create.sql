@@ -65,6 +65,7 @@ CREATE TABLE Product_Reviews(
     uid INT NOT NULL REFERENCES Users(uid),
     review VARCHAR(65535) NOT NULL,
     review_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+    rating INT NOT NULL,
     PRIMARY KEY(uid, product_id)
 );
 
@@ -73,6 +74,7 @@ CREATE TABLE Seller_Reviews(
     reviewer_id INT NOT NULL REFERENCES Users(uid),
     review VARCHAR(65535) NOT NULL,
     review_time timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+    rating INT NOT NULL,
     PRIMARY KEY(reviewer_id, seller_id)
 );
 

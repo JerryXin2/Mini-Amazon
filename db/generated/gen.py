@@ -141,7 +141,8 @@ def gen_product_reviews(num_product_reviews, available_pids, available_uids):
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
                 review_time = fake.date_time()
-                writer.writerow([product_id, uid, review, review_time])
+                rating = random.randint(1, 5)
+                writer.writerow([product_id, uid, review, review_time,rating])
             else:
                 continue
         print(f'{num_product_reviews} generated')
@@ -162,7 +163,8 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
                 review_time = fake.date_time()
-                writer.writerow([seller_id, reviewer_id, review, review_time])
+                rating = random.randint(1, 5)
+                writer.writerow([seller_id, reviewer_id, review, review_time,rating])
             else:
                 continue
         print(f'{num_product_reviews} generated')
