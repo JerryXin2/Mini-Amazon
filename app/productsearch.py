@@ -31,9 +31,5 @@ def productsearch():
         return render_template('productsearch.html', avail_products = products, form = form)
     return render_template('productsearch.html', avail_products = [], form = form)
 
-@bp.route('/<product_id>', methods=['GET','POST'])
-def product():
-    if a:
-        return render_template('singleproduct.html')
 
 
