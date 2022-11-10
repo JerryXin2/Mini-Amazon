@@ -11,8 +11,8 @@
       <th scope="col">Product ID</th>
       <th scope="col">Product Name</th>
       <th scope="col">Price</th>
-      <th scope="col"> </th>
-      <th scope="col">Amount to Add</th> 
+      <th scope="col"> Amount to Add </th>
+      <th scope="col"> </th> 
     </tr>
   </thead>
   <tbody>
@@ -21,8 +21,8 @@
         <th scope="row">{{product.product_id}}</th>
         <td>{{product.product_name}}</td>
         <td>{{product.price}}</td>
-        <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
-        <td> <input type="number" id="quantity" name="quantity" min="1" value="1"> </td>
+        <td> <input type="number" id="purchasecount" name="quantity" min="1" value="1"> </td>
+        <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id, quantity = 1) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
       </tr>
     {% endfor %}
   </tbody>
