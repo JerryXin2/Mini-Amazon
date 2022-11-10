@@ -105,7 +105,7 @@ def changeAddress():
     return render_template('changeAddress.html', form=form)
 
 class SellerForm(FlaskForm):
-    seller = StringField('New Seller ID', validators=[DataRequired()])
+    seller = StringField('User ID', validators=[DataRequired()])
     submit = SubmitField('Set New Seller')
 
 @bp.route('/registerSeller', methods = ["GET", "POST"])

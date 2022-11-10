@@ -1,9 +1,4 @@
-from random import randint
-from flask_login import UserMixin, current_user
 from flask import current_app as app
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from .. import login
 
 class Seller:
     def __init__(self, uid, seller):
