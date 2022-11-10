@@ -26,8 +26,10 @@ def reviewHome():
     return render_template('reviewHome.html', title='reviewHome')
 
 class AddProductReviewForm(FlaskForm):
+    invalid_review = 0
     id = IntegerField('ID of Product of Review', validators=[DataRequired()])
     review = StringField('Content of New Review', validators=[DataRequired()])
+    rating = IntegerField('Rating of New Review(1-5 scale)', validators=[DataRequired()])
     submit = SubmitField('Submit new Review')
 
 @bp.route('/addProductReview', methods = ["GET", "POST"])
@@ -38,7 +40,13 @@ def addProductReview():
         dt_string = now.strftime("%Y/%m/%d %H:%M:%S")
         review = form.review.data
         product_id = form.id.data
-        ret = Product_Review.addProductReview(current_user.uid, product_id,  review, dt_string)
-        return render_template('addProductReview.html',
+        rating = form.rating.data
+        if(rating <= 5 and rating >= 1):
+            ret = Product_Review.addProductReview(current_user.uid, product_id,  review, dt_string, rating)
+            return render_template('addProductReview.html',
+                           form=form)
+        else:
+            form.invalid_review = 1
+            return render_template('addProductReview.html',
                            form=form)
     return render_template('addProductReview.html', form=form)
