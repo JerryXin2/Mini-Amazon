@@ -33,5 +33,8 @@ def create_app():
     from .addcart import bp as addcart_bp
     app.register_blueprint(addcart_bp)
 
+    from .reviewHome import bp as reviewHome_bp
+    app.register_blueprint(reviewHome_bp)
+
 
     return app
