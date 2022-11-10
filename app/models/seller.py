@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .. import login
 
-class User(UserMixin):
+class Seller(UserMixin):
     def __init__(self, uid, seller):
         self.uid = uid
         self.seller = seller
@@ -19,7 +19,7 @@ RETURNING uid
 """,
                                   uid = uid, seller = seller)
             uid = rows[0][0]
-            return User.get(uid)
+            return 1
         except Exception as e:
             # likely email already in use; better error checking and reporting needed;
             # the following simply prints the error to the console:
