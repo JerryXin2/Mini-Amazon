@@ -3,13 +3,13 @@ import csv
 from faker import Faker
 import random
 
-num_users = 100
-num_sellers = 20
-num_products = 2000
+num_users = 200
+num_sellers = 50
+num_products = 20000
 num_carts = num_users
-num_orders = 2500
-num_product_reviews  = 500
-num_seller_reviews = 50
+num_orders = 25000
+num_product_reviews  = 5000
+num_seller_reviews = 2000
 
 Faker.seed(1)
 fake = Faker()
@@ -110,7 +110,8 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             order_time = fake.date_time()    
             quantity = fake.random_int(min = 1, max = 9)
             fulfillment = fake.random_element(elements=('true', 'false'))
-            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment])
+            price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
+            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment, price])
         print(f'{num_orders} generated')
     return
     

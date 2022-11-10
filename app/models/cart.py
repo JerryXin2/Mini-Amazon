@@ -54,3 +54,16 @@ WHERE uid = :uid
 ''',
         uid = uid)
         return [UserCart(*row) for row in rows]
+
+    def add_item_to_cart(uid, product_id): #Will add functionality to choose quantity/update outstanding orders later
+        try:
+            rows = app.db.execute("""
+INSERT INTO Carts(uid, product_id, quantity)
+VALUES(:uid, :product_id, :quantity)
+RETURNING uid
+""",
+                                  quantity = 1)
+        except Exception as e:
+            print("Failed to add to cart")
+        flash("Item Added")
+        return None
