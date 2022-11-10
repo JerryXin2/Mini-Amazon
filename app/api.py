@@ -46,7 +46,6 @@ def products():
                            avail_products = products,
                            form = form)
 
-
 class SearchForItemsByUIDForm(FlaskForm):
     id = StringField('User ID')
     submit = SubmitField('Get Cart')
@@ -89,3 +88,5 @@ def social():
     return render_template('review.html',
                            reviews= reviews,
                            form= form)
+
+

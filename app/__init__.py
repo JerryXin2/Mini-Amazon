@@ -27,7 +27,11 @@ def create_app():
     from .loginview import bp as loginview_bp
     app.register_blueprint(loginview_bp)
 
+    from .productsearch import bp as productsearch_bp
+    app.register_blueprint(productsearch_bp)
+
     from .addcart import bp as addcart_bp
     app.register_blueprint(addcart_bp)
+
 
     return app
