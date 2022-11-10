@@ -66,13 +66,13 @@ Restrictions: Non-sellers can only access the previous orders of their own uid, 
 
 NEW:
 
-orders(product_id, seller_id, uid, address, order_time, quantity, fulfillment, price)
+orders(product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
 
 key:uid, order_time, address
 
-Restrictions: Non-sellers can only access the previous orders of their own uid, Sellers can access orders that have their uid OR seller_id
+Restrictions: Non-sellers can only access the previous orders of their own uid, Sellers can access orders that have their uid OR seller_id, fulfillment_time must be later than order_time
 
-REASON: Table name was simplified to orders. The status of fulfillment allows us to see if these orders are fulfilled or not. We changed the key to uid, order_time, and address. This should be an adequate key to identify all unique orders. We do not expect the same people to be able to place orders at the same time to the same address. Needed to add new variable price in case price changes between time of purchase and time of order fulfillment.
+REASON: Table name was simplified to orders. The status of fulfillment allows us to see if these orders are fulfilled or not. We changed the key to uid, order_time, and address. This should be an adequate key to identify all unique orders. We do not expect the same people to be able to place orders at the same time to the same address. Needed to add new variable price in case price changes between time of purchase and time of order fulfillment. Needed to add new variable fulfillment_time to indicate when an order was fulfilled, not just the time of purchase.
 
 
 UNCHANGED:
