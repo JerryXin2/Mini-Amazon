@@ -52,10 +52,4 @@
 </table>
 
 <br><br>
-{% if current_user.is_authenticated %}
-<h2>Your recent purchases:</h2>
-{% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
-{% endif %}
-
 {% endblock %}

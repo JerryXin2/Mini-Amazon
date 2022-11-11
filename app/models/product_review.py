@@ -56,3 +56,13 @@ LIMIT 5
             
         return 1
 
+    @staticmethod
+    def getAllUserReview(uid):
+        rows = app.db.execute("""
+    SELECT product_id, review, review_time, rating
+    FROM Product_Reviews
+    WHERE uid = :uid
+    ORDER BY review_time DESC
+    """,
+                                uid = uid)
+        return [Product_Review(*row) for row in rows] 

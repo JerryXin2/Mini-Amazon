@@ -46,13 +46,9 @@ def addProductReview():
         product_id = form.id.data
         rating = form.rating.data
         if(rating <= 5 and rating >= 1):
-            ret = Product_Review.addProductReview(current_user.uid, product_id,  review, dt_string, rating)
-            return render_template('addProductReview.html',
-                           form=form)
+            ret = Product_Review.addProductReview(product_id, current_user.uid, review, dt_string, rating)
         else:
             form.invalid_review = 1
-            return render_template('addProductReview.html',
-                           form=form)
     return render_template('addProductReview.html', form=form)
 
 class AddSellerReviewForm(FlaskForm):
@@ -71,11 +67,27 @@ def addSellerReview():
         seller_id = form.id.data
         rating = form.rating.data
         if(rating <= 5 and rating >= 1):
-            ret = Seller_Review.addSellerReview(seller_id, current_user.uid, review, dt_string, rating)
-            return render_template('addSellerReview.html',
-                           form=form)
+            ret = Seller_Review.addSellerReview(
+                seller_id, current_user.uid, review, dt_string, rating)
+
         else:
             form.invalid_review = 1
-            return render_template('addSellerReview.html',
-                           form=form)
     return render_template('addSellerReview.html', form=form)
+
+
+class SeeUserReviewForm(FlaskForm):
+    invalid_review = 0
+    id = IntegerField('ID of User to see Review', validators=[DataRequired()])
+    submit = SubmitField('See Review')
+
+@bp.route('/seeUserReview', methods = ["GET", "POST"])
+def seeUserReview():
+    form = SeeUserReviewForm()
+    if form.validate_on_submit():
+        user_id = form.id.data
+        allProductReviews = Product_Review.getAllUserReview(user_id)
+        #allSellerReviews, do later.
+        return render_template('seeUserReview.html', avail_reviews = allProductReviews,
+                           form=form)
+    return render_template('seeUserReview.html', avail_reviews = [], form=form)
+
