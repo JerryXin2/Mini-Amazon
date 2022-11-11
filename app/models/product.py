@@ -2,7 +2,7 @@ from flask import current_app as app
 
 
 class Product:
-    def __init__(self, product_id, product_name, category, description, image, price, available, seller_id):
+    def __init__(self, product_id, product_name, category, description, image, price, available, seller_id, quantity):
         self.product_id = product_id
         self.product_name = product_name
         self.category = category
@@ -11,11 +11,12 @@ class Product:
         self.price = price
         self.available = available
         self.seller_id = seller_id
+        self.quantity = quantity
 
     @staticmethod
     def get(product_id):
         rows = app.db.execute('''
-SELECT product_id, product_name, category, description, image, price, available, seller_id
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
 FROM Products
 WHERE product_id = :product_id
 ''',
@@ -25,7 +26,7 @@ WHERE product_id = :product_id
     @staticmethod
     def get_all(available=True):
         rows = app.db.execute('''
-SELECT product_id, product_name, category, description, image, price, available, seller_id
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
 FROM Products
 WHERE available = :available
 ''',
@@ -35,7 +36,7 @@ WHERE available = :available
     @staticmethod
     def get_all_by_seller(seller_id, available=True):
         rows = app.db.execute('''
-SELECT product_id, product_name, category, description, image, price, available, seller_id
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
 FROM Products
 WHERE seller_id = :seller_id
 AND available = :available
@@ -47,7 +48,7 @@ AND available = :available
     @staticmethod
     def get_k_products(k, available=True):
         rows = app.db.execute('''
-SELECT product_id, product_name, category, description, image, price, available, seller_id
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
 FROM Products
 WHERE available = :available
 ORDER BY price DESC
@@ -60,7 +61,7 @@ LIMIT :k
     @staticmethod
     def search_products(search_key, available=True):
         rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
     FROM Products
     WHERE product_name LIKE CONCAT('%', :search_key, '%')
     ''',
