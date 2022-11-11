@@ -6,9 +6,9 @@
 <form class= "search" action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
-      {{ form.uid.label }}<br/>
-      {{ form.uid(size=32) }}<br/>
-      {% for error in form.uid.errors %}
+      {{ form.id.label }}<br/>
+      {{ form.id(size=100) }}<br/>
+      {% for error in form.id.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
@@ -27,24 +27,44 @@
     <br><br>
 
 
-<h2>Reviews:</h2>
+<h2>Product Review History of User:</h2>
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
       <th scope="col">Product ID</th>
-      <th scope="col">User ID</th>
       <th scope="col">Review</th>
-      <th scope="col">Time</th>
+	  <th scope="col">Time</th>
       <th scope="col">Rating</th>
     </tr>
   </thead>
   <tbody>
-    {% for review in reviews%}
+    {% for review in avail_reviews%}
       <tr>
-        <th scope="row">{{review.product_id}}</th>
-        <td>{{review.uid}}</td>
+        <td>{{review.product_id}}</td>
         <td>{{review.review}}</td>
-        <td>{{review.review_time}}</td>
+		    <td>{{review.review_time}}</td>
+        <td>{{review.rating}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Seller Review History of User:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Seller ID</th>
+      <th scope="col">Review</th>
+	  <th scope="col">Time</th>
+      <th scope="col">Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in avail_reviews2%}
+      <tr>
+        <td>{{review.seller_id}}</td>
+        <td>{{review.review}}</td>
+		    <td>{{review.review_time}}</td>
         <td>{{review.rating}}</td>
       </tr>
     {% endfor %}
@@ -52,4 +72,5 @@
 </table>
 
 <br><br>
+
 {% endblock %}
