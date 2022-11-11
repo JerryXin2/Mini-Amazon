@@ -117,3 +117,10 @@ def registerSeller():
         return render_template('registerSeller.html',
                            form=form)
     return render_template('registerSeller.html', form=form)
+
+@bp.route('/purchaseHistory', methods = ["GET", "POST"])
+def purchaseHistory():
+    uid = current_user.uid
+    purchases = Purchase.get_all_by_uid(uid)
+    return render_template('purchaseHistory.html',
+                           purchase_history=purchases)
