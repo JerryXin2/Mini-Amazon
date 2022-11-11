@@ -86,8 +86,8 @@ def seeUserReview():
     if form.validate_on_submit():
         user_id = form.id.data
         allProductReviews = Product_Review.getAllUserReview(user_id)
-        #allSellerReviews, do later.
-        return render_template('seeUserReview.html', avail_reviews = allProductReviews,
+        allSellerReviews = Seller_Review.getAllUserReview(user_id)
+        return render_template('seeUserReview.html', avail_reviews = allProductReviews, avail_reviews2 = allSellerReviews, 
                            form=form)
     return render_template('seeUserReview.html', avail_reviews = [], form=form)
 

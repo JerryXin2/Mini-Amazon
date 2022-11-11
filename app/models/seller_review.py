@@ -27,3 +27,14 @@ class Seller_Review:
             
         return 1
 
+    @staticmethod
+    def getAllUserReview(reviewer_id):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE reviewer_id = :reviewer_id
+    ORDER BY review_time DESC
+    """,
+                                reviewer_id = reviewer_id)
+        return [Seller_Review(*row) for row in rows] 
+

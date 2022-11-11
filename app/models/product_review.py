@@ -59,7 +59,7 @@ LIMIT 5
     @staticmethod
     def getAllUserReview(uid):
         rows = app.db.execute("""
-    SELECT product_id, review, review_time, rating
+    SELECT product_id, uid, review, review_time, rating
     FROM Product_Reviews
     WHERE uid = :uid
     ORDER BY review_time DESC
