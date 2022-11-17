@@ -4,14 +4,11 @@
 <form class= "search" action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <p>
-    {{ form.withdraw.label }}<br/>
-    {{ form.withdraw(size=32) }}<br/>
-    {% for error in form.withdraw.errors %}
+    {{ form.remove.label }}<br/>
+    {{ form.remove(size=32) }}<br/>
+    {% for error in form.remove.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
-    {% if form.overdrawn == 1%}
-          You cannot withdraw more than your account balance!
-    {% endif %}
   </p>
   <p>
     {% with messages = get_flashed_messages() %}
