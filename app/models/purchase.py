@@ -53,7 +53,7 @@ ORDER BY order_time DESC
         rows = app.db.execute('''
 SELECT order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price
 FROM Orders
-WHERE uid = :uid
+WHERE seller_id = :seller_id
 ORDER BY order_time DESC
 ''',
                               seller_id=seller_id,)
