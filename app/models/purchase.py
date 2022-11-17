@@ -49,7 +49,7 @@ ORDER BY order_time DESC
         return [Purchase(*row) for row in rows]
 
     @staticmethod
-    def get_all_by_uid(seller_id):
+    def get_all_by_seller_id(seller_id):
         rows = app.db.execute('''
 SELECT order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price
 FROM Orders
