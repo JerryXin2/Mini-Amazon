@@ -32,3 +32,28 @@ class SellerViewForm(FlaskForm):
 def sellerview():
     form = SellerViewForm()
     return render_template('sellerview.html', title='sellerview')
+
+@bp.route('/')
+def inventory():
+    # get all available products for sale:
+    products = Product.get_all(True)
+    # find the products current user has bought:
+    if current_user.is_authenticated:
+        purchases = Purchase.get_all_by_uid_since(
+            current_user.uid, datetime.datetime(1980, 9, 14, 0, 0, 0))
+    else:
+        purchases = None
+    # render the page by adding information to the index.html file
+    return render_template('index.html',
+                           avail_products=products,
+                           purchase_history=purchases)
+
+@bp.route('/')
+def inventory():
+    # somewhat pseudo-code
+    if seller_id.is_authenticated:
+        inventory = Product.get_all_by_seller(seller_id)
+    else: 
+        inventory = None
+    return render_template('inventory.html', inventory)
+
