@@ -48,3 +48,14 @@ ORDER BY order_time DESC
                               uid=uid,)
         return [Purchase(*row) for row in rows]
 
+    @staticmethod
+    def get_all_by_uid(seller_id):
+        rows = app.db.execute('''
+SELECT order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price
+FROM Orders
+WHERE uid = :uid
+ORDER BY order_time DESC
+''',
+                              seller_id=seller_id,)
+        return [Purchase(*row) for row in rows]
+
