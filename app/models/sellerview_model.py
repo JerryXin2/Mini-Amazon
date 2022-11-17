@@ -1,6 +1,6 @@
 from flask import current_app as app
 
-class Product:
+class Sellerview:
     def __init__(self, uid, seller):
         self.product_id = product_id,
         self.seller_id = seller_id,
