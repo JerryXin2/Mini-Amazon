@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+>
+    <div class="text-dark text-center">
+    </div>
+    <div class="card-deck">
+
+        {% for product in products%}
+        <div class="card">
+            <img class="card-img-top" src="{{url_for('static', filename='img/'+product.image)}}" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">{{product.name}}</h4>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-footer"> 
+                <form action="{{ url_for('main.order') }}">
+                <input type="hidden" id="product_id" name="product_id" value="{{ product.id }}">
+                <input class="btn btn-primary" type="submit" value="Add to Cart">
+                </form>  
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

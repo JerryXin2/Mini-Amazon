@@ -31,9 +31,30 @@ def productsearch():
         return render_template('productsearch.html', avail_products = products, form = form)
     return render_template('productsearch.html', avail_products = [], form = form)
 
-@bp.route('/<product_id>', methods=['GET','POST'])
-def product():
-    if a:
-        return render_template('singleproduct.html')
+@bp.route('/productsearchdescription', methods=['GET','POST'])
+def productsearchdescription():
+    form = matching_products_search()
+    if form.validate_on_submit():
+        word = form.word.data
+        products = Product.search_product_description(word)
+        return render_template('productsearch.html', avail_products = products, form = form)
+    return render_template('productsearch.html', avail_products = [], form = form)
 
+@bp.route('/productsortasc', methods=['GET','POST'])
+def productsortasc():
+    form = matching_products_search()
+    word = form.word.data
+    products = Product.sort_price_asc(word)
+    return render_template('productsearch.html', avail_products = products, form = form)
 
+@bp.route('/productsortdesc', methods=['GET','POST'])
+def productsortdesc():
+    form = matching_products_search()
+    word = form.word.data
+    products = Product.sort_price_desc(word)
+    return render_template('productsearch.html', avail_products = products, form = form)
+
+@bp.route('/<int:productid>/')
+def itemdetails(productid=None):
+    products= Product.query.filter(id==productid).first()
+    return render_template('productpage.html', products = products)

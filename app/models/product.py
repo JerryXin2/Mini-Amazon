@@ -63,8 +63,47 @@ LIMIT :k
     SELECT product_id, product_name, category, description, image, price, available, seller_id
     FROM Products
     WHERE product_name LIKE CONCAT('%', :search_key, '%')
+    GROUP BY product_id, category
+    ''',
+                                search_key = search_key,
+                                available=available)
+        return [Product(*row) for row in rows]
+    
+    @staticmethod
+    def search_product_description(search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    FROM Products
+    WHERE description LIKE CONCAT('%', :search_key, '%')
+    GROUP BY product_id, category
     ''',
                                 search_key = search_key,
                                 available=available)
         return [Product(*row) for row in rows]
 
+    @staticmethod
+    def sort_price_asc(search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    FROM Products
+    WHERE product_name LIKE CONCAT('%', :search_key, '%')
+    GROUP BY product_id, category
+    ORDER BY price ASC
+    ''',
+                                search_key = search_key,
+                                available=available)
+        return [Product(*row) for row in rows]
+    
+    @staticmethod
+    def sort_price_desc(search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    FROM Products
+    WHERE product_name LIKE CONCAT('%', :search_key, '%')
+    GROUP BY product_id, category
+    ORDER BY price DESC
+    ''',
+                                search_key = search_key,
+                                available=available)
+        return [Product(*row) for row in rows]
+    
