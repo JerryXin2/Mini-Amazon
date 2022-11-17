@@ -1,4 +1,4 @@
-from flask import current_app as app
+from flask import current_app as app, flash
 
 
 class Cart:
@@ -60,9 +60,10 @@ WHERE uid = :uid
             rows = app.db.execute("""
 INSERT INTO Carts(uid, product_id, quantity)
 VALUES(:uid, :product_id, :quantity)
-RETURNING uid
 """,
-                                  quantity = 1)
+                                uid = uid,
+                                product_id = product_id,
+                                quantity = 1)
         except Exception as e:
             print("Failed to add to cart")
         flash("Item Added")
