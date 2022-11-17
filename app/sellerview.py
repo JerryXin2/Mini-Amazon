@@ -15,11 +15,18 @@ from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.seller import Seller
+from .models.sellerview_model import Sellerview
 
 from flask import Blueprint
 bp = Blueprint('sellerview', __name__)
 
-class SellerViewForm(FlaskForm):
+@bp.route('/sellerview', methods=['GET','POST'])
+def sellerview():
+    return render_template('sellerview.html', title='sellerview')
+
+
+class addProductsForm(FlaskForm):
+    product_id = StringField('Product ID', validators=[DataRequired()])
     product_name = StringField('Product Name', validators=[DataRequired()])
     category = StringField('Product Category', validators=[DataRequired()])
     description = StringField('Product Description', validators=[DataRequired()])
@@ -28,32 +35,42 @@ class SellerViewForm(FlaskForm):
     quantity = IntegerField('Product Quantity', validators=[DataRequired()])
     submit = SubmitField('Add Product(s) to Inventory')
 
-@bp.route('/sellerview', methods=['GET','POST'])
-def sellerview():
-    form = SellerViewForm()
-    return render_template('sellerview.html', title='sellerview')
+@bp.route('/addProducts', methods=['GET','POST'])
+def addProducts():
+    form = addProductsForm()
+    if form.validate_on_submit():
+        ret = Sellerview.addProducts(form.product_id.data, current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image.data, form.price.data, form.available.data, form.quantity.data)
+        return render_template('addProducts.html', form=form)
+    return render_template('addProducts.html', form=form)
+
+class removeProductsForm(FlaskForm):
+    remove = IntegerField('Product Name', validators=[DataRequired()])
+    submit = SubmitField('Remove Product')
+
+@bp.route('/removeProducts', methods=['GET','POST'])
+def removeProducts():
+    form = removeProductsForm()
+    if form.validate_on_submit():
+        ret = Sellerview.removeProducts(current_user.uid, form.product_name.data)
+        return render_template('removeProducts.html', form=form)
+    return render_template('removeProducts.html', form=form)
 
 @bp.route('/')
 def inventory():
-    # get all available products for sale:
-    products = Product.get_all(True)
-    # find the products current user has bought:
     if current_user.is_authenticated:
-        purchases = Purchase.get_all_by_uid_since(
-            current_user.uid, datetime.datetime(1980, 9, 14, 0, 0, 0))
-    else:
-        purchases = None
-    # render the page by adding information to the index.html file
-    return render_template('index.html',
-                           avail_products=products,
-                           purchase_history=purchases)
-
-@bp.route('/')
-def inventory():
-    # somewhat pseudo-code
-    if seller_id.is_authenticated:
-        inventory = Product.get_all_by_seller(seller_id)
+        inventory = Purchase.get_all_by_seller_id(current_user.uid)
     else: 
         inventory = None
     return render_template('inventory.html', inventory)
+
+@bp.route('/')
+def fulfillment():
+    if current_user.is_authenticated: 
+        inventory = Purchase.get_all_by_fulfillment_status(current_user.uid)
+    else:
+        inventory = None
+    return render_template('inventory.html', inventory)
+
+
+
 
