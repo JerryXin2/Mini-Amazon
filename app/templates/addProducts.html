@@ -4,11 +4,6 @@
 <form class= "search" action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <p>
-    {{ form.product_id.label }}<br/>
-    {{ form.product_id(size=32) }}<br/>
-    {% for error in form.product_id.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
     {{ form.product_name.label }}<br/>
     {{ form.product_name(size=32) }}<br/>
     {% for error in form.product_name.errors %}

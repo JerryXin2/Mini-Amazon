@@ -1,4 +1,5 @@
 from flask import current_app as app
+from random import randint
 
 
 class Product:
@@ -73,7 +74,7 @@ LIMIT :k
     @staticmethod
     def search_product_descriptions(search_key, available=True):
         rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
     FROM Products
     WHERE description LIKE CONCAT('%', :search_key, '%')
     GROUP BY product_id, category
@@ -85,7 +86,7 @@ LIMIT :k
     @staticmethod
     def sort_price_asc(search_key, available=True):
         rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
     FROM Products
     WHERE product_name LIKE CONCAT('%', :search_key, '%')
     GROUP BY product_id, category
@@ -98,7 +99,7 @@ LIMIT :k
     @staticmethod
     def sort_price_desc(search_key, available=True):
         rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
     FROM Products
     WHERE product_name LIKE CONCAT('%', :search_key, '%')
     GROUP BY product_id, category
@@ -111,7 +112,7 @@ LIMIT :k
     @staticmethod
     def specific_prod(prod_id, available=True):
         rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
     FROM Products
     WHERE product_id = :prod_id
     ''',
@@ -119,12 +120,12 @@ LIMIT :k
                                 available=available)
         return [Product(*row) for row in rows]
 
-    def addProducts(product_id, seller_id, product_name, category, description, image,  price, available, quantity):
+    def addProducts(seller_id, product_name, category, description, image,  price, available, quantity):
         app.db.execute("""
 INSERT INTO Products
 VALUES (:product_id, :seller_id, :product_name, :category, :description, :image, :price, :available, :quantity)
 """,
-                              product_id = product_id, seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
+                              product_id = randint(0, 240000000), seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
         
         return 1
     
