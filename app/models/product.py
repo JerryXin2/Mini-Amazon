@@ -70,7 +70,7 @@ LIMIT :k
         return [Product(*row) for row in rows]
     
     @staticmethod
-    def search_product_description(search_key, available=True):
+    def search_product_descriptions(search_key, available=True):
         rows = app.db.execute('''
     SELECT product_id, product_name, category, description, image, price, available, seller_id
     FROM Products
@@ -106,4 +106,16 @@ LIMIT :k
                                 search_key = search_key,
                                 available=available)
         return [Product(*row) for row in rows]
+
+    @staticmethod
+    def specific_prod(prod_id, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id
+    FROM Products
+    WHERE product_id = :prod_id
+    ''',
+                                prod_id = prod_id,
+                                available=available)
+        return [Product(*row) for row in rows]
+
     
