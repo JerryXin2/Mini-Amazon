@@ -1,5 +1,7 @@
 from flask import current_app as app
 
+from app.models.product import Product
+
 
 class Purchase:
     def __init__(self, order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price):
@@ -46,5 +48,16 @@ WHERE uid = :uid
 ORDER BY order_time DESC
 ''',
                               uid=uid,)
+        return [Purchase(*row) for row in rows]
+
+    @staticmethod
+    def get_all_by_fulfillment_status(seller_id):
+        rows = app.db.execute('''
+SELECT order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price
+FROM Orders
+WHERE seller_id = :seller_id AND fulfillment = FALSE
+ORDER BY order_time DESC
+''',
+                              seller_id=seller_id)
         return [Purchase(*row) for row in rows]
 
