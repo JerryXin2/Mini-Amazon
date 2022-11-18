@@ -15,7 +15,7 @@ FROM Carts
 WHERE uid = :uid
 ''',
                               uid= uid)
-        return Cart(*(rows[0])) if rows else None
+        return [Cart(*row) for row in rows]
 
     @staticmethod
     def get_all_by_uid_since(uid, since):
