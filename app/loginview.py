@@ -37,6 +37,54 @@ def addBalance():
                            form=form)
     return render_template('addBalance.html', form=form)
 
+class SetBalanceForm(FlaskForm):
+    negbal = 0
+    set = IntegerField('Set Balance to this number', validators=[DataRequired()])
+    submit = SubmitField('Set Balance')
+
+@bp.route('/setBalance', methods = ["GET", "POST"])
+def setBalance():
+    form = SetBalanceForm()
+    if form.validate_on_submit():
+        set = form.set.data
+        if set < 0:
+            form.negbal = 1
+            return render_template('setBalance.html',
+                           form=form)
+        else:
+            ret = User.setBal(current_user.uid, set)
+            return render_template('setBalance.html',
+                           form=form)
+    return render_template('setBalance.html', form=form)
+
+class GiftBalanceForm(FlaskForm):
+    neggift = 0
+    overdrawn = 0
+    userid = IntegerField('User ID of Gift', validators=[DataRequired()])
+    gift = IntegerField('Amount to Gift', validators=[DataRequired()])
+    submit = SubmitField('Send Gift')
+
+@bp.route('/giftBalance', methods = ["GET", "POST"])
+def giftBalance():
+    form = GiftBalanceForm()
+    if form.validate_on_submit():
+        giftid = form.userid.data
+        gift = form.gift.data
+        if gift < 0:
+            form.neggift = 1
+            return render_template('giftBalance.html',
+                           form=form)
+        elif current_user.balance < gift:
+            form.overdrawn = 1
+            return render_template('giftBalance.html',
+                           form=form)
+        else:
+            User.addBal(giftid, gift)
+            User.withdrawBal(current_user.uid, gift)
+            return render_template('giftBalance.html',
+                           form=form)
+    return render_template('giftBalance.html', form=form)
+
 class WithdrawBalanceForm(FlaskForm):
     overdrawn = 0
     withdraw = IntegerField('Withdraw Balance', validators=[DataRequired()])
@@ -120,7 +168,7 @@ def registerSeller():
 
 class purchaseHistoryForm(FlaskForm):
     myChoices1 = ['Most Recent', 'Price Ascend','Price Descend']
-    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Price Filter')
+    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
     myChoices = ['Search by Name','Search by Description']
     myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
     search_key = StringField('Key Word')
