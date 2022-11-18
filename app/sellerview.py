@@ -25,7 +25,6 @@ def sellerview():
 
 
 class addProductsForm(FlaskForm):
-    product_id = IntegerField('Product ID', validators=[DataRequired()])
     product_name = StringField('Product Name', validators=[DataRequired()])
     category = StringField('Product Category', validators=[DataRequired()])
     description = StringField('Product Description', validators=[DataRequired()])
@@ -39,7 +38,7 @@ class addProductsForm(FlaskForm):
 def addProducts():
     form = addProductsForm()
     if form.validate_on_submit():
-        ret = Product.addProducts(form.product_id.data, current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        ret = Product.addProducts(current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
         return render_template('addProducts.html', form=form)
     return render_template('addProducts.html', form=form)
 
