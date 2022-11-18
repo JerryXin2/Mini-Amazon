@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Seller Inventory Overview</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product ID</th>
+      <th scope="col">Seller ID</th>
+      <th scope="col">Product Name </th>
+      <th scope="col">Product Description </th>
+      <th scope="col">Product Category </th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit Price</th>
+      <th scope="col">Availability</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for purchase in inventory1%}
+      <tr>
+        <th scope="row">{{purchase.product_id}}</td>
+          <td>{{purchase.seller_id}}</td>
+        <td>{{purchase.product_name}}</td>
+        <td>{{purchase.description}}</td>
+        <td>{{purchase.category}}</td>
+        <td>{{purchase.quantity}}</td>
+        <td>{{purchase.price}}</td>
+        <td>{{purchase.availability}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

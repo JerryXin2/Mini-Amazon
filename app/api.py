@@ -56,10 +56,13 @@ def carts():
     # given a user id, find the items in the cart for that user.
     id = current_user.uid
     items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    total = 0
     for item in items_in_cart:
         item.product_name = item.product_name[0]
+        total += item.price
     return render_template('cart.html',
-                           items = items_in_cart)
+                           items = items_in_cart,
+                           total = total)
     
 class SearchForInventory(FlaskForm):
     seller_id = StringField('Seller ID')

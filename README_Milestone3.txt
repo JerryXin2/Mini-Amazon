@@ -11,7 +11,7 @@ Henry Huynh - Social Guru: responsible for Feedback / Messaging
 Updates this week:
 Jerry Xin - Worked on User Guru Requirements for Mini Amazon Project(Login, Change balance/name/address, etc)
 Shirley Wang - Worked on Product Guru Requirements for Mini Amazon Project
-Chris Cameron - Worked on Carts Guru Requirements for Mini Amazon Project
+Chris Cameron - Worked on Carts Guru Requirements for Mini Amazon Project (Carts & Orders Pages), Updated gen.py
 Jachin Friday - Worked on Sellers Guru Requirements for Mini Amazon Project
 Henry Huynh - Worked on Social Guru Requirements for Mini Amazon Project
 

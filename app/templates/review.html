@@ -35,6 +35,7 @@
       <th scope="col">User ID</th>
       <th scope="col">Review</th>
       <th scope="col">Time</th>
+      <th scope="col">Rating</th>
     </tr>
   </thead>
   <tbody>
@@ -44,16 +45,11 @@
         <td>{{review.uid}}</td>
         <td>{{review.review}}</td>
         <td>{{review.review_time}}</td>
+        <td>{{review.rating}}</td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
 
 <br><br>
-{% if current_user.is_authenticated %}
-<h2>Your recent purchases:</h2>
-{% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
-{% endif %}
-
 {% endblock %}

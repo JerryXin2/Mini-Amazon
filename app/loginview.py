@@ -14,6 +14,7 @@ from .models.cart import Cart
 from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
+from .models.seller import Seller
 
 from flask import Blueprint
 bp = Blueprint('loginview', __name__)
@@ -102,3 +103,24 @@ def changeAddress():
         return render_template('changeAddress.html',
                            form=form)
     return render_template('changeAddress.html', form=form)
+
+class SellerForm(FlaskForm):
+    name = StringField('Seller Name', validators=[DataRequired()])
+    submit = SubmitField('Set New Seller')
+
+@bp.route('/registerSeller', methods = ["GET", "POST"])
+def registerSeller():
+    form = SellerForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        ret = Seller.registerSeller(current_user.uid, name)
+        return render_template('registerSeller.html',
+                           form=form)
+    return render_template('registerSeller.html', form=form)
+
+@bp.route('/purchaseHistory', methods = ["GET", "POST"])
+def purchaseHistory():
+    uid = current_user.uid
+    purchases = Purchase.get_all_by_uid(uid)
+    return render_template('purchaseHistory.html',
+                           purchase_history=purchases)

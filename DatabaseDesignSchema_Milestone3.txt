@@ -25,16 +25,16 @@ key: uid
 
 
 OLD:
-Products(product_id, seller_id, product_name, category, description, image, price, available)
+Products(product_id, seller_id, product_name, category, description, image, price, available, quantity)
 
 key: pid
 
 NEW:
-Products(product_id, seller_id, product_name, category, description, image, price, available)
+Products(product_id, seller_id, product_name, category, description, image, price, available, quantity)
 
 key: product_id
 
-REASON: We actually never used pid, rather product_id. Changed key to reflect this.
+REASON: We actually never used pid, rather product_id. Changed key to reflect this. Added quantity to know how many of a product is available
 
 
 OLD:
@@ -66,22 +66,25 @@ Restrictions: Non-sellers can only access the previous orders of their own uid, 
 
 NEW:
 
-orders(product_id, seller_id, uid, address, order_time, quantity, fulfillment, price)
+orders(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
 
-key:uid, order_time, address
+key:order_id
 
-Restrictions: Non-sellers can only access the previous orders of their own uid, Sellers can access orders that have their uid OR seller_id
+Restrictions: Non-sellers can only access the previous orders of their own uid, Sellers can access orders that have their uid OR seller_id, fulfillment_time must be later than order_time
 
-REASON: Table name was simplified to orders. The status of fulfillment allows us to see if these orders are fulfilled or not. We changed the key to uid, order_time, and address. This should be an adequate key to identify all unique orders. We do not expect the same people to be able to place orders at the same time to the same address. Needed to add new variable price in case price changes between time of purchase and time of order fulfillment.
+REASON: Table name was simplified to orders. The status of fulfillment allows us to see if these orders are fulfilled or not. We changed the key to uid, order_time, and address. This should be an adequate key to identify all unique orders. We do not expect the same people to be able to place orders at the same time to the same address. Needed to add new variable price in case price changes between time of purchase and time of order fulfillment. Needed to add new variable fulfillment_time to indicate when an order was fulfilled, not just the time of purchase. order_id added to simplify identifying different orders. This is now our new key.
 
 
-UNCHANGED:
+OLD:
 
 inventory(product_id, quantity)
 
 key: product_id
 
 Restriction: Only accessed and edited by Sellers
+
+NEW:
+Removed this table, redundant.
 
 
 OLD:

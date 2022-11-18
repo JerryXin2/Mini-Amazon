@@ -28,16 +28,24 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Product ID</th>
-      <th scope="col">User ID</th>
-      <th scope="col">Time Purchased</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit Price</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Fulfilled?</th>
+      <th scope="col">Fulfillment Time</th>
     </tr>
   </thead>
   <tbody>
     {% for purchase in purchase_history%}
       <tr>
         <th scope="row">{{purchase.product_id}}</th>
-        <td>{{purchase.uid}}</td>
-        <td>{{purchase.order_time}}</td>
+        <td>{{purchase.quantity}}</td>
+        <td>{{purchase.price}}</td>
+        <td>{{purchase.price*purchase.quantity}}</td>
+        <td>{{ purchase.fulfillment }}</td>
+        {% if purchase.fulfillment %}
+          <td>{{ purchase.fulfillment_time}}</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </tbody>

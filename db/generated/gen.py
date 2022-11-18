@@ -73,7 +73,8 @@ def gen_products(num_products, available_sids):
             available = fake.random_element(elements=('true', 'false'))
             if available == 'true':
                 available_pids.append(product_id)
-            writer.writerow([product_id, seller_id, product_name, category, description, image, price, available])
+            quantity = fake.random_int(min = 1, max = 999)
+            writer.writerow([product_id, seller_id, product_name, category, description, image, price, available, quantity])
         print(f'{num_products} generated; {len(available_pids)} available')
     return available_pids
 
@@ -101,6 +102,7 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
         writer = get_csv_writer(f)
         print('Orders...', end=' ', flush = True)
         for id in range(num_orders):
+            order_id = id
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             product_id = fake.random_element(elements = available_pids)
@@ -110,20 +112,10 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             order_time = fake.date_time()    
             quantity = fake.random_int(min = 1, max = 9)
             fulfillment = fake.random_element(elements=('true', 'false'))
+            fulfillment_time = fake.date_time_between(start_date = order_time)
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
-            writer.writerow([product_id, seller_id, uid, address, order_time, quantity, fulfillment, price])
+            writer.writerow([order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price])
         print(f'{num_orders} generated')
-    return
-    
-def gen_inventory(available_pids):
-    with open('Inventory.csv', 'w') as f:
-        writer = get_csv_writer(f)
-        print('Inventory...', end=' ', flush = True)
-        for p in (available_pids):
-            product_id = p   
-            quantity = fake.random_int(min = 1, max = 9999)
-            writer.writerow([product_id, quantity])
-        print(f'inventory generated')
     return
     
 def gen_product_reviews(num_product_reviews, available_pids, available_uids):
@@ -141,7 +133,8 @@ def gen_product_reviews(num_product_reviews, available_pids, available_uids):
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
                 review_time = fake.date_time()
-                writer.writerow([product_id, uid, review, review_time])
+                rating = random.randint(1, 5)
+                writer.writerow([product_id, uid, review, review_time, rating])
             else:
                 continue
         print(f'{num_product_reviews} generated')
@@ -162,7 +155,8 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
                 set.append(pair)
                 review = fake.sentence(nb_words = 20) [:-1]
                 review_time = fake.date_time()
-                writer.writerow([seller_id, reviewer_id, review, review_time])
+                rating = random.randint(1, 5)
+                writer.writerow([seller_id, reviewer_id, review, review_time, rating])
             else:
                 continue
         print(f'{num_product_reviews} generated')
@@ -175,6 +169,5 @@ available_sids = gen_sellers(num_sellers, available_uids)
 available_pids = gen_products(num_products, available_sids)
 gen_carts(num_carts)
 gen_orders(num_orders, available_uids, available_pids, available_sids)
-gen_inventory(available_pids)
 gen_product_reviews(num_product_reviews, available_pids, available_uids)
 gen_seller_reviews(num_seller_reviews, available_sids, available_uids)

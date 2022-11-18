@@ -40,14 +40,15 @@ ORDER BY time_added_to_cart DESC
   #      return [Cart(*row) for row in rows]
         
 class UserCart:
-    def __init__(self, product_name, quantity):
+    def __init__(self, product_name, quantity, price):
         self.product_name = product_name,
         self.quantity = quantity
+        self.price = price
     
     @staticmethod
     def get_items_in_cart_by_uid(uid):
         rows = app.db.execute('''
-SELECT products.product_name, carts.quantity
+SELECT products.product_name, carts.quantity, products.price
 FROM Carts, Products
 WHERE uid = :uid
   AND carts.product_id = products.product_id
@@ -55,7 +56,7 @@ WHERE uid = :uid
         uid = uid)
         return [UserCart(*row) for row in rows]
 
-    def add_item_to_cart(uid, product_id): #Will add functionality to choose quantity/update outstanding orders later
+    def add_item_to_cart(uid, product_id, quantity): #Will add functionality to choose quantity/update outstanding orders later
         try:
             rows = app.db.execute("""
 INSERT INTO Carts(uid, product_id, quantity)
@@ -63,8 +64,8 @@ VALUES(:uid, :product_id, :quantity)
 """,
                                 uid = uid,
                                 product_id = product_id,
-                                quantity = 1)
+                                quantity = quantity)
         except Exception as e:
             print("Failed to add to cart")
-        flash("Item Added")
+        #flash("Item Added")
         return None
