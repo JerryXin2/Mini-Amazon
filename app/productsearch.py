@@ -20,12 +20,11 @@ from flask import Blueprint
 bp = Blueprint('productsearch', __name__)
 
 class matching_products_search(FlaskForm):
-    word = StringField('Product Search')
     myChoices1 = ['Price Ascend','Price Descend']
     myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Price Filter')
     myChoices = ['Search by Name','Search by Description']
     myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
-    search_key = StringField('Key Word')
+    search_key = StringField('Key Word', validators=[DataRequired()])
     submit = SubmitField('Update Search')
 
 @bp.route('/productsearch', methods=['GET','POST'])

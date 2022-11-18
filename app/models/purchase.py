@@ -61,3 +61,34 @@ ORDER BY order_time DESC
                               seller_id=seller_id)
         return [Purchase(*row) for row in rows]
 
+    @staticmethod
+    def get_all_by_uid_most_recent(uid, search_key):
+        rows = app.db.execute('''
+SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price
+FROM Orders, Products
+WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+ORDER BY order_time DESC
+''',
+                              uid=uid, search_key =search_key)
+        return [Purchase(*row) for row in rows]
+
+    def get_all_by_uid_price_asc(uid, search_key):
+        rows = app.db.execute('''
+SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price
+FROM Orders, Products
+WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+ORDER BY price ASC
+''',
+                              uid=uid, search_key =search_key)
+        return [Purchase(*row) for row in rows]
+
+    def get_all_by_uid_price_desc(uid, search_key):
+        rows = app.db.execute('''
+SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price
+FROM Orders, Products
+WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+ORDER BY price DESC
+''',
+                              uid=uid, search_key =search_key)
+        return [Purchase(*row) for row in rows]
+
