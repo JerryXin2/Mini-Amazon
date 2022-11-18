@@ -83,6 +83,17 @@ WHERE uid = :uid
         
         return 1
     
+    @staticmethod
+    def setBal(uid, set):
+        app.db.execute("""
+UPDATE Users
+SET balance = :set
+WHERE uid = :uid
+""",
+                              uid = uid, set=set)
+        
+        return 1
+    
     def withdrawBal(uid, less):
         app.db.execute("""
 UPDATE Users
