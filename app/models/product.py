@@ -69,3 +69,33 @@ LIMIT :k
                                 available=available)
         return [Product(*row) for row in rows]
 
+    def addProducts(product_id, seller_id, product_name, category, description, image,  price, available, quantity):
+        app.db.execute("""
+INSERT INTO Products
+VALUES (:product_id, :seller_id, :product_name, :category, :description, :image, :price, :available, :quantity)
+""",
+                              product_id = product_id, seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
+        
+        return 1
+    
+    def removeProducts(uid, product_name):
+        app.db.execute("""
+DELETE FROM Products
+WHERE seller_id = :uid AND product_name = :product_name
+""",
+                              uid = uid, product_name=product_name)
+        
+        return 1
+    
+    @staticmethod
+    def get_all_by_seller_id(seller_id):
+        rows = app.db.execute('''
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+FROM Products
+WHERE seller_id = :seller_id
+''',
+                              seller_id = seller_id)
+        return [Product(*row) for row in rows]
+
+
+
