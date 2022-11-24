@@ -50,6 +50,7 @@ ORDER BY order_time DESC
 
     @staticmethod
     def add_new_order(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price): #Will add ability to add multiple at once
+        print(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
         try:
             rows = app.db.execute("""
 INSERT INTO Orders(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
@@ -63,8 +64,9 @@ VALUES(:order_id, :product_id, :seller_id, :uid, :address, :order_time, :quantit
                                 address = address,
                                 order_time = order_time,
                                 fulfillment = fulfillment,
-                                fulfillment_time = fulfillment_time)
+                                fulfillment_time = fulfillment_time,
+                                price = price)
         except Exception as e:
-            print("Failed to add to cart")
+            print("Failed to add to orders")
         #flash("Item Added")
         return None
