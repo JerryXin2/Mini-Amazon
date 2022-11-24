@@ -28,12 +28,16 @@ class PurchaseHistoryForm(FlaskForm):
 
 @bp.route('/addorder', methods=['GET','POST'])
 def addorder():
-    #Load Carts Page
+    #Get Cart Info
     id = current_user.uid
     items_in_cart = Cart.get(id)
+    #Make a new order
     for item in items_in_cart:
         current_product = Product.get(item.product_id)
         Purchase.add_new_order(randint(0,240000000), item.product_id, current_product.seller_id, id, current_user.address, datetime.now(), item.quantity, False, datetime.now(), current_product.price)
+    #Delete Current Cart Contents
+    UserCart.clear_cart(id)
+    #Go to orders page (will likely change)
     purchases = Purchase.get_all_by_uid(id)
     return render_template('purchase.html',
                            purchase_history=purchases,

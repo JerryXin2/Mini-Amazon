@@ -69,3 +69,14 @@ VALUES(:uid, :product_id, :quantity)
             print("Failed to add to cart")
         #flash("Item Added")
         return None
+
+    @staticmethod
+    def clear_cart(uid):
+        try:
+            rows = app.db.execute("""
+DELETE FROM Carts WHERE uid = :uid
+""",
+                                uid = uid)
+        except Exception as e:
+            print("Failed to delete user cart contents")
+        return None
