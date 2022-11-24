@@ -55,6 +55,7 @@
           <a href="{{ url_for('loginview.loginview') }}" type="button" class="btn btn-light">Profile</a>
           <a href="{{url_for('api.carts') }}" type="button" class="btn btn-light"> Cart </a>
           <a href="{{url_for('api.users') }}" type="button" class="btn btn-light"> Past Orders </a>
+          <a href="{{url_for('sellerview.sellerview') }}" type="button" class="btn btn-light"> Seller Overview </a>
         {% else %}
           <a href="{{ url_for('users.login') }}" type="button" class="btn btn-light">Log in</a>
         {% endif %}

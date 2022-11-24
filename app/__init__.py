@@ -39,5 +39,8 @@ def create_app():
     from .reviewHome import bp as reviewHome_bp
     app.register_blueprint(reviewHome_bp)
 
+    from .sellerview import bp as sellerview_bp
+    app.register_blueprint(sellerview_bp)
+
 
     return app

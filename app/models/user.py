@@ -46,11 +46,11 @@ WHERE email = :email
     def register(email, password, firstname, lastname, address):
         try:
             rows = app.db.execute("""
-INSERT INTO Users(uid, email, firstname, lastname, address, password, balance)
-VALUES(:uid, :email, :firstname, :lastname, :address, :password, :balance)
+INSERT INTO Users(email, firstname, lastname, address, password, balance)
+VALUES(:email, :firstname, :lastname, :address, :password, :balance)
 RETURNING uid
 """,
-                                  uid = randint(0,240000000), email=email,
+                                email=email,
                                   password=generate_password_hash(password),
                                   firstname=firstname, lastname=lastname, address = address, balance = 0.0)
             uid = rows[0][0]
@@ -80,6 +80,17 @@ SET balance = balance + :additional
 WHERE uid = :uid
 """,
                               uid = uid, additional=additional)
+        
+        return 1
+    
+    @staticmethod
+    def setBal(uid, set):
+        app.db.execute("""
+UPDATE Users
+SET balance = :set
+WHERE uid = :uid
+""",
+                              uid = uid, set=set)
         
         return 1
     
