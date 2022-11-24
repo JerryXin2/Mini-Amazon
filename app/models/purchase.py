@@ -51,6 +51,28 @@ ORDER BY order_time DESC
         return [Purchase(*row) for row in rows]
 
     @staticmethod
+
+    def add_new_order(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price): #Will add ability to add multiple at once
+        try:
+            rows = app.db.execute("""
+INSERT INTO Orders(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
+VALUES(:order_id, :product_id, :seller_id, :uid, :address, :order_time, :quantity, :fulfillment, :fulfillment_time, :price)
+""",
+                                uid = uid,
+                                product_id = product_id,
+                                quantity = quantity,
+                                order_id = order_id,
+                                seller_id = seller_id,
+                                address = address,
+                                order_time = order_time,
+                                fulfillment = fulfillment,
+                                fulfillment_time = fulfillment_time,
+                                price = price)
+        except Exception as e:
+            print("Failed to add to orders")
+        #flash("Item Added")
+        return None
+
     def get_all_by_fulfillment_status(seller_id):
         rows = app.db.execute('''
 SELECT order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price
@@ -91,4 +113,5 @@ ORDER BY price DESC
 ''',
                               uid=uid, search_key =search_key)
         return [Purchase(*row) for row in rows]
+
 

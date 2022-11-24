@@ -15,7 +15,7 @@ FROM Carts
 WHERE uid = :uid
 ''',
                               uid= uid)
-        return Cart(*(rows[0])) if rows else None
+        return [Cart(*row) for row in rows]
 
     @staticmethod
     def get_all_by_uid_since(uid, since):
@@ -68,4 +68,15 @@ VALUES(:uid, :product_id, :quantity)
         except Exception as e:
             print("Failed to add to cart")
         #flash("Item Added")
+        return None
+
+    @staticmethod
+    def clear_cart(uid):
+        try:
+            rows = app.db.execute("""
+DELETE FROM Carts WHERE uid = :uid
+""",
+                                uid = uid)
+        except Exception as e:
+            print("Failed to delete user cart contents")
         return None
