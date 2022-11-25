@@ -10,6 +10,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price</th> 
       <th scope="col">Total Price</th> 
+      <th scope="col"></th> 
     </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
         <td>{{product.quantity}}</td>
         <td>{{product.price}}</td>
         <td>{{product.price*product.quantity}}</td>
+        <td> <a href="{{ url_for('addcart.deletecart', pid=product.product_id)}}" type="button" class="btn btn-light"> Delete </a> </td>
       </tr>
     {% endfor %}
   </tbody>
