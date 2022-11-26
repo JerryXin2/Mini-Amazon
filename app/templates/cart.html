@@ -21,7 +21,7 @@
         <td>{{product.quantity}}</td>
         <td>{{product.price}}</td>
         <td>{{product.price*product.quantity}}</td>
-        <td></td>
+        <td><a href="{{ url_for('addcart.updatecart', pid=product.product_id)}}" type="button" class="btn btn-light"> Edit </a></td>
         <td> <a href="{{ url_for('addcart.deletecart', pid=product.product_id)}}" type="button" class="btn btn-light"> Delete </a> </td>
       </tr>
     {% endfor %}

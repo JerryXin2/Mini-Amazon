@@ -72,8 +72,20 @@ VALUES(:uid, :product_id, :quantity)
         return None
 
     @staticmethod
-    def remove_item_from_cart(uid, product_id): #Will add functionality to choose quantity/update outstanding orders later
-        print(uid, product_id)
+    def update_amount_in_cart(uid, product_id, quantity):
+        try:
+            rows = app.db.execute("""
+UPDATE Carts SET quantity = :quantity WHERE uid = :uid AND product_id = :product_id
+""",
+                                uid = uid,
+                                product_id = product_id,
+                                quantity = quantity)
+        except Exception as e:
+            print("failed to update amount in cart")
+        return None            
+
+    @staticmethod
+    def remove_item_from_cart(uid, product_id):
         try:
             rows = app.db.execute("""
 DELETE FROM Carts WHERE uid = :uid AND product_id = :product_id 
