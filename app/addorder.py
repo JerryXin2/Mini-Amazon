@@ -46,8 +46,8 @@ def addorder():
         else:
             current_product = Product.get(item.product_id)
             #Move money
-            User.addBal(current_product.seller_id, total)
-            User.withdrawBal(current_user.uid, total)
+            User.addBal(current_product.seller_id, current_product.price*item.quantity)
+            User.withdrawBal(current_user.uid, current_product.price*item.quantity)
             #Move item
             UserCart.remove_item_from_cart(current_user.uid, item.product_id) 
             Purchase.add_new_order(randint(0,240000000), item.product_id, current_product.seller_id, id, current_user.address, datetime.now(), item.quantity, False, datetime.now(), current_product.price)
