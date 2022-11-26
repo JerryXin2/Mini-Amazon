@@ -26,7 +26,7 @@ class PurchaseHistoryForm(FlaskForm):
 @bp.route('/users', methods = ["GET", "POST"])
 def users():
     form = PurchaseHistoryForm()
-    uid = form.userid.data
+    uid = current_user.uid
     purchases = Purchase.get_all_by_uid(uid)
     return render_template('purchase.html',
                            purchase_history=purchases,
