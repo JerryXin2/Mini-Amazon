@@ -40,15 +40,16 @@ ORDER BY time_added_to_cart DESC
   #      return [Cart(*row) for row in rows]
         
 class UserCart:
-    def __init__(self, product_name, quantity, price):
+    def __init__(self, product_name, quantity, price, product_id):
         self.product_name = product_name,
         self.quantity = quantity
         self.price = price
+        self.product_id = product_id
     
     @staticmethod
     def get_items_in_cart_by_uid(uid):
         rows = app.db.execute('''
-SELECT products.product_name, carts.quantity, products.price
+SELECT products.product_name, carts.quantity, products.price, products.product_id
 FROM Carts, Products
 WHERE uid = :uid
   AND carts.product_id = products.product_id
@@ -68,6 +69,31 @@ VALUES(:uid, :product_id, :quantity)
         except Exception as e:
             print("Failed to add to cart")
         #flash("Item Added")
+        return None
+
+    @staticmethod
+    def update_amount_in_cart(uid, product_id, quantity):
+        try:
+            rows = app.db.execute("""
+UPDATE Carts SET quantity = :quantity WHERE uid = :uid AND product_id = :product_id
+""",
+                                uid = uid,
+                                product_id = product_id,
+                                quantity = quantity)
+        except Exception as e:
+            print("failed to update amount in cart")
+        return None            
+
+    @staticmethod
+    def remove_item_from_cart(uid, product_id):
+        try:
+            rows = app.db.execute("""
+DELETE FROM Carts WHERE uid = :uid AND product_id = :product_id 
+""",
+                                uid = uid,
+                                product_id = product_id)
+        except Exception as e:
+            print("failed to delete item from cart")
         return None
 
     @staticmethod

@@ -148,5 +148,15 @@ WHERE seller_id = :seller_id
                               seller_id = seller_id)
         return [Product(*row) for row in rows]
 
+    @staticmethod
+    def withdrawInv(product_id, less):
+        app.db.execute("""
+UPDATE Products
+SET quantity = quantity - :less
+WHERE product_id = :product_id
+""",
+                              product_id = product_id, less=less)
+        return 1
+
 
 

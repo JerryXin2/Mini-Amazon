@@ -22,12 +22,68 @@ class SearchForItemsByUIDForm(FlaskForm):
     id = StringField('User ID')
     submit = SubmitField('Get Cart')
 
+class AddQuantityToCartForm(FlaskForm):
+    quantity = IntegerField('Quantity')
+    submit = SubmitField('Add To Cart')
+
 @bp.route('/addcart', methods=['GET','POST'])
 def addcart():
-    #Add to Cart
     product_id = request.args.get('pid')
-    quantity = request.args.get('quantity')
-    UserCart.add_item_to_cart(current_user.uid, product_id, quantity)
+    form = AddQuantityToCartForm()
+    #If form already filled out
+    if form.validate_on_submit():
+        quantity = form.quantity.data
+        UserCart.add_item_to_cart(current_user.uid, product_id, quantity)
+         #Load Carts Page
+        id = current_user.uid
+        items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+        total = 0
+        for item in items_in_cart:
+            item.product_name = item.product_name[0]
+            total += item.price*item.quantity
+        return render_template('cart.html',
+                            items = items_in_cart,
+                            total = total)
+    #Else Load Quantity Selection
+    return render_template('addcart.html',
+                            product_id = product_id,
+                            form = form)
+
+class UpdateQuantityInCartForm(FlaskForm):
+    quantity = IntegerField('Quantity')
+    submit = SubmitField('Update Amount')
+
+@bp.route('/updatecart', methods=['GET','POST'])
+def updatecart():
+    product_id = request.args.get('pid')
+    form = UpdateQuantityInCartForm()
+    #If form already filled out
+    if form.validate_on_submit():
+        quantity = form.quantity.data
+        UserCart.update_amount_in_cart(current_user.uid, product_id, quantity)
+         #Load Carts Page
+        id = current_user.uid
+        items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+        total = 0
+        for item in items_in_cart:
+            item.product_name = item.product_name[0]
+            total += item.price*item.quantity
+        return render_template('cart.html',
+                            items = items_in_cart,
+                            total = total)
+    #Else Load Quantity Selection
+    return render_template('updateQuantity.html',
+                            product_id = product_id,
+                            form = form)
+    
+
+    
+                           
+@bp.route('/deletecart', methods=['GET','POST'])
+def deletecart():
+    #Remove From Cart
+    product_id = request.args.get('pid')
+    UserCart.remove_item_from_cart(current_user.uid, product_id) 
     #Load Carts Page
     id = current_user.uid
     items_in_cart = UserCart.get_items_in_cart_by_uid(id)

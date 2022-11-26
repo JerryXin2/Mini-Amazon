@@ -65,6 +65,7 @@
       <th scope="col">Price</th>
 	    <th scope="col">Description</th>
       <th scope="col">Image</th>
+      <th scope = "col">Add To Cart</th> 
     </tr>
   </thead>
   <tbody>
@@ -75,6 +76,7 @@
         <td>{{"$%.2f" | format(product.price|float)}}</td>
         <td>{{product.description}}</td>
         <td>{{product.image}}</td>
+        <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
       </tr>
     {% endfor %}
   </tbody>
