@@ -40,7 +40,7 @@ def addcart():
         total = 0
         for item in items_in_cart:
             item.product_name = item.product_name[0]
-            total += item.price
+            total += item.price*item.quantity
         return render_template('cart.html',
                             items = items_in_cart,
                             total = total)
