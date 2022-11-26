@@ -46,13 +46,14 @@ def products():
                            avail_products = products,
                            form = form)
 
-class SearchForItemsByUIDForm(FlaskForm):
-    id = StringField('User ID')
-    submit = SubmitField('Get Cart')
+class UpdateCartQuantityForm(FlaskForm):
+    quantity = StringField('')
+    submit = SubmitField('Update')
 
 
 @bp.route('/carts', methods = ["GET", "POST"])
 def carts():
+    form = UpdateCartQuantityForm()
     # given a user id, find the items in the cart for that user.
     id = current_user.uid
     items_in_cart = UserCart.get_items_in_cart_by_uid(id)
@@ -62,7 +63,8 @@ def carts():
         total += item.price
     return render_template('cart.html',
                            items = items_in_cart,
-                           total = total)
+                           total = total,
+                           form = form)
     
 class SearchForInventory(FlaskForm):
     seller_id = StringField('Seller ID')
