@@ -44,6 +44,9 @@ def addorder():
             print("insufficient funds")
         #Add order
         else:
+            #Remove From Inventory
+            Product.withdrawInv(item.product_id, item.quantity)
+            #Get product info
             current_product = Product.get(item.product_id)
             #Move money
             User.addBal(current_product.seller_id, current_product.price*item.quantity)
