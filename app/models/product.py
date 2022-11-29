@@ -125,7 +125,7 @@ LIMIT :k
 INSERT INTO Products
 VALUES (:product_id, :seller_id, :product_name, :category, :description, :image, :price, :available, :quantity)
 """,
-                              product_id = randint(0, 240000000), seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
+                              product_id = randint(20001, 240000000), seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
         
         return 1
     
