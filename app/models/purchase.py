@@ -92,13 +92,13 @@ ORDER BY price DESC
                               uid=uid, search_key =search_key)
         return [Purchase(*row) for row in rows]
 
-    def removeProductsbyFulfillmentStatus(uid, fulfillment):
+    def removeProductsbyFulfillmentStatus(uid, product_name):
         app.db.execute("""
-DELETE FROM Orders
-WHERE seller_id = :uid AND fulfillment = TRUE
-ORDER BY price ASC
+UPDATE Orders
+SET fulfillment = TRUE
+WHERE product_name = :product_name;
 """,
-                              uid = uid, fulfillment=fulfillment)
+                              uid = uid, product_namet=product_name)
         
         return 1
 
