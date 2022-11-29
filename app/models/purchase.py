@@ -56,16 +56,18 @@ ORDER BY order_time DESC
 
     @staticmethod
 
-    def add_new_order(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price): #Will add ability to add multiple at once
+    def add_new_order(order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price):
+        print(order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
         try:
             rows = app.db.execute("""
-INSERT INTO Orders(order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
-VALUES(:order_id, :product_id, :seller_id, :uid, :address, :order_time, :quantity, :fulfillment, :fulfillment_time, :price)
+INSERT INTO Orders(order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price)
+VALUES(:order_id, :superorder_id, :product_id, :seller_id, :uid, :address, :order_time, :quantity, :fulfillment, :fulfillment_time, :price)
 """,
                                 uid = uid,
                                 product_id = product_id,
                                 quantity = quantity,
                                 order_id = order_id,
+                                superorder_id = superorder_id,
                                 seller_id = seller_id,
                                 address = address,
                                 order_time = order_time,

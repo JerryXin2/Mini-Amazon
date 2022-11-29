@@ -57,6 +57,12 @@ def gen_sellers(num_sellers, available_uids):
     return available_sids
 
 def gen_products(num_products, available_sids):
+    my_word_list = [
+'tools','clothing','furniture',
+'electronics','food','medicine',
+'cleaning','appliances','home',
+'toys','automotive','education','beauty' ]
+
     available_pids = []
     with open('Products.csv', 'w') as f:
         writer = get_csv_writer(f)
@@ -66,7 +72,7 @@ def gen_products(num_products, available_sids):
                 print(f'{product_id}', end=' ', flush=True)
             seller_id = fake.random_element(elements = available_sids)
             product_name = fake.sentence(nb_words=4)[:-1]
-            category = fake.word()
+            category = fake.word(ext_word_list=my_word_list)
             description = fake.sentence(nb_words = 20) [:-1]
             image = fake.dga()
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
@@ -105,6 +111,7 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             order_id = id
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
+            superorder_id = fake.random_int(min = 1, max = 9)
             product_id = fake.random_element(elements = available_pids)
             seller_id = fake.random_element(elements = available_sids)
             uid = fake.random_element(elements = available_uids)
@@ -114,7 +121,7 @@ def gen_orders(num_orders, available_uids, available_pids, available_sids):
             fulfillment = fake.random_element(elements=('true', 'false'))
             fulfillment_time = fake.date_time_between(start_date = order_time)
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
-            writer.writerow([order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price])
+            writer.writerow([order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price])
         print(f'{num_orders} generated')
     return
     
