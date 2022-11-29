@@ -81,3 +81,18 @@ def markproductasfulfilled():
         ret = Purchase.removeProductsbyFulfillmentStatus(current_user.uid, form.fulfilled.data)
         return render_template('sellerFulfilled.html', form=form)
     return render_template('sellerFulfilled.html', form=form)
+
+class addQuantityForm(FlaskForm):
+    quantity = IntegerField('Product Quantity', validators=[DataRequired()])
+    submit = SubmitField('Add Quantity to Inventory')
+
+@bp.route('/addQuantity', methods = ["GET", "POST"])
+def addQuantity():
+    form = AddQuantityForm()
+    if form.validate_on_submit():
+        additional = form.quantity.data
+        ret = Product.addquantity(current_user.uid, additional)
+        return render_template('addBalance.html',
+                           form=form)
+    return render_template('addBalance.html', form=form)
+
