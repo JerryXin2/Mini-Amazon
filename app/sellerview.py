@@ -69,15 +69,3 @@ def fulfillment():
     else:
         inventory = None
     return render_template('sellerFulfilled.html', inventory1 = inventory)
-
-class fulfilledForm(FlaskForm):
-    fulfilled = StringField('Product Name', validators=[DataRequired()])
-    submit = SubmitField('Fulfilled')
-
-@bp.route('/fulfillment', methods=['GET','POST'])
-def removeFulfilledProducts():
-    form = fulfilledForm()
-    if form.validate_on_submit():
-        ret = Purchase.removeProductsbyFulfillmentStatus(current_user.uid, form.fulfilled.data)
-        return render_template('sellerFulfilled.html', form=form)
-    return render_template('sellerFulfilled.html', form=form)
