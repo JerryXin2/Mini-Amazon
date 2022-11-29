@@ -148,5 +148,15 @@ WHERE seller_id = :seller_id
                               seller_id = seller_id)
         return [Product(*row) for row in rows]
 
+def addquantity(seller_id, additional):
+    app.db.execute("""
+UPDATE Users
+SET quantity = quantity + :additional
+WHERE uid = :uid
+""",
+                              uid = uid, additional=additional)
+        
+        return 1
 
+    
 
