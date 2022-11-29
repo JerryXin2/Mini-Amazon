@@ -92,7 +92,7 @@ def addQuantity():
     if form.validate_on_submit():
         additional = form.quantity.data
         ret = Product.addquantity(current_user.uid, additional)
-        return render_template('addBalance.html',
+        return render_template('addquantity.html',
                            form=form)
-    return render_template('addBalance.html', form=form)
+    return render_template('addquantity.html', form=form)
 
