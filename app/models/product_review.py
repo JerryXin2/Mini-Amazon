@@ -66,3 +66,23 @@ LIMIT 5
     """,
                                 uid = uid)
         return [Product_Review(*row) for row in rows] 
+
+    def deleteUserReview(uid, product_id):
+        rows = app.db.execute("""
+    DELETE FROM Product_Reviews
+    WHERE uid = :uid AND product_id = :product_id
+    """,
+                                uid = uid, product_id = product_id)
+
+        return 1
+    
+    def updateUserReview(uid, product_id, review, review_time, rating):
+        rows = app.db.execute("""
+    UPDATE Product_Reviews
+    SET review = :review, review_time = :review_time, rating = :rating
+    WHERE uid = :uid AND product_id = :product_id
+    """,
+                                uid = uid, product_id = product_id, review = review, 
+                                review_time = review_time, rating = rating)
+
+        return 1

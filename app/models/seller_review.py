@@ -38,3 +38,23 @@ class Seller_Review:
                                 reviewer_id = reviewer_id)
         return [Seller_Review(*row) for row in rows] 
 
+    def deleteSellerReview(reviewer_id, seller_id):
+        rows = app.db.execute("""
+    DELETE FROM Seller_Reviews
+    WHERE reviewer_id = :reviewer_id AND seller_id = :seller_id
+    """,
+                                reviewer_id = reviewer_id, seller_id = seller_id)
+
+        return 1
+    
+    def updateSellerReview(uid, product_id, review, review_time, rating):
+        rows = app.db.execute("""
+    UPDATE Seller_Reviews
+    SET review = :review, review_time = :review_time, rating = :rating
+    WHERE reviewer_id = :reviewer_id AND seller_id = :seller_id
+    """,
+                                reviewer_id = reviewer_id, seller_id = seller_id, review = review, 
+                                review_time = review_time, rating = rating)
+
+        return 1
+
