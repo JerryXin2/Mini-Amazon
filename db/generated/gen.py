@@ -57,6 +57,12 @@ def gen_sellers(num_sellers, available_uids):
     return available_sids
 
 def gen_products(num_products, available_sids):
+    my_word_list = [
+'tools','clothing','furniture',
+'electronics','food','medicine',
+'cleaning','appliances','home',
+'toys','automotive','education','beauty' ]
+
     available_pids = []
     with open('Products.csv', 'w') as f:
         writer = get_csv_writer(f)
@@ -66,7 +72,7 @@ def gen_products(num_products, available_sids):
                 print(f'{product_id}', end=' ', flush=True)
             seller_id = fake.random_element(elements = available_sids)
             product_name = fake.sentence(nb_words=4)[:-1]
-            category = fake.word()
+            category = fake.word(ext_word_list=my_word_list)
             description = fake.sentence(nb_words = 20) [:-1]
             image = fake.dga()
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
