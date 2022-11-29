@@ -98,7 +98,7 @@ UPDATE Orders
 SET fulfillment = TRUE
 WHERE product_name = :product_name;
 """,
-                              uid = uid, product_namet=product_name)
+                              uid = uid, product_name=product_name)
         
         return 1
 
