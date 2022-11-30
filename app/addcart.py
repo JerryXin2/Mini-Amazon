@@ -33,7 +33,8 @@ def addcart():
     #If form already filled out
     if form.validate_on_submit():
         quantity = form.quantity.data
-        UserCart.add_item_to_cart(current_user.uid, product_id, quantity)
+        if quantity > 0:
+            UserCart.add_item_to_cart(current_user.uid, product_id, quantity)
          #Load Carts Page
         id = current_user.uid
         items_in_cart = UserCart.get_items_in_cart_by_uid(id)
@@ -60,7 +61,8 @@ def updatecart():
     #If form already filled out
     if form.validate_on_submit():
         quantity = form.quantity.data
-        UserCart.update_amount_in_cart(current_user.uid, product_id, quantity)
+        if quantity > 0:
+            UserCart.update_amount_in_cart(current_user.uid, product_id, quantity)
          #Load Carts Page
         id = current_user.uid
         items_in_cart = UserCart.get_items_in_cart_by_uid(id)
