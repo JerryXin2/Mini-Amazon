@@ -17,6 +17,8 @@ Henry Huynh - Finished Social Guru Requirements for Mini Amazon Project, added/t
 
 Link to access github Repository, with all code: https://gitlab.oit.duke.edu/mx47/mini-amazon-skeleton
 
+We would like to enter our project for an Audience Choice Award for Extra Credit.
+
 The code to populate the sample database is found under mx47/mini-amazon-skeleton/db/data.
 
 The three files used to generate the sample data are:
