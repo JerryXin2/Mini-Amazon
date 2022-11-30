@@ -157,6 +157,16 @@ WHERE product_id = :product_id
 """,
                               product_id = product_id, less=less)
         return 1
+    
+    def setquantity(seller_id, additional, product_name):
+        app.db.execute("""
+    UPDATE Products
+    SET quantity = :additional
+    WHERE seller_id = :seller_id and product_name = :product_name
+    """,
+                                seller_id = seller_id, additional=additional, product_name= product_name)
+            
+        return 1
 
 
 

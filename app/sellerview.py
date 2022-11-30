@@ -69,3 +69,35 @@ def fulfillment():
     else:
         inventory = None
     return render_template('sellerFulfilled.html', inventory1 = inventory)
+
+class addQuantityForm(FlaskForm):
+    neg = 0
+    name = StringField('Name of Product', validators=[DataRequired()])
+    quantity = IntegerField('Product Quantity', validators=[DataRequired()])
+    submit = SubmitField('Add Quantity to Inventory')
+
+@bp.route('/setQuantity', methods = ["GET", "POST"])
+def setQuantity():
+    form = addQuantityForm()
+    if form.validate_on_submit():
+        quantity = form.quantity.data
+        name = form.name.data
+        if form.quantity.data < 0 :
+            form.neg = 1
+            return render_template('setquantity.html',
+                           form=form)
+        else:
+            ret = Product.setquantity(current_user.uid, quantity, name)
+            return render_template('setquantity.html',
+                           form=form)
+    return render_template('setquantity.html', form=form)
+
+@bp.route('/fulfill', methods=['GET','POST'])
+def fulfill():
+    order_id = int(request.args.get('order_id'))
+    Purchase.removeProductsbyFulfillmentStatus(current_user.uid, order_id) 
+    inventory = Purchase.get_all_by_fulfillment_status(current_user.uid)
+    return render_template('sellerFulfilled.html',
+                           inventory1 = inventory)
+
+
