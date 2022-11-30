@@ -15,6 +15,7 @@
       <th scope="col">Fulfilled?</th>
       <th scope="col">Fulfillment Time</th>
       <th scope="col">Shipped Address</th>
+      <th scope="col">Button to Fulfill Order</th>
     </tr>
   </thead>
   <tbody>
@@ -28,10 +29,10 @@
         <td>{{purchase.price*purchase.quantity}}</td>
         <td>{{purchase.order_time}}</td>
         <td>{{ purchase.fulfillment }}</td>
-        {% if purchase.fulfillment %}
-          <td>{{ purchase.fulfillment_time}}</td>
-        {% endif %}
+        <td>{% if purchase.fulfillment %} {{ purchase.fulfillment_time}}{% endif %}</td>
+        
         <td>{{ purchase.address }}</td>
+        <td> <a href="{{ url_for('sellerview.fulfill', order_id=purchase.order_id)}}" type="button" class="btn btn-light"> Fulfill </a> </td>
       </tr>
     {% endfor %}
   </tbody>

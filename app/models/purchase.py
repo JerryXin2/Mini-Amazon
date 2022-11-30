@@ -83,7 +83,7 @@ VALUES(:order_id, :superorder_id, :product_id, :seller_id, :uid, :address, :orde
         rows = app.db.execute('''
 SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name
 FROM Orders, Products
-WHERE seller_id = :seller_id AND fulfillment = FALSE
+WHERE Orders.seller_id = :seller_id AND fulfillment = FALSE
 AND orders.product_id = products.product_id
 ORDER BY order_time DESC
 ''',
@@ -95,7 +95,7 @@ ORDER BY order_time DESC
         rows = app.db.execute('''
 SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name
 FROM Orders, Products
-WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY order_time DESC
 ''',
                               uid=uid, search_key =search_key)
@@ -105,7 +105,7 @@ ORDER BY order_time DESC
         rows = app.db.execute('''
 SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name
 FROM Orders, Products
-WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY price ASC
 ''',
                               uid=uid, search_key =search_key)
@@ -115,10 +115,20 @@ ORDER BY price ASC
         rows = app.db.execute('''
 SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name
 FROM Orders, Products
-WHERE Orders. uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
+WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY price DESC
 ''',
                               uid=uid, search_key =search_key)
         return [Purchase(*row) for row in rows]
+
+    def removeProductsbyFulfillmentStatus(uid, order_id):
+        app.db.execute('''
+UPDATE Orders
+SET fulfillment = TRUE
+WHERE order_id = :order_id
+''',
+                              uid =uid, order_id=order_id)
+        
+        return 1
 
 
