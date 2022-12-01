@@ -1,27 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form class= "search" action="" method="post" novalidate>
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.userid.label }}<br/>
-    {{ form.userid(size=32) }}<br/>
-    {% for error in form.userid.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-  </p>
-  {{ form.submit(class_="btn btn-black") }}
+
   <br><br>
 <h2>Your recent purchases:</h2>
 <table class='table table-hover table-bordered container'>
@@ -31,8 +11,11 @@
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price</th>
       <th scope="col">Total Price</th>
-      <th scope="col">Fulfilled?</th>
+      <th scope="col">Address</th>
+      <th scope="col">Item Fulfilled</th>
+      <th scope="col">Order Completed</th>
       <th scope="col">Fulfillment Time</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -42,7 +25,9 @@
         <td>{{purchase.quantity}}</td>
         <td>{{purchase.price}}</td>
         <td>{{purchase.price*purchase.quantity}}</td>
+        <td>{{purchase.address}}</td>
         <td>{{ purchase.fulfillment }}</td>
+        <td>{{purchase.order_fulfilled}}</td>
         {% if purchase.fulfillment %}
           <td>{{ purchase.fulfillment_time}}</td>
         {% endif %}

@@ -28,6 +28,12 @@ def users():
     form = PurchaseHistoryForm()
     uid = current_user.uid
     purchases = Purchase.get_all_by_uid(uid)
+    for purchase in purchases:
+        print(purchase.order_fulfilled)
+        if(purchase.fulfillment):
+            for purchase2 in purchases:
+                if(purchase.order_time == purchase2.order_time and purchase2.fulfillment == False):
+                    purchase.order_fulfilled = False
     return render_template('purchase.html',
                            purchase_history=purchases,
                            form=form)
