@@ -4,8 +4,9 @@ from app.models.product import Product
 
 
 class Purchase:
-    def __init__(self, order_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price, product_name, order_fulfilled):
+    def __init__(self, order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price, product_name, order_fulfilled):
         self.order_id = order_id
+        self.superorder_id = superorder_id
         self.product_id = product_id
         self.seller_id = seller_id
         self.uid = uid
@@ -21,7 +22,7 @@ class Purchase:
     @staticmethod
     def get(product_id):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, superorder_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE product_id = :product_id
     AND orders.product_id = products.product_id
@@ -32,7 +33,7 @@ WHERE product_id = :product_id
     @staticmethod
     def get_all_by_uid_since(uid, since):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE uid = :uid
 AND orders.product_id = products.product_id
@@ -46,7 +47,7 @@ ORDER BY order_time DESC
     @staticmethod
     def get_all_by_uid(uid):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE uid = :uid
 AND orders.product_id = products.product_id
@@ -82,7 +83,7 @@ VALUES(:order_id, :superorder_id, :product_id, :seller_id, :uid, :address, :orde
 
     def get_all_by_fulfillment_status(seller_id):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE Orders.seller_id = :seller_id AND fulfillment = FALSE
 AND orders.product_id = products.product_id
@@ -94,7 +95,7 @@ ORDER BY order_time DESC
     @staticmethod
     def get_all_by_uid_most_recent(uid, search_key):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY order_time DESC
@@ -104,7 +105,7 @@ ORDER BY order_time DESC
 
     def get_all_by_uid_price_asc(uid, search_key):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY price ASC
@@ -114,7 +115,7 @@ ORDER BY price ASC
 
     def get_all_by_uid_price_desc(uid, search_key):
         rows = app.db.execute('''
-SELECT order_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
 FROM Orders, Products
 WHERE Orders.uid = :uid and Orders.product_id  = Products.product_id and Products.product_name LIKE CONCAT('%', :search_key, '%')
 ORDER BY price DESC

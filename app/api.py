@@ -32,7 +32,7 @@ def users():
         print(purchase.order_fulfilled)
         if(purchase.fulfillment):
             for purchase2 in purchases:
-                if(purchase.order_time == purchase2.order_time and purchase2.fulfillment == False):
+                if(purchase.superorder_id == purchase2.superorder_id and purchase2.fulfillment == False):
                     purchase.order_fulfilled = False
     return render_template('purchase.html',
                            purchase_history=purchases,

@@ -7,6 +7,7 @@
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
+      <th scope="col">Order ID</th>
       <th scope="col">Product Name</th>
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price</th>
@@ -21,7 +22,8 @@
   <tbody>
     {% for purchase in purchase_history%}
       <tr>
-        <th scope="row">{{purchase.product_name}}</th>
+        <th scope="row">{{purchase.superorder_id}}</th>
+        <td>{{purchase.product_name}}</td>
         <td>{{purchase.quantity}}</td>
         <td>{{purchase.price}}</td>
         <td>{{purchase.price*purchase.quantity}}</td>
