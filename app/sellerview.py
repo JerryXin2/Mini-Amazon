@@ -54,6 +54,25 @@ def removeProducts():
         return render_template('removeProducts.html', form=form)
     return render_template('removeProducts.html', form=form)
 
+class editProductsForm(FlaskForm):
+    old_product_name = StringField('Old Product Name', validators=[DataRequired()])
+    product_name = StringField('New Product Name', validators=[DataRequired()])
+    category = StringField('New Product Category', validators=[DataRequired()])
+    description = StringField('New Product Description', validators=[DataRequired()])
+    image = 0
+    price = DecimalField('New Product Price', validators=[DataRequired()])
+    quantity = IntegerField('New Product Quantity', validators=[DataRequired()])
+    available = BooleanField('New Availability')
+    submit = SubmitField('Edit Current Product in Inventory')
+
+@bp.route('/editProducts', methods=['GET','POST'])
+def editProducts():
+    form = editProductsForm()
+    if form.validate_on_submit():
+        ret = Product.editProducts(current_user.uid, form.old_product_name.data, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        return render_template('editProducts.html', form=form)
+    return render_template('editProducts.html', form=form)
+
 @bp.route('/inventory', methods=['GET', 'POST'])
 def inventory():
     if current_user.is_authenticated:

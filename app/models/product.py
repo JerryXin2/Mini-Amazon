@@ -129,6 +129,16 @@ VALUES (:product_id, :seller_id, :product_name, :category, :description, :image,
         
         return 1
     
+    def editProducts(seller_id, old_product_name, product_name, category, description, image,  price, available, quantity):
+        app.db.execute("""
+UPDATE Products
+SET product_name = :product_name, category = :category, description = :description, image = :image, price = :price, available = :available, quantity = :quantity)
+WHERE product_name = :old_product_name and seller_id = :seller_id
+""",
+                               seller_id = seller_id, old_product_name = old_product_name, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
+        
+        return 1
+    
     def removeProducts(uid, product_name):
         app.db.execute("""
 DELETE FROM Products
