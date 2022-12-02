@@ -81,7 +81,7 @@
         <td>{{"$%.2f"|format(product.price|float)}}</td>
         <td>{{product.description}}</td>
         <td>{{product.image}}</td>
-        <td>{{"%.2f"|format(product.rating|float)}}</td>
+        <td><span class="score"><span style="width: {{product.rating*20}}%"></span></span></td>
       </tr>
     {% endfor %}
   </tbody>
