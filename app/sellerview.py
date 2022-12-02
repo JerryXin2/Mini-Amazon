@@ -6,7 +6,7 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, FileField, DecimalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp
 
 from .models.user import User
@@ -29,7 +29,7 @@ class addProductsForm(FlaskForm):
     category = StringField('Product Category', validators=[DataRequired()])
     description = StringField('Product Description', validators=[DataRequired()])
     image = 0
-    price = IntegerField('Product Price', validators=[DataRequired()])
+    price = DecimalField('Product Price', validators=[DataRequired()])
     quantity = IntegerField('Product Quantity', validators=[DataRequired()])
     available = BooleanField('Availability')
     submit = SubmitField('Add Product(s) to Inventory')
