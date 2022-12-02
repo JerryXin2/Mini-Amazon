@@ -1,0 +1,14 @@
+This file contains the final advanced features implemented in our Mini Amazon project for CS 316.
+These features will be noted as either required or additonal/extra features that go beyond the project requirements.
+
+Team members: Jerry Xin, Shirley Wang, Henry Huynh, Jachin Friday, Chris Cameron
+Team name: Pink Parrots
+
+1. Button to set balance to a specific value(as opposed to add/subtract balance) 
+    -restrictions implemented: cannot set balance to negative number
+2. Ability to search Purchase History
+3. Ability to filter Purchase History by Price Ascending, cross compatible with search
+4. Ability to filter Purchase History by Price Descending, cross compatible with search
+5. Cross compatibility between ability to filter Purchase History by Most Recent and search
+6. Button to be able to gift balance to another user, requires user to input other user’s uid and gift amount.
+	-restrictions implemented: cannot give negative amount, and cannot give more than the current user’s account balance
