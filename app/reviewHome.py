@@ -32,18 +32,20 @@ def reviewHome():
 
 class AddProductReviewForm(FlaskForm):
     invalid_review = 0
-    id = IntegerField('ID of Product of Review', validators=[DataRequired()])
+    #id = IntegerField('ID of Product of Review', validators=[DataRequired()])
     review = StringField('Content of New Review', validators=[DataRequired()])
     rating = IntegerField('Rating of New Review(1-5 scale)', validators=[DataRequired()])
     submit = SubmitField('Submit new Review')
 
 @bp.route('/addProductReview', methods = ["GET", "POST"])
 def addProductReview():
+    product_id = request.args.get('pid')
+    print(product_id)
     form = AddProductReviewForm()
     if form.validate_on_submit():
         dt_string = getTime()
         review = form.review.data
-        product_id = form.id.data
+        #product_id = pid
         rating = form.rating.data
         if(rating <= 5 and rating >= 1):
             ret = Product_Review.addProductReview(product_id, current_user.uid, review, dt_string, rating)
@@ -53,18 +55,19 @@ def addProductReview():
 
 class AddSellerReviewForm(FlaskForm):
     invalid_review = 0
-    id = IntegerField('ID of Seller to Review', validators=[DataRequired()])
+    #id = IntegerField('ID of Seller to Review', validators=[DataRequired()])
     review = StringField('Content of New Review', validators=[DataRequired()])
     rating = IntegerField('Rating of New Review(1-5 scale)', validators=[DataRequired()])
     submit = SubmitField('Submit new Review')
 
 @bp.route('/addSellerReview', methods = ["GET", "POST"])
 def addSellerReview():
+    seller_id = request.args.get('sid')
     form = AddSellerReviewForm()
     if form.validate_on_submit():
         dt_string = getTime()
         review = form.review.data
-        seller_id = form.id.data
+        #seller_id = sid
         rating = form.rating.data
         if(rating <= 5 and rating >= 1):
             ret = Seller_Review.addSellerReview(
