@@ -21,10 +21,14 @@
         <p>About this item: {{product.description}}</p>
         <p>Rating:
           <span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
-        <p>{{product.seller}}</p>
+        <p>Seller: {{product.seller}}</p>
         <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
         <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light"> {{product.product_name}} Reviews </a>
+        <a href="{{ url_for('reviewHome.addProductReview')}}" class="btn btn-light"> Add a Product Review </a>
         <a href="{{ url_for('reviewHome.seeSellerReview', sid=product.seller_id) }}" class="btn btn-light"> {{product.seller}} Reviews </a>
+        <a href="{{ url_for('reviewHome.addSellerReview')}}" class="btn btn-light"> Add a Seller Review </a>
+
+
       </div>
       {% endfor %}
     </tbody>
@@ -42,7 +46,7 @@
         <p class="price">${{rel_product.price}}</p>
         <p>Rating:
           <span class="score"><span style="width: {{rel_product.rating*20}}%"></span></span></p>
-        <p>{{rel_product.seller}}</p>
+        <p>Seller: {{rel_product.seller}}</p>
         <a href="{{ url_for('addcart.addcart', pid=rel_product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
         <a href="{{ url_for('reviewHome.seeProductReview', pid=rel_product.product_id) }}" class="btn btn-light"> {{rel_product.product_name}} Reviews </a>
         <a href="{{ url_for('reviewHome.seeSellerReview', sid=rel_product.seller_id) }}" class="btn btn-light"> {{rel_product.seller}} Reviews </a>
