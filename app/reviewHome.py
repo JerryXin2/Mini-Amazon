@@ -133,6 +133,16 @@ def updateReview():
         return render_template('updateReview.html', form = form)
     return render_template('updateReview.html', form = form)
 
+class SeeSellerReviewForm(FlaskForm):
+    invalid_review = 0
+    id = IntegerField('ID of User to see Review', validators=[DataRequired()])
+    submit = SubmitField('See Review')
+
+@bp.route('/seeSellerReview', methods = ["GET", "POST"])
+def seeSellerReview():
+    seller_id = request.args.get('sid')
+    allSellerReviews = Seller_Review.getAllUserReview(seller_id)
+    return render_template('seeSellerReview.html', avail_reviews2 = allSellerReviews)
     
 
 
