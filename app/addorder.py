@@ -8,7 +8,7 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
@@ -23,8 +23,12 @@ from flask import Blueprint
 bp = Blueprint('addorder', __name__)
 
 class PurchaseHistoryForm(FlaskForm):
-    userid = IntegerField('User ID')
-    submit = SubmitField('Find Purchase History')
+    myChoices1 = ['Most Recent', 'Price Ascend','Price Descend']
+    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
+    myChoices = ['Search by Name','Search by Description']
+    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
+    search_key = StringField('Key Word')
+    submit = SubmitField('Update Search')
 
 @bp.route('/addorder', methods=['GET','POST'])
 def addorder():
@@ -59,6 +63,12 @@ def addorder():
     #UserCart.clear_cart(id)
     #Go to orders page (will likely change)
     purchases = Purchase.get_all_by_uid(id)
+    if form.myField1.data == 'Price Ascend':
+        purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
+    if form.myField1.data == 'Price Descend':
+        purchases = Purchase.get_all_by_uid_price_desc(uid,search_key) 
+    if form.myField1.data == 'Most Recent':
+        purchases = Purchase.get_all_by_uid_most_recent(uid,search_key)
     for purchase in purchases:
         print(purchase.order_fulfilled)
         if(purchase.fulfillment):
