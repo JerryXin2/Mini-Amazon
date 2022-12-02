@@ -67,6 +67,17 @@ LIMIT 5
                                 uid = uid)
         return [Product_Review(*row) for row in rows] 
 
+    @staticmethod
+    def getAllProductReview(pid):
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    WHERE product_id = :pid
+    ORDER BY review_time DESC
+    """,
+                                pid = pid)
+        return [Product_Review(*row) for row in rows] 
+
     def deleteUserReview(uid, product_id):
         rows = app.db.execute("""
     DELETE FROM Product_Reviews
