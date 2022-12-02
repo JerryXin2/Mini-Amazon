@@ -15,6 +15,8 @@ from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.seller import Seller
+from .models.product_review import Product_Review
+from .models.seller_review import Seller_Review
 
 from flask import Blueprint
 bp = Blueprint('loginview', __name__)
@@ -194,5 +196,5 @@ def purchaseHistory():
 def seeUser():
     uid = request.args.get('uid')
     user = User.getUser(uid)
-    print(user)
-    return render_template('userPage.html', uid = user)
+    reviews = Seller_Review.getAllUserReview(uid)
+    return render_template('userPage.html', uid = user, avail_reviews2 = reviews)
