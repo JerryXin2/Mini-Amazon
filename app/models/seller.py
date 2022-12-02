@@ -15,3 +15,12 @@ RETURNING uid
 """,
                                   uid = uid, seller = seller)
         return 1
+    
+    def checkSeller(uid):
+        rows = app.db.execute("""
+        SELECT uid, seller
+        FROM Sellers
+        WHERE uid = :uid
+""",
+                                  uid = uid)
+        return 1 if rows else 0
