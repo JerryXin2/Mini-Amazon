@@ -1,4 +1,5 @@
 from pickle import FALSE, TRUE
+from random import randint
 
 from importlib_metadata import email
 from app.models.product_review import Product_Review
@@ -6,7 +7,7 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, FileField, DecimalField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, FileField, DecimalField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp
 
 from .models.user import User
@@ -15,9 +16,17 @@ from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.seller import Seller
+from .models.product_review import Product_Review
+from .models.seller_review import Seller_Review
+from datetime import datetime
 
 from flask import Blueprint
 bp = Blueprint('sellerview', __name__)
+
+def getTime():
+    now = datetime.now()
+    dt_string = now.strftime("%Y/%m/%d %H:%M:%S")
+    return dt_string
 
 @bp.route('/sellerview', methods=['GET','POST'])
 def sellerview():
@@ -26,7 +35,11 @@ def sellerview():
 
 class addProductsForm(FlaskForm):
     product_name = StringField('Product Name', validators=[DataRequired()])
-    category = StringField('Product Category', validators=[DataRequired()])
+    myChoices2 = ['None','tools','clothing','furniture',
+'electronics','food','medicine',
+'cleaning','appliances','home',
+'toys','automotive','education','beauty']
+    category = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     description = StringField('Product Description', validators=[DataRequired()])
     image = 0
     price = DecimalField('Product Price', validators=[DataRequired()])
@@ -38,7 +51,10 @@ class addProductsForm(FlaskForm):
 def addProducts():
     form = addProductsForm()
     if form.validate_on_submit():
-        ret = Product.addProducts(current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        prod_id = randint(20000,24000000)
+        dt_string = getTime()
+        ret = Product.addProducts(prod_id, current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        Product_Review.addProductReview(prod_id,current_user.uid, "placeholder review", dt_string,5)
         return render_template('addProducts.html', form=form)
     return render_template('addProducts.html', form=form)
 
@@ -53,6 +69,13 @@ def removeProducts():
         ret = Product.removeProducts(current_user.uid, form.remove.data)
         return render_template('removeProducts.html', form=form)
     return render_template('removeProducts.html', form=form)
+
+@bp.route('/removeProducts2', methods=['GET','POST'])
+def removeProducts2():
+    pid = request.args.get('uid')
+    ret = Product.removeProducts2(pid)
+    inventory = Product.get_all_by_seller_id(current_user.uid)
+    return render_template('sellerInventory.html',inventory1 = inventory)
 
 class editProductsForm(FlaskForm):
     old_product_name = StringField('Old Product Name', validators=[DataRequired()])

@@ -13,6 +13,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price</th>
       <th scope="col">Availability</th>
+      <th scope="col">Delete From Inventory</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,8 @@
         <td>{{purchase.quantity}}</td>
         <td>{{purchase.price}}</td>
         <td>{{purchase.availability}}</td>
+        <td><a href="{{ url_for('sellerview.removeProducts2', uid=purchase.product_id) }}" class="btn btn-dark"> Delete From Inventory </a></td>
+
       </tr>
     {% endfor %}
   </tbody>
