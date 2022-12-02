@@ -77,6 +77,55 @@ LIMIT 5
     """,
                                 pid = pid)
         return [Product_Review(*row) for row in rows] 
+    
+    @staticmethod
+    def getAllProducts():
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    ORDER BY review_time DESC
+    """,
+                                )
+        return [Product_Review(*row) for row in rows] 
+    
+    def get_all_product_reviews(search_key):
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    """,search_key = search_key
+                                )
+        return [Product_Review(*row) for row in rows] 
+    
+    def get_all_by_price_asc(search_key):
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY rating ASC
+    """,search_key = search_key
+                                )
+        return [Product_Review(*row) for row in rows] 
+    
+    def get_all_by_price_desc(search_key):
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY rating DESC
+    """,search_key= search_key
+                                )
+        return [Product_Review(*row) for row in rows] 
+    
+    def get_all_by_most_recent(search_key):
+        rows = app.db.execute("""
+    SELECT product_id, uid, review, review_time, rating
+    FROM Product_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY review_time DESC
+    """,search_key  = search_key
+                                )
+        return [Product_Review(*row) for row in rows] 
 
     def deleteUserReview(uid, product_id):
         rows = app.db.execute("""

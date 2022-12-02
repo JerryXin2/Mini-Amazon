@@ -38,6 +38,23 @@ class Seller_Review:
                                 reviewer_id = reviewer_id)
         return [Seller_Review(*row) for row in rows] 
 
+    def get_all_sellers(search_key):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    """,search_key = search_key
+                                )
+        return [Seller_Review(*row) for row in rows] 
+    
+    def get_all_seller_reviews(search_key):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    """,search_key = search_key
+                                )
+        return [Seller_Review(*row) for row in rows] 
+
     def deleteSellerReview(reviewer_id, seller_id):
         rows = app.db.execute("""
     DELETE FROM Seller_Reviews

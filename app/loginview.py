@@ -182,7 +182,8 @@ def purchaseHistory():
     purchases = Purchase.get_all_by_uid(uid)
     form = purchaseHistoryForm()
     search_key = form.search_key.data
-    print(form.myField.data)
+    if form.myField1.data == 'None':
+        purchases = Purchase.get_all_by_uid_search(uid,search_key)
     if form.myField1.data == 'Price Ascend':
         purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
     if form.myField1.data == 'Price Descend':
