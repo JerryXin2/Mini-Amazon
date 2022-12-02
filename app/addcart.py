@@ -6,7 +6,7 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
@@ -36,12 +36,9 @@ def addcart():
         if quantity > 0:
             UserCart.add_item_to_cart(current_user.uid, product_id, quantity)
          #Load Carts Page
-        id = current_user.uid
         items_in_cart = UserCart.get_items_in_cart_by_uid(id)
         total = 0
-        for item in items_in_cart:
-            item.product_name = item.product_name[0]
-            total += item.price*item.quantity
+
         return render_template('cart.html',
                             items = items_in_cart,
                             total = total)
