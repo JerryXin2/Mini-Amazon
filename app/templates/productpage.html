@@ -3,93 +3,78 @@
 {% block content %}
 
 
-<form class= "search" action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <!-- prod_id: {{prod_id}} -->
-    <p>
+<form class="search" action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <!-- prod_id: {{prod_id}} -->
+  <p>
+
+    <!-- <ins>Filter by Category</ins> -->
+    <tbody>
+      {% for product in avail_products%}
       
-      <!-- <ins>Filter by Category</ins> -->
-      <tbody>
-        {% for product in avail_products%}
-          <tr>
-            <div style = "position:absolute; font-size: 50px; max-width: 700px; left:180px; top:200px; background-color:rgb(253, 255, 141);">
-              <td>Detailed Product Page</td>
-            </div>
-            <div style = "position:absolute; font-size: 25px; max-width: 400px; left:200px; top:320px; background-color:lightblue;">
-              <td>Product Name: {{product.product_name}}</td>
-            </div>
-
-            <div style = "position:absolute; font-size: 30px; max-width: 500px; left:100px; top:500px; background-color:rgb(255, 222, 161);">
-              <td>Product Price</td>
-            </div>
-            <div style = "position:absolute; font-size: 20px; max-width: 400px; left:100px; top:570px; background-color:lightblue;">
-              <td>${{product.price}}</td>
-            </div>
-
-            <div style = "position:absolute; font-size: 30px; max-width: 500px; left:600px; top:500px; background-color:rgb(255, 222, 161);">
-              <td>Product Description</td>
-            </div>
-            <div style = "position:absolute; font-size: 20px; max-width: 400px; left:600px; top:570px; background-color:lightblue;">
-              <td>{{product.description}}</td>
-            </div>
-
-
-            <div style = "position:absolute; font-size: 30px; max-width: 500px; left:1030px; top:500px; background-color:rgb(255, 222, 161);">
-              <td>Product Category</td>
-            </div>
-            <div style = "position:absolute; font-size: 20px; max-width: 400px; left:1030px; top:570px; background-color:lightblue;">
-              <td>{{product.category}}</td>
-            </div>
-
-
-            <div style = "position:absolute; font-size: 30px; max-width: 500; left:1000px; top:200px; background-color:rgb(255, 222, 161);">
-              <td>Product Image</td>
-            </div>
-            <div style = "position:absolute; font-size: 25px; max-width: 400px; left:1000px; top:320px; background-color:rgb(91, 108, 114);">
-              <td>Will insert image: {{product.image}}</td>
-            </div>
-
-          
-          </tr>
-        {% endfor %}
-      </tbody>
-      
-      {% for error in form.search_key.errors %}
-      <span style="color: red;">[{{ error }}]</span>
+      <div class="card">
+        <img src={{product.image}} style="width:100%">
+        <h1>{{product.product_name}}</h1>
+        <p class="price">${{product.price}}</p>
+        <p>{{product.description}}</p>
+        <p>{{product.category}}</p>
+        <p>About this item: {{product.description}}</p>
+        <p>Reviews: {{product.review}}</p>
+        <p>Rating:
+          <div class="star-ratings-css">
+            <div class="star-ratings-css-top" style="width: calc({{ product.rating}}*20)% ">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div></p>
+        <p>{{product.seller}}</p>
+        <p><button>Add to Cart</button></p>
+      </div>
       {% endfor %}
-    
-    </p>
-    <p>
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-    </p>
-    <div style = "position:absolute; left:800px; top:60px; background-color:black;">
-      <!-- {{ form.submit(class_="btn btn-black") }} -->
-    </div>
-    
+    </tbody>
+  
+    {% for error in form.search_key.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+    <tbody>
+      {% for rel_product in related_products%}
+      
+      <div class="card">
+        <img src={{rel_product.image}} style="width:100%">
+        <h1>{{rel_product.product_name}}</h1>
+        <p class="price">${{rel_product.price}}</p>
+        <p>Rating:
+          <div class="star-ratings-css">
+            <div class="star-ratings-css-top" style="width: calc({{ rel_product.rating}}*20)% ">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div></p>
+        <p>{{rel_product.seller}}</p>
+        <p><button>Add to Cart</button></p>
+      </div>
+      {% endfor %}
+    </tbody>
+
+  </p>
+  <p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+  </p>
+  <div style="position:absolute; left:800px; top:60px; background-color:black;">
+    <!-- {{ form.submit(class_="btn btn-black") }} -->
+  </div>
+  <br><br>
     <br><br>
+    {% if current_user.is_authenticated %}
+    <h2>Your recent purchases:</h2>
+    {% else %}
+    <p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
+    {% endif %}
 
-<div style = "position:absolute; left:0px; top:750px; background-color:rgb(234, 206, 235);">
-
-
-<h2>Sellers and Quantities for sale:</h2>
-
-
-
-<h2>Reviews for this Product:</h2>
-
-<br><br>
-{% if current_user.is_authenticated %}
-<h2>Your recent purchases:</h2>
-{% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
-{% endif %}
-
-{% endblock %}
+    {% endblock %}

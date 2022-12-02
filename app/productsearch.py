@@ -13,7 +13,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from .models.user import User
 from .models.cart import Cart
 from .models.cart import UserCart
-from .models.product import Product
+from .models.product import Product, P1
 from .models.purchase import Purchase
 
 from flask import Blueprint
@@ -21,10 +21,12 @@ bp = Blueprint('productsearch', __name__)
 
 class matching_products_search(FlaskForm):
     word = StringField('Product Search')
-    myChoices1 = ['Price Ascend','Price Descend']
-    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Price Filter')
-    myChoices = ['Search by Name','Search by Description']
-    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
+    myChoices1 = ['None','Low to High','High to Low']
+    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Price:')
+    myChoices = ['Name','Description']
+    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Search By')
+    myChoices2 = ['None','this','next','time', 'than']
+    myField2 = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     search_key = StringField('Key Word')
     submit = SubmitField('Update Search')
 
@@ -32,34 +34,40 @@ class matching_products_search(FlaskForm):
 def productsearch():
     form = matching_products_search()
     search_key = form.search_key.data
-    products = Product.search_products(search_key)
+    products = P1.search_products(search_key)
     print(form.myField.data)
-    if form.myField.data == 'Search by Name':
+    if form.myField.data == 'Name':
         products = Product.search_products(search_key)
-        if form.myField1.data == 'Price Ascend':
+        if form.myField1.data == 'Low to High':
             products = Product.sort_price_asc(search_key)
-        if form.myField1.data == 'Price Descend':
+        if form.myField1.data == 'High to Low':
             products = Product.sort_price_desc(search_key) 
-    if form.myField.data == 'Search by Description':
+    if form.myField.data == 'Description':
         products = Product.search_product_descriptions(search_key) 
-        if form.myField1.data == 'Price Ascend':
+        if form.myField1.data == 'Low to High':
             products = Product.sort_price_asc(search_key)
-        if form.myField1.data == 'Price Descend':
+        if form.myField1.data == 'High to Low':
             products = Product.sort_price_desc(search_key) 
+    if form.myField2.data != 'None':
+        cat = form.myField2.data
+        sortPrice = form.myField1.data
+        products = Product.filter_category(search_key,cat,sortPrice)
     return render_template('productsearch.html', avail_products = products, form = form)
 
 @bp.route('/prod_detail/<prod_id>', methods=['GET', 'POST'])
 def prod_detail(prod_id):
     form = matching_products_search()
     search_key = form.search_key.data
-    products = Product.search_products(search_key)
-    products = Product.specific_prod(prod_id)
+    product = Product.specific_prod(prod_id)
+    prod_id = product[0].product_name
+    related_products = Product.search_related_products(prod_id)
     print(form.myField.data)
     if form.myField.data == 'Price Descend':
-        products = Product.sort_price_desc(search_key)
+        product = Product.sort_price_desc(search_key)
     if form.myField.data == 'Price Ascend':
-        products = Product.sort_price_asc(search_key)
+        product = Product.sort_price_asc(search_key)
     return render_template('productpage.html',
-                           avail_products = products,
+                           avail_products = product,
+                           related_products = related_products,
                            form = form)
 
