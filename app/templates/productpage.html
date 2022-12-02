@@ -19,7 +19,6 @@
         <p>{{product.description}}</p>
         <p>{{product.category}}</p>
         <p>About this item: {{product.description}}</p>
-        <p>Reviews: {{product.review}}</p>
         <p>Rating:
           <span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
         <p>{{product.seller}}</p>
@@ -33,6 +32,7 @@
     {% for error in form.search_key.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
+    <h1> Related Products</h1>
     <tbody>
       {% for rel_product in related_products%}
       
