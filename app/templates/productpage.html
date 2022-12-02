@@ -13,7 +13,7 @@
       {% for product in avail_products%}
       
       <div class="card">
-        <img src={{product.image}} style="width:100%">
+        <img src={{product.image}} style = "width: 25vw">
         <h1>{{product.product_name}}</h1>
         <p class="price">${{product.price}}</p>
         <p>{{product.description}}</p>
@@ -41,7 +41,7 @@
       {% for rel_product in related_products%}
       
       <div class="card">
-        <img src={{rel_product.image}} style="width:100%">
+        <img src={{rel_product.image}} style="width: 25vw">
         <h1>{{rel_product.product_name}}</h1>
         <p class="price">${{rel_product.price}}</p>
         <p>Rating:
