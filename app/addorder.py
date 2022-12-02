@@ -59,6 +59,12 @@ def addorder():
     #UserCart.clear_cart(id)
     #Go to orders page (will likely change)
     purchases = Purchase.get_all_by_uid(id)
+    for purchase in purchases:
+        print(purchase.order_fulfilled)
+        if(purchase.fulfillment):
+            for purchase2 in purchases:
+                if(purchase.superorder_id == purchase2.superorder_id and purchase2.fulfillment == False):
+                    purchase.order_fulfilled = False
     return render_template('purchase.html',
                            purchase_history=purchases,
                            form=PurchaseHistoryForm())
