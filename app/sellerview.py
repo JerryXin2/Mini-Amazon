@@ -41,7 +41,7 @@ class addProductsForm(FlaskForm):
 'toys','automotive','education','beauty']
     category = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     description = StringField('Product Description', validators=[DataRequired()])
-    image = 0
+    image = StringField('URL for Image', validators=[DataRequired()])
     price = DecimalField('Product Price', validators=[DataRequired()])
     quantity = IntegerField('Product Quantity', validators=[DataRequired()])
     available = BooleanField('Availability')
@@ -53,7 +53,7 @@ def addProducts():
     if form.validate_on_submit():
         prod_id = randint(20000,24000000)
         dt_string = getTime()
-        ret = Product.addProducts(prod_id, current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        ret = Product.addProducts(prod_id, current_user.uid, form.product_name.data, form.category.data, form.description.data, form.image.data, form.price.data, form.available.data, form.quantity.data)
         Product_Review.addProductReview(prod_id,current_user.uid, "placeholder review", dt_string,5)
         return render_template('addProducts.html', form=form)
     return render_template('addProducts.html', form=form)
@@ -86,7 +86,7 @@ class editProductsForm(FlaskForm):
 'toys','automotive','education','beauty']
     category = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     description = StringField('New Product Description', validators=[DataRequired()])
-    image = 0
+    image = StringField('URL for Image', validators=[DataRequired()])
     price = DecimalField('New Product Price', validators=[DataRequired()])
     quantity = IntegerField('New Product Quantity', validators=[DataRequired()])
     available = BooleanField('New Availability')
@@ -96,7 +96,7 @@ class editProductsForm(FlaskForm):
 def editProducts():
     form = editProductsForm()
     if form.validate_on_submit():
-        ret = Product.editProducts(current_user.uid, form.old_product_name.data, form.product_name.data, form.category.data, form.description.data, form.image, form.price.data, form.available.data, form.quantity.data)
+        ret = Product.editProducts(current_user.uid, form.old_product_name.data, form.product_name.data, form.category.data, form.description.data, form.image.data, form.price.data, form.available.data, form.quantity.data)
         return render_template('editProducts.html', form=form)
     return render_template('editProducts.html', form=form)
 
