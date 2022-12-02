@@ -25,7 +25,10 @@ class matching_products_search(FlaskForm):
     myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Price:')
     myChoices = ['Name','Description']
     myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Search By')
-    myChoices2 = ['None','this','next','time', 'than']
+    myChoices2 = ['None','tools','clothing','furniture',
+'electronics','food','medicine',
+'cleaning','appliances','home',
+'toys','automotive','education','beauty']
     myField2 = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     search_key = StringField('Key Word')
     submit = SubmitField('Update Search')
