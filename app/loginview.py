@@ -189,3 +189,10 @@ def purchaseHistory():
         purchases = Purchase.get_all_by_uid_most_recent(uid,search_key)
     return render_template('purchaseHistory.html',
                            purchase_history=purchases, form = form)
+
+@bp.route('/seeUser', methods = ["GET", "POST"])
+def seeUser():
+    uid = request.args.get('uid')
+    user = User.getUser(uid)
+    print(user)
+    return render_template('userPage.html', uid = user)
