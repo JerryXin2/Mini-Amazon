@@ -197,4 +197,6 @@ def seeUser():
     uid = request.args.get('uid')
     user = User.getUser(uid)
     reviews = Seller_Review.getAllUserReview(uid)
-    return render_template('userPage.html', uid = user, avail_reviews2 = reviews)
+    seller = Seller.checkSeller(uid)
+    return render_template('userPage.html', uid = user, avail_reviews2 = reviews, seller = seller)
+
