@@ -43,6 +43,27 @@
         background-color: #000 !important;
         color: #fff;
     }
+    .score {
+  display: inline-block;
+  font-family: Wingdings;
+  font-size: 30px;
+  color: #ccc;
+  position: relative;
+}
+.score::before,
+.score span::before{
+  content: "\2605\2605\2605\2605\2605";
+  display: block;
+}
+.score span {
+  white-space: pre;
+  color: gold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
   </style>
 </head>
 

@@ -16,20 +16,18 @@
         <img src={{product.image}} style="width:100%">
         <h1>{{product.product_name}}</h1>
         <p class="price">${{product.price}}</p>
-        <p>{{product.description}}</p>
         <p>{{product.category}}</p>
         <p>About this item: {{product.description}}</p>
-        <p>Reviews: {{product.review}}</p>
-        <p>Rating:
-          <div class="star-ratings-css">
-            <div class="star-ratings-css-top" style="width: calc({{ product.rating}}*20)% ">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        </div></p>
+        <p>Rating:<span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
         <p>{{product.seller}}</p>
+        {% endfor %}
+        <p>Reviews: 
+          {% for review in reviews%}
+          {{review.review}}
+          {% endfor %}</p>
         <p><button>Add to Cart</button></p>
       </div>
-      {% endfor %}
+      
     </tbody>
   
     {% for error in form.search_key.errors %}
@@ -42,12 +40,7 @@
         <img src={{rel_product.image}} style="width:100%">
         <h1>{{rel_product.product_name}}</h1>
         <p class="price">${{rel_product.price}}</p>
-        <p>Rating:
-          <div class="star-ratings-css">
-            <div class="star-ratings-css-top" style="width: calc({{ rel_product.rating}}*20)% ">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        </div></p>
+        <p>Rating:<span class="score"><span style="width: {{rel_product.rating*20}}%"></span></span></p>
         <p>{{rel_product.seller}}</p>
         <p><button>Add to Cart</button></p>
       </div>
