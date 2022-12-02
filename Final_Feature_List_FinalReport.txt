@@ -4,6 +4,8 @@ These features will be noted as either required or additonal/extra features that
 Team members: Jerry Xin, Shirley Wang, Henry Huynh, Jachin Friday, Chris Cameron
 Team name: Pink Parrots
 
+EXTRA FEATURES:
+
 1. Button to set balance to a specific value(as opposed to add/subtract balance) 
     -restrictions implemented: cannot set balance to negative number
 
