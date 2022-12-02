@@ -21,11 +21,7 @@
         <p>About this item: {{product.description}}</p>
         <p>Reviews: {{product.review}}</p>
         <p>Rating:
-          <div class="star-ratings-css">
-            <div class="star-ratings-css-top" style="width: calc({{ product.rating}}*20)% ">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        </div></p>
+          <span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
         <p>{{product.seller}}</p>
         <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
         <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light"> {{product.product_name}} Reviews </a>
@@ -45,11 +41,7 @@
         <h1>{{rel_product.product_name}}</h1>
         <p class="price">${{rel_product.price}}</p>
         <p>Rating:
-          <div class="star-ratings-css">
-            <div class="star-ratings-css-top" style="width: 100%">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        </div></p>
+          <span class="score"><span style="width: {{rel_product.rating*20}}%"></span></span></p>
         <p>{{rel_product.seller}}</p>
         <a href="{{ url_for('addcart.addcart', pid=rel_product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
         <a href="{{ url_for('reviewHome.seeProductReview', pid=rel_product.product_id) }}" class="btn btn-light"> {{rel_product.product_name}} Reviews </a>
