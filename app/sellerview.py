@@ -80,7 +80,11 @@ def removeProducts2():
 class editProductsForm(FlaskForm):
     old_product_name = StringField('Old Product Name', validators=[DataRequired()])
     product_name = StringField('New Product Name', validators=[DataRequired()])
-    category = StringField('New Product Category', validators=[DataRequired()])
+    myChoices2 = ['None','tools','clothing','furniture',
+'electronics','food','medicine',
+'cleaning','appliances','home',
+'toys','automotive','education','beauty']
+    category = SelectField(choices = myChoices2, validators = None, default = 'None',label = 'Category Select')
     description = StringField('New Product Description', validators=[DataRequired()])
     image = 0
     price = DecimalField('New Product Price', validators=[DataRequired()])
