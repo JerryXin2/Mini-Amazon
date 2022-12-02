@@ -120,12 +120,12 @@ LIMIT :k
                                 available=available)
         return [Product(*row) for row in rows]
 
-    def addProducts(seller_id, product_name, category, description, image,  price, available, quantity):
+    def addProducts(product_id, seller_id, product_name, category, description, image,  price, available, quantity):
         app.db.execute("""
 INSERT INTO Products
 VALUES (:product_id, :seller_id, :product_name, :category, :description, :image, :price, :available, :quantity)
 """,
-                              product_id = randint(20001, 240000000), seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
+                              product_id = product_id, seller_id = seller_id, product_name = product_name, category = category, description = description, image = 0, price = price, available = available, quantity = quantity)
         
         return 1
     
@@ -145,6 +145,21 @@ DELETE FROM Products
 WHERE seller_id = :uid AND product_name = :product_name
 """,
                               uid = uid, product_name=product_name)
+        
+        return 1
+    
+    def removeProducts2(product_id):
+        app.db.execute("""
+DELETE FROM Orders
+WHERE product_id = :product_id;
+DELETE FROM Product_Reviews 
+WHERE product_id = :product_id;
+DELETE FROM Carts
+WHERE product_id = :product_id;
+DELETE FROM Products 
+WHERE product_id = :product_id;
+""",
+                              product_id = product_id)
         
         return 1
     
@@ -392,7 +407,7 @@ WHERE seller_id = :seller_id
 
         SQL_str ='''SELECT DISTINCT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, pr.rating, pr.review, s.seller
                     FROM Products as p, Product_Reviews as pr, Sellers as s
-                    WHERE p.product_id = pr.product_id AND p.product_id = :prod_id 
+                    WHERE p.product_id = pr.product_id
                         AND p.category = :cat
                         AND p.seller_id = s.uid
                     '''
