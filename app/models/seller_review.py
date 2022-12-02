@@ -38,11 +38,11 @@ class Seller_Review:
                                 reviewer_id = reviewer_id)
         return [Seller_Review(*row) for row in rows] 
 
-    def get_all_sellers(search_key):
+    def get_all_sellers():
         rows = app.db.execute("""
     SELECT seller_id, reviewer_id, review, review_time, rating
     FROM Seller_Reviews
-    """,search_key = search_key
+    """,
                                 )
         return [Seller_Review(*row) for row in rows] 
     
@@ -54,6 +54,37 @@ class Seller_Review:
     """,search_key = search_key
                                 )
         return [Seller_Review(*row) for row in rows] 
+    
+    def get_all_seller_reviews_most_recent(search_key):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY review_time DESC
+    """,search_key = search_key
+                                )
+        return [Seller_Review(*row) for row in rows] 
+    
+    def get_all_seller_reviews_rating_asc(search_key):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY rating ASC
+    """,search_key = search_key
+                                )
+        return [Seller_Review(*row) for row in rows] 
+    
+    def get_all_seller_reviews_rating_desc(search_key):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE review LIKE CONCAT('%', :search_key, '%')
+    ORDER BY rating DESC
+    """,search_key = search_key
+                                )
+        return [Seller_Review(*row) for row in rows] 
+
 
     def deleteSellerReview(reviewer_id, seller_id):
         rows = app.db.execute("""

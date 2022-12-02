@@ -97,7 +97,7 @@ LIMIT 5
                                 )
         return [Product_Review(*row) for row in rows] 
     
-    def get_all_by_price_asc(search_key):
+    def get_all_by_rating_asc(search_key):
         rows = app.db.execute("""
     SELECT product_id, uid, review, review_time, rating
     FROM Product_Reviews
@@ -107,7 +107,7 @@ LIMIT 5
                                 )
         return [Product_Review(*row) for row in rows] 
     
-    def get_all_by_price_desc(search_key):
+    def get_all_by_rating_desc(search_key):
         rows = app.db.execute("""
     SELECT product_id, uid, review, review_time, rating
     FROM Product_Reviews
