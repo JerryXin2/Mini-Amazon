@@ -82,12 +82,57 @@ class SeeUserReviewForm(FlaskForm):
 
 @bp.route('/seeUserReview', methods = ["GET", "POST"])
 def seeUserReview():
+    
     form = SeeUserReviewForm()
     if form.validate_on_submit():
         user_id = form.id.data
         allProductReviews = Product_Review.getAllUserReview(user_id)
         allSellerReviews = Seller_Review.getAllUserReview(user_id)
         return render_template('seeUserReview.html', avail_reviews = allProductReviews, avail_reviews2 = allSellerReviews, 
-                           form=form)
+                           form=form, user_id = user_id)
     return render_template('seeUserReview.html', avail_reviews = [], form=form)
+
+@bp.route('/removeReview', methods=['GET','POST'])
+def removeReview():
+    form = SeeUserReviewForm()
+    user_id = form.id.data
+    is_product_review = request.args.get('is_product_review')
+    product_id = request.args.get('product_id')
+    item_id = request.args.get('item_id')
+    if (is_product_review == '1'):
+        Product_Review.deleteUserReview(current_user.uid, item_id)
+    else:
+        Seller_Review.deleteSellerReview(current_user.uid, item_id)
+    return redirect(url_for('reviewHome.seeUserReview'))
+
+
+class UpdateReviewForm(FlaskForm):
+    invalid_review = 0
+    review = StringField('New review')
+    rating = IntegerField('New rating')
+    submit = SubmitField('Update Review')
+
+@bp.route('/updateReview', methods=['GET','POST'])
+def updateReview():
+    is_product_review = request.args.get('is_product_review')
+    product_id = request.args.get('product_id')
+    item_id = request.args.get('item_id')
+    form = UpdateReviewForm()
+    if form.validate_on_submit():
+        review_time = getTime()
+        review = form.review.data
+        rating = form.rating.data
+        if (rating <= 5 and rating >= 1):
+            if (is_product_review == '1'):
+                Product_Review.updateUserReview(current_user.uid, item_id, review, review_time, rating)
+            else:
+                Seller_Review.updateSellerReview(current_user.uid, item_id, review, review_time, rating)
+            return redirect(url_for('reviewHome.seeUserReview'))
+        else: 
+            form.invalid_review = 1
+        return render_template('updateReview.html', form = form)
+    return render_template('updateReview.html', form = form)
+
+    
+
 
