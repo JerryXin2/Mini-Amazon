@@ -52,7 +52,7 @@
         </div></p>
         <p>{{rel_product.seller}}</p>
         <a href="{{ url_for('addcart.addcart', pid=rel_product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
-        <a href="{{ url_for('reviewHome.seeProductReview', sid=rel_product.product_id) }}" class="btn btn-light"> {{rel_product.product_name}} Reviews </a>
+        <a href="{{ url_for('reviewHome.seeProductReview', pid=rel_product.product_id) }}" class="btn btn-light"> {{rel_product.product_name}} Reviews </a>
         <a href="{{ url_for('reviewHome.seeSellerReview', sid=rel_product.seller_id) }}" class="btn btn-light"> {{rel_product.seller}} Reviews </a>
       </div>
       {% endfor %}
