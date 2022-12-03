@@ -100,13 +100,26 @@ def editProducts():
         return render_template('editProducts.html', form=form)
     return render_template('editProducts.html', form=form)
 
-@bp.route('/inventory', methods=['GET', 'POST'])
+class inventoryHistoryForm(FlaskForm):
+    myChoices1 = ['None', 'Price Ascend','Price Descend']
+    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
+    myChoices = ['Search by Name','Search by Description']
+    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
+    search_key = StringField('Key Word')
+    submit = SubmitField('Update Search')
+
+@bp.route('/inventory', methods = ["GET", "POST"])
 def inventory():
-    if current_user.is_authenticated:
-        inventory = Product.get_all_by_seller_id(current_user.uid)
-    else: 
-        inventory = None
-    return render_template('sellerInventory.html', inventory1 = inventory)
+    uid = current_user.uid
+    inventory = Product.get_all_by_seller(uid)
+    form = inventoryHistoryForm()
+    search_key = form.search_key.data
+    print(form.myField.data)
+    if form.myField1.data == 'Price Ascend':
+        inventory = Product.sort_price_asc(uid,search_key) 
+    if form.myField1.data == 'Price Descend':
+        inventory = Product.sort_price_desc(uid,search_key) 
+    return render_template('sellerInventory.html', inventory1=inventory)
 
 @bp.route('/fulfillment', methods=['GET', 'POST'])
 def fulfillment():
@@ -146,29 +159,7 @@ def fulfill():
     return render_template('sellerFulfilled.html',
                            inventory1 = inventory)
 
-class inventoryHistoryForm(FlaskForm):
-    myChoices1 = ['None', 'Most Recent', 'Price Ascend','Price Descend']
-    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
-    myChoices = ['Search by Name','Search by Description']
-    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
-    search_key = StringField('Key Word')
-    submit = SubmitField('Update Search')
 
-@bp.route('/purchaseHistory', methods = ["GET", "POST"])
-def inventoryHistory():
-    uid = current_user.uid
-    purchases = Purchase.get_all_by_uid(uid)
-    form = purchaseHistoryForm()
-    search_key = form.search_key.data
-    print(form.myField.data)
-    if form.myField1.data == 'Price Ascend':
-        purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
-    if form.myField1.data == 'Price Descend':
-        purchases = Purchase.get_all_by_uid_price_desc(uid,search_key) 
-    if form.myField1.data == 'Most Recent':
-        purchases = Purchase.get_all_by_uid_most_recent(uid,search_key)
-    return render_template('purchaseHistory.html',
-                           purchase_history=purchases, form = form)
 
 
 
