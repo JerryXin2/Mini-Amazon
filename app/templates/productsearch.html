@@ -12,7 +12,20 @@
     <div style = "background-color:lightblue;">
       {{ form.search_key(size=32) }}
     </div>
-    
+
+    <div style = "background-color:lightblue;">
+      {{ form.low.label }}<br/>
+      <div style = "background-color:lightblue;">
+        {{ form.low(size=32) }}
+      </div>
+    </div>
+    <p>TO</p>
+    <div style = "background-color:lightblue;">
+      {{ form.high.label }}<br/>
+      <div style = "background-color:lightblue;">
+        {{ form.high(size=32) }}
+      </div>
+    </div>
     <div style = "background-color:lightblue;">
       {{ form.myField.label }}<br/>
     </div>
@@ -32,12 +45,10 @@
     <div style = "background-color:lightblue;">
       {{ form.myField2.label }}<br/>
     </div>
-
     <div style = "background-color:lightblue;">
       {{form.myField2}}
     </div>
-    
-    
+
     {% for error in form.search_key.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
@@ -68,7 +79,7 @@
       <th scope="col">Product Name</th>
       <th scope="col">Category</th>
       <th scope="col">Price</th>
-	    <th scope="col">Description</th>
+      <th scope="col">Description</th>
       <th scope="col">Image</th>
       <th scope= "col"> Add To Cart</th>
       <th scope="col">Average Rating</th>
