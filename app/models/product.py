@@ -547,5 +547,29 @@ WHERE seller_id = :seller_id
                               )
         return [P2(*row) for row in rows]
 
+    @staticmethod
+    def get_items_in_wishlist_by_uid(uid):
+        rows = app.db.execute('''
+SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+                    FROM Products as p, Product_Reviews as pr, Sellers as s, Wishlist as w
+                    WHERE uid = :uid
+                        AND w.product_id = products.product_id
+                        AND p.product_id = pr.product_id
+                        AND p.seller_id = s.uid
+                    GROUP BY p.product_id, pr.review, s.seller
+''',
+        uid = uid)
+        return [P2(*row) for row in rows]
 
+    @staticmethod
+    def remove_item_from_wishlist(uid, product_id):
+        try:
+            rows = app.db.execute("""
+DELETE FROM Wishlist WHERE uid = :uid AND product_id = :product_id 
+""",
+                                uid = uid,
+                                product_id = product_id)
+        except Exception as e:
+            print("failed to delete item from cart")
+        return None
 

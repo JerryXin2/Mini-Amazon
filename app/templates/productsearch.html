@@ -93,8 +93,9 @@
         <td>{{"$%.2f"|format(product.price|float)}}</td>
         <td>{{product.description}}</td>
         <td>{{product.image}}</td>
-        <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
         <td><span class="score"><span style="width: {{product.rating*20}}%"></span></span></td>
+        <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
+        <td> <a href="{{ url_for('productsearch.addWishlist', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Wishlist </a> </td>
       </tr>
     {% endfor %}
   </tbody>

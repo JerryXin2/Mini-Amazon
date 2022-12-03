@@ -99,3 +99,33 @@ def prod_detail(prod_id):
                            related_products = related_products,
                            form = form)
 
+class AddToWishlist(FlaskForm):
+    submit = SubmitField('Add To Wishlist')
+
+@bp.route('/addWishlist', methods=['GET','POST'])
+def addWishlist():
+    product_id = request.args.get('pid')
+    form = AddToWishlist()
+    #If form already filled out
+    if form.validate_on_submit():
+         #Load Carts Page
+        id = current_user.uid
+        items_in_cart = P2.get_items_in_wishlist_by_uid(id)
+        return render_template('cart.html',
+                            items = items_in_cart)
+    #Else Load Quantity Selection
+    return render_template('wishlist.html',
+                            product_id = product_id,
+                            form = form)
+    
+                           
+@bp.route('/deleteWishlist', methods=['GET','POST'])
+def deleteWishlist():
+    #Remove From Cart
+    product_id = request.args.get('pid')
+    P2.remove_item_from_wishlist(current_user.uid, product_id) 
+    #Load Carts Page
+    id = current_user.uid
+    items_in_wishlist = P2.get_items_in_wishlist_by_uid(id)
+    return render_template('wishlist.html',
+                           items = items_in_wishlist)
