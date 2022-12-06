@@ -53,6 +53,7 @@ class Seller_Review:
         rows = app.db.execute("""
     SELECT seller_id, reviewer_id, review, review_time, rating
     FROM Seller_Reviews
+    ORDER BY review_time DESC
     """,
                                 )
         return [Seller_Review(*row) for row in rows] 
