@@ -55,7 +55,6 @@
       <th scope="col">Item Fulfilled</th>
       <th scope="col">Order Completed</th>
       <th scope="col">Fulfillment Time</th>
-      <th scope="col">Order Again</th>
       
     </tr>
   </thead>
@@ -70,10 +69,9 @@
         <td>{{purchase.address}}</td>
         <td>{{ purchase.fulfillment }}</td>
         <td>{{purchase.order_fulfilled}}</td>
-        <td>{% if purchase.fulfillment %}
-          {{ purchase.fulfillment_time}}
-        {% endif %}</td>
-        <td><a href="{{ url_for('addcart.addcart', pid=purchase.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a></td>
+        {% if purchase.fulfillment %}
+          <td>{{ purchase.fulfillment_time}}</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </tbody>
