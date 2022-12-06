@@ -37,6 +37,17 @@ class Seller_Review:
     """,
                                 reviewer_id = reviewer_id)
         return [Seller_Review(*row) for row in rows] 
+    
+    @staticmethod
+    def getAllSellerReview(seller_id):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE seller_id = :seller_id
+    ORDER BY review_time DESC
+    """,
+                                seller_id = seller_id)
+        return [Seller_Review(*row) for row in rows] 
 
     def get_all_sellers():
         rows = app.db.execute("""

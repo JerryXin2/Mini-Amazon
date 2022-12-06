@@ -40,9 +40,9 @@ class AddProductReviewForm(FlaskForm):
 @bp.route('/addProductReview', methods = ["GET", "POST"])
 def addProductReview():
     product_id = request.args.get('pid')
-    print(product_id)
     form = AddProductReviewForm()
     if form.validate_on_submit():
+        product_id = request.args.get('pid')
         dt_string = getTime()
         review = form.review.data
         #product_id = pid
@@ -140,7 +140,7 @@ def updateReview():
 @bp.route('/seeSellerReview', methods = ["GET", "POST"])
 def seeSellerReview():
     seller_id = request.args.get('sid')
-    allSellerReviews = Seller_Review.getAllUserReview(seller_id)
+    allSellerReviews = Seller_Review.getAllSellerReview(seller_id)
     return render_template('seeSellerReview.html', avail_reviews2 = allSellerReviews)
 
 @bp.route('/seeProductReview', methods = ["GET", "POST"])
