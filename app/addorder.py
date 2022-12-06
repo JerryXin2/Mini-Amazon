@@ -32,6 +32,10 @@ class PurchaseHistoryForm(FlaskForm):
 
 @bp.route('/addorder', methods=['GET','POST'])
 def addorder():
+
+    #define form
+    form = PurchaseHistoryForm()
+
     #Get Cart Info
     id = current_user.uid
     items_in_cart = Cart.get(id)
