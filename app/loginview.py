@@ -169,9 +169,9 @@ def registerSeller():
     return render_template('registerSeller.html', form=form)
 
 class purchaseHistoryForm(FlaskForm):
-    myChoices1 = ['Most Recent', 'Price Ascend','Price Descend']
+    myChoices1 = ['None', 'Most Recent', 'Price Ascend','Price Descend']
     myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
-    myChoices = ['Search by Name','Search by Description']
+    myChoices = ['None','Search by Name','Search by Description']
     myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
     search_key = StringField('Key Word')
     submit = SubmitField('Update Search')
@@ -182,7 +182,8 @@ def purchaseHistory():
     purchases = Purchase.get_all_by_uid(uid)
     form = purchaseHistoryForm()
     search_key = form.search_key.data
-    print(form.myField.data)
+    if form.myField1.data == 'None':
+        purchases = Purchase.get_all_by_uid_search(uid,search_key)
     if form.myField1.data == 'Price Ascend':
         purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
     if form.myField1.data == 'Price Descend':

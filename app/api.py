@@ -68,7 +68,6 @@ class UpdateCartQuantityForm(FlaskForm):
     quantity = StringField('')
     submit = SubmitField('Update')
 
-
 @bp.route('/carts', methods = ["GET", "POST"])
 def carts():
     form = UpdateCartQuantityForm()
