@@ -56,52 +56,6 @@ WHERE uid = :uid
 ''',
         uid = uid)
         return [UserCart(*row) for row in rows]
-    
-    @staticmethod
-    def get_items_in_cart_by_uid_search(uid,search_key):
-        rows = app.db.execute('''
-SELECT products.product_name, carts.quantity, products.price, products.product_id
-FROM Carts, Products
-WHERE uid = :uid
-  AND carts.product_id = products.product_id and products.product_name LIKE CONCAT('%', :search_key, '%')
-''',
-        uid = uid, search_key=  search_key)
-        return [UserCart(*row) for row in rows]
-    
-    @staticmethod
-    def get_items_in_cart_by_uid_search_price_asc(uid,search_key):
-        rows = app.db.execute('''
-SELECT products.product_name, carts.quantity, products.price, products.product_id
-FROM Carts, Products
-WHERE uid = :uid
-  AND carts.product_id = products.product_id and products.product_name LIKE CONCAT('%', :search_key, '%')
-ORDER BY price ASC
-''',
-        uid = uid, search_key=  search_key)
-        return [UserCart(*row) for row in rows]
-    
-    @staticmethod
-    def get_items_in_cart_by_uid_search_price_desc(uid,search_key):
-        rows = app.db.execute('''
-SELECT products.product_name, carts.quantity, products.price, products.product_id
-FROM Carts, Products
-WHERE uid = :uid
-  AND carts.product_id = products.product_id and products.product_name LIKE CONCAT('%', :search_key, '%')
-ORDER BY price DESC
-''',
-        uid = uid, search_key=  search_key)
-        return [UserCart(*row) for row in rows]
-    @staticmethod
-    def get_items_in_cart_by_uid_search_name(uid,search_key):
-        rows = app.db.execute('''
-SELECT products.product_name, carts.quantity, products.price, products.product_id
-FROM Carts, Products
-WHERE uid = :uid
-  AND carts.product_id = products.product_id and products.product_name LIKE CONCAT('%', :search_key, '%')
-ORDER BY products.product_name DESC
-''',
-        uid = uid, search_key=  search_key)
-        return [UserCart(*row) for row in rows]
 
     def add_item_to_cart(uid, product_id, quantity): #Will add functionality to choose quantity/update outstanding orders later
         try:
@@ -152,3 +106,5 @@ DELETE FROM Carts WHERE uid = :uid
         except Exception as e:
             print("Failed to delete user cart contents")
         return None
+
+

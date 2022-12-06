@@ -59,10 +59,19 @@ def addorder():
             #Move item
             UserCart.remove_item_from_cart(current_user.uid, item.product_id) 
             Purchase.add_new_order(randint(0,240000000), ordernum, item.product_id, current_product.seller_id, id, current_user.address, datetime.now(), item.quantity, False, datetime.now(), current_product.price)
+    #Reload Carts Page
+    total = 0
+    items_in_cart = UserCart.get_items_in_cart_by_uid(id)
+    for item in items_in_cart:
+        item.product_name = item.product_name[0]
+        total += item.price
+    return render_template('cart.html',
+                           items = items_in_cart,
+                           total = total)
     #Delete Current Cart Contents
     #UserCart.clear_cart(id)
     #Go to orders page (will likely change)
-    purchases = Purchase.get_all_by_uid(id)
+"""     purchases = Purchase.get_all_by_uid(id)
     if form.myField1.data == 'Price Ascend':
         purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
     if form.myField1.data == 'Price Descend':
@@ -77,4 +86,4 @@ def addorder():
                     purchase.order_fulfilled = False
     return render_template('purchase.html',
                            purchase_history=purchases,
-                           form=PurchaseHistoryForm())
+                           form=PurchaseHistoryForm()) """
