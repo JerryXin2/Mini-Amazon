@@ -95,6 +95,42 @@ LIMIT :k
                                 search_key = search_key,
                                 available=available)
         return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def get_all_by_seller_search(uid, search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+    FROM Products
+    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
+    ''',
+                                search_key = search_key,uid= uid,
+                                available=available)
+        return [Product(*row) for row in rows]
+
+    @staticmethod
+    def get_all_by_seller_sort_price_asc(uid, search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+    FROM Products
+    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
+    ORDER BY price ASC
+    ''',
+                                search_key = search_key,uid= uid,
+                                available=available)
+        return [Product(*row) for row in rows]
+
+    @staticmethod
+    def get_all_by_seller_sort_price_desc(uid, search_key, available=True):
+        rows = app.db.execute('''
+    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+    FROM Products
+    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
+    ORDER BY price DESC
+    ''',
+                                search_key = search_key,uid= uid,
+                                available=available)
+        return [Product(*row) for row in rows]
     
     @staticmethod
     def sort_price_desc(search_key, available=True):

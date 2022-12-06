@@ -100,13 +100,29 @@ def editProducts():
         return render_template('editProducts.html', form=form)
     return render_template('editProducts.html', form=form)
 
+
+class inventoryHistoryForm(FlaskForm):
+    myChoices1 = ['None', 'Price Ascend','Price Descend']
+    myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
+    myChoices = ['Search by Name','Search by Description']
+    myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
+    search_key = StringField('Key Word')
+    submit = SubmitField('Update Search')
+
+
 @bp.route('/inventory', methods=['GET', 'POST'])
 def inventory():
-    if current_user.is_authenticated:
-        inventory = Product.get_all_by_seller_id(current_user.uid)
-    else: 
-        inventory = None
-    return render_template('sellerInventory.html', inventory1 = inventory)
+    uid = current_user.uid
+    inventory = Product.get_all_by_seller(uid)
+    form = inventoryHistoryForm()
+    search_key = form.search_key.data
+    if form.myField1.data == 'None':
+        inventory = Product.get_all_by_seller_search(uid,search_key) 
+    if form.myField1.data == 'Price Ascend':
+        inventory = Product.get_all_by_seller_sort_price_asc(uid,search_key) 
+    if form.myField1.data == 'Price Descend':
+        inventory = Product.get_all_by_seller_sort_price_desc(uid,search_key) 
+    return render_template('sellerInventory.html', inventory1 = inventory, form = form)
 
 @bp.route('/fulfillment', methods=['GET', 'POST'])
 def fulfillment():
