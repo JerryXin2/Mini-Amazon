@@ -5,7 +5,9 @@
 
 <body>
     <div class="main">
-      
+
+      {% if current_user.is_authenticated %}
+
       <h1 style="color:black; text-align: center;">  </h1>
       <h1 style="color:black; text-align: center;"> Hello {{current_user.firstname}}! </h1>
       <h1 style="color:black; text-align: center;"> Your account ID is {{current_user.uid}} </h1>
@@ -13,6 +15,13 @@
 
       <a href="{{ url_for('reviewHome.addProductReview') }}" type="button" class="btn btn-dark"> Add Product Review</a>
       <a href="{{ url_for('reviewHome.addSellerReview') }}" type="button" class="btn btn-dark"> Add Seller Review</a>
+
+      {% else %}
+
+      <h1 style="color:black; text-align: center;"> Sign in to add or edit reviews! </h1>
+
+      {% endif %}
+
       <a href="{{ url_for('reviewHome.seeUserReview') }}" type="button" class="btn btn-dark"> See User Review</a>
       <a href="{{ url_for('reviewHome.productReviews') }}" type="button" class="btn btn-dark"> All Product Reviews</a>
       <a href="{{ url_for('reviewHome.sellerReviews') }}" type="button" class="btn btn-dark"> All Seller Reviews</a>
