@@ -50,6 +50,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">Reviewer User ID</th>
+          <th scope="col">Seller ID</th>
           <th scope="col">Review</th>
             <th scope="col">Time</th>
           <th scope="col">Rating</th>
@@ -58,6 +59,7 @@
       <tbody>
         {% for review in avail_reviews2%}
           <tr>
+            <td>{{review.reviewer_id}}</td>
             <td>{{review.seller_id}}</td>
             <td>{{review.review}}</td>
                 <td>{{review.review_time}}</td>
