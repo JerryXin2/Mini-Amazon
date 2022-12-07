@@ -106,3 +106,5 @@ DELETE FROM Carts WHERE uid = :uid
         except Exception as e:
             print("Failed to delete user cart contents")
         return None
+
+

@@ -13,7 +13,7 @@
       {% for product in avail_products%}
       
       <div class="card">
-        <img src={{product.image}} style="width:100%">
+        <img src={{product.image}} style = "width: 25vw">
         <h1>{{product.product_name}}</h1>
         <p class="price">${{product.price}}</p>
         <p>{{product.description}}</p>
@@ -22,12 +22,12 @@
         <p>Rating:
           <span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
         <p>Seller: {{product.seller}}</p>
-        <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
-        <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light"> {{product.product_name}} Reviews </a>
-        <a href="{{ url_for('reviewHome.addProductReview')}}" class="btn btn-light"> Add a Product Review </a>
-        <a href="{{ url_for('reviewHome.seeSellerReview', sid=product.seller_id) }}" class="btn btn-light"> {{product.seller}} Reviews </a>
-        <a href="{{ url_for('reviewHome.addSellerReview')}}" class="btn btn-light"> Add a Seller Review </a>
-
+        <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light btnspace"> Add To Cart </a>
+        <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light btnspace"> {{product.product_name}} Reviews </a>
+        <a href="{{ url_for('reviewHome.addProductReview', pid=product.product_id) }}" class="btn btn-light btnspace"> Add a Product Review </a>
+        <a href="{{ url_for('reviewHome.seeSellerReview', sid=product.seller_id) }}" class="btn btn-light btnspace"> {{product.seller}} Reviews </a>
+        <a href="{{ url_for('reviewHome.addSellerReview', sid=product.seller_id) }}" class="btn btn-light btnspace"> Add a Seller Review </a>
+        <a href="{{ url_for('loginview.seeUser', uid=product.seller_id) }}" class="btn btn-light btnspace"> {{product.seller}}'s Seller Page </a>
 
       </div>
       {% endfor %}
@@ -41,15 +41,15 @@
       {% for rel_product in related_products%}
       
       <div class="card">
-        <img src={{rel_product.image}} style="width:100%">
+        <img src={{rel_product.image}} style="width: 25vw">
         <h1>{{rel_product.product_name}}</h1>
         <p class="price">${{rel_product.price}}</p>
         <p>Rating:
           <span class="score"><span style="width: {{rel_product.rating*20}}%"></span></span></p>
         <p>Seller: {{rel_product.seller}}</p>
-        <a href="{{ url_for('addcart.addcart', pid=rel_product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a>
-        <a href="{{ url_for('reviewHome.seeProductReview', pid=rel_product.product_id) }}" class="btn btn-light"> {{rel_product.product_name}} Reviews </a>
-        <a href="{{ url_for('reviewHome.seeSellerReview', sid=rel_product.seller_id) }}" class="btn btn-light"> {{rel_product.seller}} Reviews </a>
+        <a href="{{ url_for('addcart.addcart', pid=rel_product.product_id) }}" type="button" class="btn btn-light btnspace"> Add To Cart </a>
+        <a href="{{ url_for('reviewHome.seeProductReview', pid=rel_product.product_id) }}" class="btn btn-light btnspace"> {{rel_product.product_name}} Reviews </a>
+        <a href="{{ url_for('reviewHome.seeSellerReview', sid=rel_product.seller_id) }}" class="btn btn-light btnspace"> {{rel_product.seller}} Reviews </a>
       </div>
       {% endfor %}
     </tbody>

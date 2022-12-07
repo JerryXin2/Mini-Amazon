@@ -9,11 +9,6 @@
     {% for error in form.review.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
-    {{ form.id.label }}<br/>
-    {{ form.id(size=32) }}<br/>
-    {% for error in form.id.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
     {{ form.rating.label }}<br/>
     {{ form.rating(size=32) }}<br/>
     {% for error in form.rating.errors %}

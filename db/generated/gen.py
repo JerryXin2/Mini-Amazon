@@ -75,7 +75,7 @@ def gen_products(num_products, available_sids):
             product_name = fake.sentence(nb_words=4)[:-1]
             category = fake.word(ext_word_list=my_word_list)
             description = fake.sentence(nb_words = 20) [:-1]
-            image = fake.dga()
+            image = fake.image_url()
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
             available = fake.random_element(elements=('true', 'false'))
             if available == 'true':

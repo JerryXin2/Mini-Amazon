@@ -15,6 +15,8 @@ from .models.cart import UserCart
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.seller import Seller
+from .models.product_review import Product_Review
+from .models.seller_review import Seller_Review
 
 from flask import Blueprint
 bp = Blueprint('loginview', __name__)
@@ -24,6 +26,7 @@ def loginview():
     return render_template('loginview.html', title='loginview')
 
 class AddBalanceForm(FlaskForm):
+    neg = 0
     add = IntegerField('Additional Balance', validators=[DataRequired()])
     submit = SubmitField('Add Balance to Account')
 
@@ -32,8 +35,13 @@ def addBalance():
     form = AddBalanceForm()
     if form.validate_on_submit():
         additional = form.add.data
-        ret = User.addBal(current_user.uid, additional)
-        return render_template('addBalance.html',
+        if(additional < 0):
+            form.neg = 1
+            return render_template('addBalance.html',
+                           form=form)
+        else:
+            ret = User.addBal(current_user.uid, additional)
+            return render_template('addBalance.html',
                            form=form)
     return render_template('addBalance.html', form=form)
 
@@ -87,6 +95,7 @@ def giftBalance():
 
 class WithdrawBalanceForm(FlaskForm):
     overdrawn = 0
+    neg = 0
     withdraw = IntegerField('Withdraw Balance', validators=[DataRequired()])
     submit = SubmitField('Withdraw Balance From Account')
 
@@ -97,6 +106,10 @@ def withdrawBalance():
         less = form.withdraw.data
         if current_user.balance < less:
             form.overdrawn = 1
+            return render_template('withdrawBalance.html',
+                           form=form)
+        if less < 0:
+            form.neg = 1
             return render_template('withdrawBalance.html',
                            form=form)
         else:
@@ -167,9 +180,9 @@ def registerSeller():
     return render_template('registerSeller.html', form=form)
 
 class purchaseHistoryForm(FlaskForm):
-    myChoices1 = ['Most Recent', 'Price Ascend','Price Descend']
+    myChoices1 = ['None', 'Most Recent', 'Price Ascend','Price Descend']
     myField1 = SelectField(choices = myChoices1, validators = None, default = 'None',label = 'Filter')
-    myChoices = ['Search by Name','Search by Description']
+    myChoices = ['None','Search by Name','Search by Description']
     myField = SelectField(choices = myChoices, validators = None, default = 'None',label = 'Section Select')
     search_key = StringField('Key Word')
     submit = SubmitField('Update Search')
@@ -180,7 +193,8 @@ def purchaseHistory():
     purchases = Purchase.get_all_by_uid(uid)
     form = purchaseHistoryForm()
     search_key = form.search_key.data
-    print(form.myField.data)
+    if form.myField1.data == 'None':
+        purchases = Purchase.get_all_by_uid_search(uid,search_key)
     if form.myField1.data == 'Price Ascend':
         purchases = Purchase.get_all_by_uid_price_asc(uid,search_key) 
     if form.myField1.data == 'Price Descend':
@@ -189,3 +203,13 @@ def purchaseHistory():
         purchases = Purchase.get_all_by_uid_most_recent(uid,search_key)
     return render_template('purchaseHistory.html',
                            purchase_history=purchases, form = form)
+
+@bp.route('/seeUser', methods = ["GET", "POST"])
+def seeUser():
+    uid = request.args.get('uid')
+    user = User.getUser(uid)
+    reviews = Seller_Review.getAllUserReview(uid)
+    reviews2 = Product_Review.getAllUserReview(uid)
+    seller = Seller.checkSeller(uid)
+    return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller)
+

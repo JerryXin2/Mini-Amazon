@@ -132,3 +132,13 @@ WHERE uid = :uid
                               uid = uid, address = address)
         
         return 1
+    @staticmethod
+
+    def getUser(uid):
+        rows = app.db.execute("""
+SELECT uid, email, firstname, lastname, address, password, balance
+FROM Users
+WHERE uid = :uid
+""",
+                              uid=uid)
+        return User(*(rows[0][0:]))

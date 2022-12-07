@@ -1,6 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<form class= "search" action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <p>
+    <div style = "background-color:lightblue;">
+      {{ form.search_key.label }}<br/>
+    </div>
+
+    <div style = "background-color:lightblue;">
+      {{ form.search_key(size=32) }}
+    </div>
+
+    <div style = "background-color:lightblue;">
+      {{ form.myField1.label }}<br/>
+    </div>
+
+    <div style = "background-color:lightblue;">
+      {{form.myField1(size=10)}}
+    </div>
+    
+    
+    {% for error in form.search_key.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  
+  </p>
+  <p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+  </p>
+  <div style = "position:absolute; left:800px; top:250px; background-color:black;">
+    {{ form.submit(class_="btn btn-black") }}
+  </div>
+  
+  <br><br>
+
+  
 <h2>Seller Inventory Overview</h2>
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
@@ -13,6 +57,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price</th>
       <th scope="col">Availability</th>
+      <th scope="col">Delete From Inventory</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +71,8 @@
         <td>{{purchase.quantity}}</td>
         <td>{{purchase.price}}</td>
         <td>{{purchase.availability}}</td>
+        <td><a href="{{ url_for('sellerview.removeProducts2', uid=purchase.product_id) }}" class="btn btn-dark"> Delete From Inventory </a></td>
+
       </tr>
     {% endfor %}
   </tbody>
