@@ -48,31 +48,33 @@ EXTRA FEATURES:
 6. Button to be able to gift balance to another user, requires user to input other user’s uid and gift amount, fully functional
 	-restrictions implemented: cannot give negative amount, and cannot give more than the current user’s account balance
 
-7. Ability to search All Product Reviews, fully functional
-8. Ability to filter All Product Reviews by Price Ascending, cross compatible with search, fully functional
-9. Ability to filter All Product Reviews by Price Descending, cross compatible with search, fully functional
-10. Cross compatibility between ability to filter All Product Reviews by Most Recent and search, fully functional
+7. Added start depiction of ratings for each product, fully functional
+8. Added a wishlist that is cross compatible to user and and cart pages and functions, fully functional
+9. Added a button to reorder past orders in Detailed Order Page, fully functional
 
-11. Ability to search All Seller Reviews, fully functional
-12. Ability to filter All Seller Reviews by Price Ascending, cross compatible with search, fully functional
-13. Ability to filter All Seller Reviews by Price Descending, cross compatible with search, fully functional
-14. Cross compatibility between ability to filter All Seller Reviews by Most Recent and search, fully functional
+10. Ability to search All Product Reviews, fully functional
+11. Ability to filter All Product Reviews by Price Ascending, cross compatible with search, fully functional
+12. Ability to filter All Product Reviews by Price Descending, cross compatible with search, fully functional
+13. Cross compatibility between ability to filter All Product Reviews by Most Recent and search, fully functional
 
-15. Ability to search Detailed Order Page, fully functional
-16. Ability to filter Detailed Order Page by Price Ascending, cross compatible with search, fully functional
-17. Ability to filter Detailed Order Page by Price Descending, cross compatible with search, fully functional
-18. Cross compatibility between ability to filter Detailed Order Page by Most Recent and search, fully functional
+14. Ability to search All Seller Reviews, fully functional
+15. Ability to filter All Seller Reviews by Price Ascending, cross compatible with search, fully functional
+16. Ability to filter All Seller Reviews by Price Descending, cross compatible with search, fully functional
+17. Cross compatibility between ability to filter All Seller Reviews by Most Recent and search, fully functional
 
-19. Ability to search Inventory Page, fully functional
-20. Ability to filter Inventory Page by Price Ascending, cross compatible with search, fully functional
-21. Ability to filter Inventory Page by Price Descending, cross compatible with search, fully functional
+18. Ability to search Detailed Order Page, fully functional
+19. Ability to filter Detailed Order Page by Price Ascending, cross compatible with search, fully functional
+20. Ability to filter Detailed Order Page by Price Descending, cross compatible with search, fully functional
+21. Cross compatibility between ability to filter Detailed Order Page by Most Recent and search, fully functional
 
-22. Ability to filter Product Page by Price Range, cross compatible with all other filters, fully functional
-23. Ability to filter Product Page by Average Rating, cross compatible with all other filters, fully functional
-24. Ability to filter Product Page by Categories, cross compatible with all other filters, fully functional
-25. Added start depiction of ratings for each product, fully functional
-26. Added a wishlist that is cross compatible to user and and cart pages and functions, fully functional
-27. Added a button to reorder past orders in Detailed Order Page, fully functional
+22. Ability to search Inventory Page, fully functional
+23. Ability to filter Inventory Page by Price Ascending, cross compatible with search, fully functional
+24. Ability to filter Inventory Page by Price Descending, cross compatible with search, fully functional
+
+25. Ability to filter Product Page by Price Range, cross compatible with all other filters, fully functional
+26. Ability to filter Product Page by Average Rating, cross compatible with all other filters, fully functional
+27. Ability to filter Product Page by Categories, cross compatible with all other filters, fully functional
+
 
 
 
