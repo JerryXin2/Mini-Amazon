@@ -66,3 +66,12 @@ EXTRA FEATURES:
 19. Ability to search Inventory Page
 20. Ability to filter Inventory Page by Price Ascending, cross compatible with search
 21. Ability to filter Inventory Page by Price Descending, cross compatible with search
+
+22. Ability to filter Product Page by Price Range, cross compatible with all other filters
+23. Ability to filter Product Page by Average Rating, cross compatible with all other filters
+24. Ability to filter Product Page by Categories, cross compatible with all other filters
+25. Added start depiction of ratings for each product
+26. Added a wishlist that is cross compatible to user and and cart pages and functions
+
+
+
