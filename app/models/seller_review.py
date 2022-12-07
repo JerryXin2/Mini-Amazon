@@ -117,3 +117,18 @@ class Seller_Review:
 
         return 1
 
+    @staticmethod
+    def get_average_seller_product_rating(uid, available=True):
+        avg_rating = app.db.execute('''
+
+    SELECT SUM(a.avg_rating)/COUNT(a.avg_rating) as complete_avg
+    FROM (SELECT AVG(pr.rating) as avg_rating
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE s.uid = :uid 
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, s.uid, pr.rating) a
+    ''', 
+    
+                            uid = uid)
+        return avg_rating
