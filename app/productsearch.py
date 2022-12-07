@@ -47,39 +47,53 @@ def productsearch():
         if low is not None and high is not None:
             products = P2.search_name_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
         elif low is None and high is not None:
             low = 0
             products = P2.search_name_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
         elif low is not None and high is None:
             high = 1000000
             products = P2.search_name_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
+        elif low is None and high is None:
+            low = 0
+            high = 1000000
+            products = P2.search_name_range_price(search_key, sort, low, high)
+            if form.myField2.data != 'None':
+                cat = form.myField2.data
+                products = P2.search_name_filter_category_range_price(search_key, cat, sort, low, high)
     if form.myField.data == 'Description':
         products = P2.search_desc(search_key, sort)
         if low is not None and high is not None:
             products = P2.search_desc_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
         elif low is None and high is not None:
             low = 0
             products = P2.search_desc_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
         elif low is not None and high is None:
             high = 1000000
             products = P2.search_desc_range_price(search_key, sort, low, high)
             if form.myField2.data != 'None':
-                    cat = form.myField2.data
-                    products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
+                cat = form.myField2.data
+                products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
+        elif low is None and high is None:
+            low = 0
+            high = 1000000
+            products = P2.search_desc_range_price(search_key, sort, low, high)
+            if form.myField2.data != 'None':
+                cat = form.myField2.data
+                products = P2.search_desc_filter_category_range_price(search_key, cat, sort, low, high)
     return render_template('productsearch.html', avail_products = products, form = form)
 
 @bp.route('/prod_detail/<prod_id>', methods=['GET', 'POST'])
