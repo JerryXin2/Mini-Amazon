@@ -115,11 +115,10 @@ def gen_wishlist(num_wish):
             uid = i 
             for i in range(random.randint(0,9)):
                 product_id = fake.random_element(elements = available_pids) 
-                quantity = fake.random_int(min = 1, max = 9)
                 pair = (uid, product_id)
                 if pair not in set:
                     set.append(pair)
-                    writer.writerow([uid, product_id, quantity])
+                    writer.writerow([uid, product_id])
         print(f'{num_wish} generated')
     return
 

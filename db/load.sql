@@ -11,7 +11,6 @@ SELECT pg_catalog.setval('public.users_uid_seq',
 
 \COPY Products FROM 'Products.csv' WITH DELIMITER ',' NULL '' CSV
 
-
 \COPY Carts FROM 'Carts.csv' WITH DELIMITER ',' NULL '' CSV
 
 \COPY Wishlist FROM 'Wishlist.csv' WITH DELIMITER ',' NULL '' CSV

@@ -74,6 +74,7 @@
           Hello {{current_user.firstname}}! <a href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a>
           <a href="{{ url_for('loginview.loginview') }}" type="button" class="btn btn-light">Profile</a>
           <a href="{{url_for('api.carts') }}" type="button" class="btn btn-light"> Cart </a>
+          <a href="{{url_for('wishlistitem.wishlist') }}" type="button" class="btn btn-light"> Wishlist </a>
           <a href="{{url_for('api.users') }}" type="button" class="btn btn-light"> Past Orders </a>
           <a href="{{url_for('sellerview.sellerview') }}" type="button" class="btn btn-light"> Seller Overview </a>
         {% else %}

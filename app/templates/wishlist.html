@@ -19,8 +19,8 @@
         <th scope="row">{{product.product_name}}</th>
         <td>{{product.quantity}}</td>
         <td>{{product.price}}</td>
-        <td> <a href="{{ url_for('productsearch.deleteWishlist', pid=product.product_id)}}" type="button" class="btn btn-light"> Delete From Wishlist</a> </td>
-        <td> <a href="{{ url_for('productsearch.addWishlist', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
+        <td> <a href="{{ url_for('wishlistitem.deleteWishlist', pid=product.product_id)}}" type="button" class="btn btn-light"> Delete From Wishlist</a> </td>
+        <td> <a href="{{ url_for('wishlistitem.addWishlist', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
       </tr>
     {% endfor %}
   </tbody>
