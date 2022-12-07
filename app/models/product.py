@@ -504,12 +504,8 @@ WHERE seller_id = :seller_id
 
         SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
                     FROM Products as p, Product_Reviews as pr, Sellers as s
-<<<<<<< HEAD
                     WHERE p.description LIKE CONCAT('%', :search_key, '%') 
                         AND p.product_id = pr.product_id
-=======
-                    WHERE p.product_id = pr.product_id
->>>>>>> main
                         AND p.category = :cat
                         AND p.seller_id = s.uid
                     GROUP BY p.product_id, pr.review, s.seller
