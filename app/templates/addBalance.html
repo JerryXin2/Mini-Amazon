@@ -9,6 +9,9 @@
     {% for error in form.add.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
+    {% if form.neg == 1%}
+          You cannot add a negative account balance!
+    {% endif %}
   </p>
   <p>
     {% with messages = get_flashed_messages() %}

@@ -20,7 +20,12 @@
         <th scope="row">{{product.product_id}}</th>
         <td>{{product.product_name}}</td>
         <td>{{product.price}}</td>
+
+        {% if current_user.is_authenticated %}
+
         <td> <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a> </td>
+
+        {% endif %}
       </tr>
     {% endfor %}
   </tbody>

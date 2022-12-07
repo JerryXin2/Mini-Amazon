@@ -37,11 +37,23 @@ class Seller_Review:
     """,
                                 reviewer_id = reviewer_id)
         return [Seller_Review(*row) for row in rows] 
+    
+    @staticmethod
+    def getAllSellerReview(seller_id):
+        rows = app.db.execute("""
+    SELECT seller_id, reviewer_id, review, review_time, rating
+    FROM Seller_Reviews
+    WHERE seller_id = :seller_id
+    ORDER BY review_time DESC
+    """,
+                                seller_id = seller_id)
+        return [Seller_Review(*row) for row in rows] 
 
     def get_all_sellers():
         rows = app.db.execute("""
     SELECT seller_id, reviewer_id, review, review_time, rating
     FROM Seller_Reviews
+    ORDER BY review_time DESC
     """,
                                 )
         return [Seller_Review(*row) for row in rows] 
@@ -106,3 +118,18 @@ class Seller_Review:
 
         return 1
 
+    @staticmethod
+    def get_average_seller_product_rating(uid, available=True):
+        avg_rating = app.db.execute('''
+
+    SELECT SUM(a.avg_rating)/COUNT(a.avg_rating) as complete_avg
+    FROM (SELECT AVG(pr.rating) as avg_rating
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE s.uid = :uid 
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, s.uid, pr.rating) a
+    ''', 
+    
+                            uid = uid)
+        return avg_rating

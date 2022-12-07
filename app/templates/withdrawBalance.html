@@ -12,6 +12,9 @@
     {% if form.overdrawn == 1%}
           You cannot withdraw more than your account balance!
     {% endif %}
+    {% if form.neg == 1%}
+          You cannot withdraw a negative amount!
+    {% endif %}
   </p>
   <p>
     {% with messages = get_flashed_messages() %}

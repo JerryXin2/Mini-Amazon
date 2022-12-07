@@ -22,11 +22,17 @@
         <p>Rating:
           <span class="score"><span style="width: {{product.rating*20}}%"></span></span></p>
         <p>Seller: {{product.seller}}</p>
+
+        {% if current_user.is_authenticated %}
+
         <a href="{{ url_for('addcart.addcart', pid=product.product_id) }}" type="button" class="btn btn-light btnspace"> Add To Cart </a>
-        <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light btnspace"> {{product.product_name}} Reviews </a>
-        <a href="{{ url_for('reviewHome.addProductReview')}}" class="btn btn-light btnspace"> Add a Product Review </a>
+        <a href="{{ url_for('reviewHome.addProductReview', pid=product.product_id) }}" class="btn btn-light btnspace"> Add a Product Review </a>
+        <a href="{{ url_for('reviewHome.addSellerReview', sid=product.seller_id) }}" class="btn btn-light btnspace"> Add a Seller Review </a>
+
+        {% endif %}
+
         <a href="{{ url_for('reviewHome.seeSellerReview', sid=product.seller_id) }}" class="btn btn-light btnspace"> {{product.seller}} Reviews </a>
-        <a href="{{ url_for('reviewHome.addSellerReview')}}" class="btn btn-light btnspace"> Add a Seller Review </a>
+        <a href="{{ url_for('reviewHome.seeProductReview', pid=product.product_id) }}" class="btn btn-light btnspace"> {{product.product_name}} Reviews </a>
         <a href="{{ url_for('loginview.seeUser', uid=product.seller_id) }}" class="btn btn-light btnspace"> {{product.seller}}'s Seller Page </a>
 
       </div>

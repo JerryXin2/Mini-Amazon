@@ -26,6 +26,7 @@ def loginview():
     return render_template('loginview.html', title='loginview')
 
 class AddBalanceForm(FlaskForm):
+    neg = 0
     add = IntegerField('Additional Balance', validators=[DataRequired()])
     submit = SubmitField('Add Balance to Account')
 
@@ -34,8 +35,13 @@ def addBalance():
     form = AddBalanceForm()
     if form.validate_on_submit():
         additional = form.add.data
-        ret = User.addBal(current_user.uid, additional)
-        return render_template('addBalance.html',
+        if(additional < 0):
+            form.neg = 1
+            return render_template('addBalance.html',
+                           form=form)
+        else:
+            ret = User.addBal(current_user.uid, additional)
+            return render_template('addBalance.html',
                            form=form)
     return render_template('addBalance.html', form=form)
 
@@ -89,6 +95,7 @@ def giftBalance():
 
 class WithdrawBalanceForm(FlaskForm):
     overdrawn = 0
+    neg = 0
     withdraw = IntegerField('Withdraw Balance', validators=[DataRequired()])
     submit = SubmitField('Withdraw Balance From Account')
 
@@ -99,6 +106,10 @@ def withdrawBalance():
         less = form.withdraw.data
         if current_user.balance < less:
             form.overdrawn = 1
+            return render_template('withdrawBalance.html',
+                           form=form)
+        if less < 0:
+            form.neg = 1
             return render_template('withdrawBalance.html',
                            form=form)
         else:
@@ -197,8 +208,10 @@ def purchaseHistory():
 def seeUser():
     uid = request.args.get('uid')
     user = User.getUser(uid)
+    rating1 = Seller_Review.get_average_seller_product_rating(uid)
+    rating = float(str(rating1)[11:-5])
     reviews = Seller_Review.getAllUserReview(uid)
     reviews2 = Product_Review.getAllUserReview(uid)
     seller = Seller.checkSeller(uid)
-    return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller)
+    return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller, rating=rating)
 
