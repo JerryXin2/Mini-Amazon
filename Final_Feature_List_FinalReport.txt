@@ -74,6 +74,7 @@ EXTRA FEATURES:
 25. Ability to filter Product Page by Price Range, cross compatible with all other filters, fully functional
 26. Ability to filter Product Page by Average Rating, cross compatible with all other filters, fully functional
 27. Ability to filter Product Page by Categories, cross compatible with all other filters, fully functional
+28. Ability to see average product review as a Seller visually using stars, fully functional
 
 
 
