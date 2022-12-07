@@ -17,6 +17,7 @@ from .models.purchase import Purchase
 from .models.seller import Seller
 from .models.product_review import Product_Review
 from .models.seller_review import Seller_Review
+from .models.gift import Gift
 
 from flask import Blueprint
 bp = Blueprint('loginview', __name__)
@@ -201,4 +202,19 @@ def seeUser():
     reviews2 = Product_Review.getAllUserReview(uid)
     seller = Seller.checkSeller(uid)
     return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller)
+
+class RedeemForm(FlaskForm):
+    code = StringField('Code', validators=[DataRequired()])
+    submit = SubmitField('Reedeem Code')
+
+@bp.route('/redeemCode', methods = ["GET", "POST"])
+def redeemCode():
+    print("cp2")
+    form = RedeemForm()
+    if form.validate_on_submit():
+        code = form.code.data
+        giftcard = Gift.get(code)
+        User.addBal(current_user.uid, giftcard.amount)
+        return render_template('loginview.html', title='loginview')
+    return render_template('redeem.html', form = form)
 

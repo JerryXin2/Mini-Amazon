@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 import csv
 from faker import Faker
-import random
+import random, string
 
 num_users = 200
 num_sellers = 50
@@ -10,6 +10,8 @@ num_carts = num_users
 num_orders = 25000
 num_product_reviews  = 5000
 num_seller_reviews = 2000
+#num_coupons = 10000
+num_gifts = 1000
 
 Faker.seed(1)
 fake = Faker()
@@ -169,6 +171,35 @@ def gen_seller_reviews(num_seller_reviews, available_sids, available_uids):
         print(f'{num_product_reviews} generated')
     return
 
+""" def gen_coupons(num_coupons, available_pids, available_sids):
+    with open('Coupons.csv', 'w') as f:
+        writer = get_csv_writer(f)
+        print('Coupons...', end=' ', flush=True)
+        for product_id in range(num_coupons):
+            if product_id % 100 == 0:
+                print(f'{product_id}', end=' ', flush=True)
+            code = fake.text(max_nb_chars=10)
+            product_id = fake.random_element(elements = available_pids)
+            seller_id = fake.random_element(elements = available_uids) #Owner
+            discount_percent = f'{str(fake.random_int(max=99))}.{fake.random_int(max=99):02}'
+            expiration = fake.future_datetime()
+            writer.writerow([code, seller_id, product_id, discount_percent, expiration])
+        print(f'{num_coupons} generated')
+    return """
+
+def gen_gifts(num_gifts): 
+    with open('Gifts.csv', 'w') as f:
+        writer = get_csv_writer(f)
+        print('Gifts...', end=' ', flush=True)
+        for gift_id in range(num_gifts):
+            if gift_id % 100 == 0:
+                print(f'{gift_id}', end=' ', flush=True)
+            code = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+            amount = f'{str(fake.random_int(max=1000))}.{fake.random_int(max=99):02}'
+            writer.writerow([code, amount])
+        print(f'{num_coupons} generated')
+    return  
+
 
 
 available_uids = gen_users(num_users)
@@ -178,3 +209,5 @@ gen_carts(num_carts)
 gen_orders(num_orders, available_uids, available_pids, available_sids)
 gen_product_reviews(num_product_reviews, available_pids, available_uids)
 gen_seller_reviews(num_seller_reviews, available_sids, available_uids)
+#gen_coupons(num_coupons, available_pids, available_sids)
+gen_gifts(num_gifts)

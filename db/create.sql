@@ -75,4 +75,16 @@ CREATE TABLE Seller_Reviews(
     rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
     PRIMARY KEY(reviewer_id, seller_id)
 );
+/* 
+CREATE TABLE Coupons(
+    code VARCHAR(255) NOT NULL PRIMARY KEY,
+    seller_id INT NOT NULL REFERENCES Sellers(uid),
+    product_id INT NOT NULL REFERENCES Products(product_id),
+    discount_percent DECIMAL(4,2) NOT NULL DEFAULT 0,
+    expiration timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC')
+); */
 
+CREATE TABLE Gifts(
+    code VARCHAR(255) NOT NULL PRIMARY KEY,
+    amount DECIMAL(12,2) NOT NULL
+);
