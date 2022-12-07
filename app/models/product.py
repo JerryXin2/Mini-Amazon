@@ -322,6 +322,7 @@ WHERE seller_id = :seller_id
     WHERE p.product_name LIKE CONCAT('%', SUBSTRING(:prod_name, 0, 5), '%') 
     AND p.product_id = pr.product_id 
     AND p.seller_id = s.uid
+    AND p.available = :available
     AND p.product_name != :prod_name
     GROUP BY p.product_id, p.category, pr.review, s.seller
     ''',
@@ -336,6 +337,7 @@ WHERE seller_id = :seller_id
     FROM Products as p, Product_Reviews as pr, Sellers as s
     WHERE p.product_id = pr.product_id 
     AND p.seller_id = s.uid
+    AND p.available = :available
     GROUP BY p.product_id, p.category, pr.review, s.seller
     ''',
                                 available=available)
@@ -358,6 +360,7 @@ WHERE seller_id = :seller_id
     WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
     AND p.product_id = pr.product_id
     AND p.seller_id = s.uid
+    AND p.available = :available
     GROUP BY p.product_id, p.category, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -387,6 +390,7 @@ WHERE seller_id = :seller_id
     WHERE p.description LIKE CONCAT('%', :search_key, '%') 
     AND p.product_id = pr.product_id
     AND p.seller_id = s.uid
+    AND p.available = :available
     GROUP BY p.product_id, p.category, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -416,6 +420,7 @@ WHERE seller_id = :seller_id
     AND p.price BETWEEN :low AND :high
     AND p.product_id = pr.product_id
     AND p.seller_id = s.uid
+    AND p.available = :available
     GROUP BY p.product_id, p.category, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -447,6 +452,7 @@ WHERE seller_id = :seller_id
     AND p.price BETWEEN :low AND :high
     AND p.product_id = pr.product_id
     AND p.seller_id = s.uid
+    AND p.available = :available
     GROUP BY p.product_id, p.category, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -478,6 +484,7 @@ WHERE seller_id = :seller_id
                         AND p.product_id = pr.product_id
                         AND p.category = :cat
                         AND p.seller_id = s.uid
+                        AND p.available = :available
                     GROUP BY p.product_id, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -508,6 +515,7 @@ WHERE seller_id = :seller_id
                         AND p.product_id = pr.product_id
                         AND p.category = :cat
                         AND p.seller_id = s.uid
+                        AND p.available = :available
                     GROUP BY p.product_id, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -539,6 +547,7 @@ WHERE seller_id = :seller_id
                         AND p.product_id = pr.product_id
                         AND p.category = :cat
                         AND p.seller_id = s.uid
+                        AND p.available = :available
                     GROUP BY p.product_id, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
@@ -571,6 +580,7 @@ WHERE seller_id = :seller_id
                         AND p.product_id = pr.product_id
                         AND p.category = :cat
                         AND p.seller_id = s.uid
+                        AND p.available = :available
                     GROUP BY p.product_id, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
