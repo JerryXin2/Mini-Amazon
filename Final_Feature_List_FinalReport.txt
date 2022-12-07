@@ -72,6 +72,7 @@ EXTRA FEATURES:
 24. Ability to filter Product Page by Categories, cross compatible with all other filters
 25. Added start depiction of ratings for each product
 26. Added a wishlist that is cross compatible to user and and cart pages and functions
+27. Added a button to reorder past orders in Detailed Order Page.
 
 
 
