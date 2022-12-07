@@ -59,103 +59,6 @@ LIMIT :k
                               available=available)
         return [Product(*row) for row in rows]
 
-    @staticmethod
-    def search_products(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%')
-    GROUP BY product_id, category
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [Product(*row) for row in rows]
-    
-    @staticmethod
-    def search_product_descriptions(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE description LIKE CONCAT('%', :search_key, '%')
-    GROUP BY product_id, category
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [Product(*row) for row in rows]
-
-    @staticmethod
-    def sort_price_asc(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%')
-    GROUP BY product_id, category
-    ORDER BY price ASC
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [Product(*row) for row in rows]
-
-
-    @staticmethod
-    def get_all_by_seller_search(uid, search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
-    ''',
-                                search_key = search_key,uid= uid,
-                                available=available)
-        return [Product(*row) for row in rows]
-
-    @staticmethod
-    def get_all_by_seller_sort_price_asc(uid, search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
-    ORDER BY price ASC
-    ''',
-                                search_key = search_key,uid= uid,
-                                available=available)
-        return [Product(*row) for row in rows]
-
-    @staticmethod
-    def get_all_by_seller_sort_price_desc(uid, search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%') and seller_id = :uid
-    ORDER BY price DESC
-    ''',
-                                search_key = search_key,uid= uid,
-                                available=available)
-        return [Product(*row) for row in rows]
-    
-    @staticmethod
-    def sort_price_desc(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_name LIKE CONCAT('%', :search_key, '%')
-    GROUP BY product_id, category
-    ORDER BY price DESC
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [Product(*row) for row in rows]
-
-    @staticmethod
-    def specific_prod(prod_id, available=True):
-        rows = app.db.execute('''
-    SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
-    FROM Products
-    WHERE product_id = :prod_id
-    ''',
-                                prod_id = prod_id,
-                                available=available)
-        return [Product(*row) for row in rows]
-
     def addProducts(product_id, seller_id, product_name, category, description, image,  price, available, quantity):
         app.db.execute("""
 INSERT INTO Products
@@ -332,66 +235,7 @@ LIMIT :k
         return [P2(*row) for row in rows]
 
     
-    
-    
-    @staticmethod
-    def search_related_products(prod_name, available=True):
-        rows = app.db.execute('''
-    SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
-    FROM Products as p, Product_Reviews as pr, Sellers as s
-    WHERE p.product_name LIKE CONCAT('%', SUBSTRING(:prod_name, 0, 5), '%') 
-    AND p.product_id = pr.product_id 
-    AND p.seller_id = s.uid
-    AND p.product_name != :prod_name
-    GROUP BY p.product_id, p.category, pr.review, s.seller
-    ''',
-                                prod_name = prod_name,
-                                available=available)
-        return [P2(*row) for row in rows]
-
-    @staticmethod
-    def search_product_descriptions(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
-    FROM Products as p, Product_Reviews as pr, Sellers as s
-    WHERE p.description LIKE CONCAT('%', :search_key, '%')
-    AND p.seller_id = s.uid
-    GROUP BY p.product_id, p.category, pr.review, s.seller
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [P2(*row) for row in rows]
-
-    @staticmethod
-    def sort_price_asc(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, pr.rating, pr.review, s.seller
-    FROM Products as p, Product_Reviews as pr, Sellers as s
-    WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
-    AND p.product_id = pr.product_id
-    AND p.seller_id = s.uid
-    GROUP BY p.product_id, p.category, pr.rating, s.seller
-    ORDER BY p.price ASC
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [P2(*row) for row in rows]
-    
-    @staticmethod
-    def sort_price_desc(search_key, available=True):
-        rows = app.db.execute('''
-    SELECT DISTINCT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, pr.rating, pr.review, s.seller
-    FROM Products as p, Product_Reviews as pr, Sellers as s
-    WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
-    AND p.product_id = pr.product_id
-    AND p.seller_id = s.uid
-    GROUP BY p.product_id, p.category, pr.rating, pr.review, s.seller
-    ORDER BY p.price DESC
-    ''',
-                                search_key = search_key,
-                                available=available)
-        return [P2(*row) for row in rows]
-
+   
     @staticmethod
     def specific_prod(prod_id, available=True):
         rows = app.db.execute('''
@@ -431,31 +275,278 @@ WHERE seller_id = :seller_id
 ''',
                               seller_id = seller_id)
         return [P2(*row) for row in rows]
+ 
+    
+    @staticmethod
+    def search_related_products(prod_name, available=True):
+        rows = app.db.execute('''
+    SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.product_name LIKE CONCAT('%', SUBSTRING(:prod_name, 0, 5), '%') 
+    AND p.product_id = pr.product_id 
+    AND p.seller_id = s.uid
+    AND p.product_name != :prod_name
+    GROUP BY p.product_id, p.category, pr.review, s.seller
+    ''',
+                                prod_name = prod_name,
+                                available=available)
+        return [P2(*row) for row in rows]
 
     @staticmethod
-    def filter_category(search_key, cat, sortPrice, available=True):
-        if sortPrice == 'High to Low':
-            order_by1 = 'ORDER BY price DESC'
-        if sortPrice == 'Low to High':
-            order_by1 = 'ORDER BY price'
-        if sortPrice == 'None':
-            order_by1 = ''
+    def get_all(available=True):
+        rows = app.db.execute('''
+    SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.product_id = pr.product_id 
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, p.category, pr.review, s.seller
+    ''',
+                                available=available)
+        return [P2(*row) for row in rows]
 
-        SQL_str ='''SELECT DISTINCT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, pr.rating, pr.review, s.seller
-                    FROM Products as p, Product_Reviews as pr, Sellers as s
-                    WHERE p.product_id = pr.product_id
-                        AND p.category = :cat
-                        AND p.seller_id = s.uid
+    @staticmethod
+    def search_name(search_key, sort, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC' 
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, p.category, pr.rating, pr.review, s.seller
                     '''
         SQL_str = SQL_str + '\n' + order_by1
         rows = app.db.execute(SQL_str,
                               search_key = search_key,
                               available=available,
-                              sortPrice = sortPrice,
-                              cat = cat
+                              sort = sort
                               )
         return [P2(*row) for row in rows]
 
 
+    staticmethod
+    def search_desc(search_key, sort, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC' 
 
 
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.description LIKE CONCAT('%', :search_key, '%') 
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, p.category, pr.rating, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort
+                              )
+        return [P2(*row) for row in rows]
+    
+    @staticmethod
+    def search_name_range_price(search_key, sort, low, high, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC'   
+
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
+    AND p.price BETWEEN :low AND :high
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, p.category, pr.rating, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort,
+                              low = low,
+                              high = high
+                              )
+        return [P2(*row) for row in rows]
+
+    @staticmethod
+    def search_desc_range_price(search_key, sort, low, high, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC'   
+
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+    FROM Products as p, Product_Reviews as pr, Sellers as s
+    WHERE p.description LIKE CONCAT('%', :search_key, '%') 
+    AND p.price BETWEEN :low AND :high
+    AND p.product_id = pr.product_id
+    AND p.seller_id = s.uid
+    GROUP BY p.product_id, p.category, pr.rating, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort, 
+                              low = low,
+                              high = high
+                              )
+        return [P2(*row) for row in rows]
+        
+    @staticmethod
+    def search_name_filter_category(search_key, cat, sort, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC'  
+
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+                    FROM Products as p, Product_Reviews as pr, Sellers as s
+                    WHERE p.product_name LIKE CONCAT('%', :search_key, '%') 
+                        AND p.product_id = pr.product_id
+                        AND p.category = :cat
+                        AND p.seller_id = s.uid
+                    GROUP BY p.product_id, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort,
+                              cat = cat
+                              )
+        return [P2(*row) for row in rows]
+
+    @staticmethod
+    def search_desc_filter_category(search_key, cat, sort, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC'  
+
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+                    FROM Products as p, Product_Reviews as pr, Sellers as s
+<<<<<<< HEAD
+                    WHERE p.description LIKE CONCAT('%', :search_key, '%') 
+                        AND p.product_id = pr.product_id
+=======
+                    WHERE p.product_id = pr.product_id
+>>>>>>> main
+                        AND p.category = :cat
+                        AND p.seller_id = s.uid
+                    GROUP BY p.product_id, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort,
+                              cat = cat
+                              )
+        return [P2(*row) for row in rows]
+
+    @staticmethod
+    def search_name_filter_category_range_price(search_key, cat, sort, low, high, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC'  
+
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+                    FROM Products as p, Product_Reviews as pr, Sellers as s
+                    WHERE p.product_name LIKE CONCAT('%', :search_key, '%')
+                        AND p.price BETWEEN :low AND :high
+                        AND p.product_id = pr.product_id
+                        AND p.category = :cat
+                        AND p.seller_id = s.uid
+                    GROUP BY p.product_id, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort,
+                              cat = cat,
+                              low = low,
+                              high = high
+                              )
+        return [P2(*row) for row in rows]
+
+    @staticmethod
+    def search_desc_filter_category_range_price(search_key, cat, sort, low, high, available=True):
+        order_by1 = ''
+        if sort == 'Price: High to Low':
+            order_by1 = 'ORDER BY p.price DESC'
+        if sort == 'Price: Low to High':
+            order_by1 = 'ORDER BY p.price ASC'
+        if sort == 'Average Rating: High to Low':
+            order_by1 = 'ORDER BY avg_rating DESC'
+        if sort == 'Average Rating: Low to High':
+            order_by1 = 'ORDER BY avg_rating ASC' 
+
+        SQL_str ='''SELECT p.product_id, p.product_name, p.category, p.description, p.image, p.price, p.available, p.seller_id, p.quantity, AVG(pr.rating) as avg_rating, pr.review, s.seller
+                    FROM Products as p, Product_Reviews as pr, Sellers as s
+                    WHERE p.decription LIKE CONCAT('%', :search_key, '%')
+                        AND p.price BETWEEN :low AND :high
+                        AND p.product_id = pr.product_id
+                        AND p.category = :cat
+                        AND p.seller_id = s.uid
+                    GROUP BY p.product_id, pr.review, s.seller
+                    '''
+        SQL_str = SQL_str + '\n' + order_by1
+        rows = app.db.execute(SQL_str,
+                              search_key = search_key,
+                              available=available,
+                              sort = sort,
+                              cat = cat,
+                              low = low,
+                              high = high
+                              )
+        return [P2(*row) for row in rows]
