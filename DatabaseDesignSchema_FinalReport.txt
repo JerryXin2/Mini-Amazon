@@ -30,6 +30,7 @@ Products(product_id, seller_id, product_name, category, description, image, pric
 
 key: product_id
 
+
 OLD:
 
 Carts(uid, product_id, quantity)
