@@ -45,6 +45,43 @@ AND available = :available
                               seller_id=seller_id,
                               available=available)
         return [Product(*row) for row in rows]
+    @staticmethod
+    def get_all_by_seller_search(seller_id,search_key, available=True):
+        rows = app.db.execute('''
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+FROM Products
+WHERE seller_id = :seller_id and product_name LIKE CONCAT('%', :search_key, '%') 
+AND available = :available
+''',
+                              seller_id=seller_id, search_key = search_key,
+                              available=available)
+        return [Product(*row) for row in rows]
+    
+    @staticmethod
+    def get_all_by_seller_sort_price_asc(seller_id,search_key, available=True):
+        rows = app.db.execute('''
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+FROM Products
+WHERE seller_id = :seller_id and product_name LIKE CONCAT('%', :search_key, '%')
+AND available = :available
+ORDER BY price ASC
+''',
+                              seller_id=seller_id, search_key = search_key,
+                              available=available)
+        return [Product(*row) for row in rows]
+    
+    @staticmethod
+    def get_all_by_seller_sort_price_desc(seller_id,search_key, available=True):
+        rows = app.db.execute('''
+SELECT product_id, product_name, category, description, image, price, available, seller_id, quantity
+FROM Products
+WHERE seller_id = :seller_id and product_name LIKE CONCAT('%', :search_key, '%')
+AND available = :available
+ORDER BY price DESC
+''',
+                              seller_id=seller_id, search_key = search_key,
+                              available=available)
+        return [Product(*row) for row in rows]
 
     @staticmethod
     def get_k_products(k, available=True):
