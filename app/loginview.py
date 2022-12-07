@@ -208,8 +208,10 @@ def purchaseHistory():
 def seeUser():
     uid = request.args.get('uid')
     user = User.getUser(uid)
+    rating1 = Seller_Review.get_average_seller_product_rating(uid)
+    rating = float(str(rating1)[11:-5])
     reviews = Seller_Review.getAllUserReview(uid)
     reviews2 = Product_Review.getAllUserReview(uid)
     seller = Seller.checkSeller(uid)
-    return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller)
+    return render_template('userPage.html', uid = user, avail_reviews = reviews2, avail_reviews2 = reviews, seller = seller, rating=rating)
 

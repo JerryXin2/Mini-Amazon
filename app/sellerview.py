@@ -162,4 +162,11 @@ def fulfill():
     return render_template('sellerFulfilled.html',
                            inventory1 = inventory)
 
-
+@bp.route('/productRating', methods = ['GET', 'POST'])
+def getProductRatings():
+    if current_user.is_authenticated:
+        rating = Seller_Review.get_average_seller_product_rating(current_user.uid)
+        rating = float(str(rating)[11:-5])
+    else: 
+        rating = None
+    return render_template('sellerProductRating.html', rating = rating)
