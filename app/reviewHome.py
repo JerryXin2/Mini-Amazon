@@ -160,10 +160,11 @@ class productReviewForm(FlaskForm):
 @bp.route('/productReviews', methods = ["GET", "POST"])
 def productReviews():
     form = productReviewForm()
-    allProductReviews = Product_Review.getAllProducts()
+    search_key = " "
+    allProductReviews = Product_Review.get_all_by_most_recent(search_key)
     search_key = form.search_key.data
     if form.myField1.data == 'None':
-        allProductReviews = Product_Review.get_all_product_reviews(search_key)
+        allProductReviews = Product_Review.get_all_by_most_recent(search_key)
     if form.myField1.data == 'Rating Low to High':
         allProductReviews = Product_Review.get_all_by_rating_asc(search_key) 
     if form.myField1.data == 'Rating High to Low':
@@ -184,10 +185,10 @@ class sellerReviewForm(FlaskForm):
 @bp.route('/sellerReviews', methods = ["GET", "POST"])
 def sellerReviews():
     form = sellerReviewForm()
-    allSellerReviews = Seller_Review.get_all_sellers()
+    allSellerReviews = Seller_Review.get_all_seller_reviews_most_recent(" ")
     search_key = form.search_key.data
     if form.myField1.data == 'None':
-        allSellerReviews = Seller_Review.get_all_seller_reviews(search_key)
+        allSellerReviews = Seller_Review.get_all_seller_reviews_most_recent(search_key)
     if form.myField1.data == 'Rating Low to High':
         allSellerReviews = Seller_Review.get_all_seller_reviews_rating_asc(search_key) 
     if form.myField1.data == 'Rating High to Low':

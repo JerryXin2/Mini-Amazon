@@ -4,6 +4,37 @@ These features will be noted as either required or additonal/extra features that
 Team members: Jerry Xin, Shirley Wang, Henry Huynh, Jachin Friday, Chris Cameron
 Team name: Pink Parrots
 
+REQUIRED FEATURES: 
+1. Account registry for users with email, password, user name, and password
+2. Account registry for sellers
+3. Account balance
+4. Method to withdraw from balance
+5. Method to add to balance
+6. User purchase search
+7. Display purchase details by row
+8. Products with name, description, price, and image
+9. Product search
+10. Display products with a summary for each product
+11. User cart that lists quantities, unit prices, and total prices
+12. Inventories and balances update at the time of order submission
+13. Cart contents remain after user log off
+14. Order page with final prices
+15. Method that marks the order as fulfilled when all the individual orders in the order are fulfilled
+16. Method to add product to inventory for sellers
+17. Search for orders that are fulfilled or to be fulfilled
+18. Method where sellers can mark orders as fulfilled
+19. Users can submit reviews for products
+20. Users cannot add more than one review for a single product
+21. Users can delete their product reviews
+22. Users can submit reviews for sellers
+23. Users cannot add more than one review for a single seller
+24. Users can delete their seller reviews
+25. Users can see a list of all their own reviews
+26. User can select from list to update reviews
+27. Sellers can see summary ratings for themselves that includes average and number of ratings
+28. Summary ratings for products (includes average and number of ratings)
+
+
 EXTRA FEATURES:
 
 1. Button to set balance to a specific value(as opposed to add/subtract balance) 
@@ -31,3 +62,16 @@ EXTRA FEATURES:
 16. Ability to filter Detailed Order Page by Price Ascending, cross compatible with search
 17. Ability to filter Detailed Order Page by Price Descending, cross compatible with search
 18. Cross compatibility between ability to filter Detailed Order Page by Most Recent and search
+
+19. Ability to search Inventory Page
+20. Ability to filter Inventory Page by Price Ascending, cross compatible with search
+21. Ability to filter Inventory Page by Price Descending, cross compatible with search
+
+22. Ability to filter Product Page by Price Range, cross compatible with all other filters
+23. Ability to filter Product Page by Average Rating, cross compatible with all other filters
+24. Ability to filter Product Page by Categories, cross compatible with all other filters
+25. Added start depiction of ratings for each product
+26. Added a wishlist that is cross compatible to user and and cart pages and functions
+
+
+

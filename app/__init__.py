@@ -42,5 +42,8 @@ def create_app():
     from .sellerview import bp as sellerview_bp
     app.register_blueprint(sellerview_bp)
 
+    from .wishlistitem import bp as wishlistitem_bp
+    app.register_blueprint(wishlistitem_bp)
+
 
     return app

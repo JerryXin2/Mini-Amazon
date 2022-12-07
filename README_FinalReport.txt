@@ -9,11 +9,11 @@ Jachin Friday - Sellers Guru: responsible for Inventory / Order Fulfillment
 Henry Huynh - Social Guru: responsible for Feedback / Messaging
 
 Updates this week:
-Jerry Xin - Finished User Guru Requirements, added/tested/implemented additonal bonus features, helped other teammates integrate features
-Shirley Wang - Finished Product Guru Requirements for Mini Amazon Project, added/tested/implemented additonal bonus features 
+Jerry Xin - Finished User Guru Requirements, added/tested/implemented additonal bonus features, helped other teammates integrate features. Added user public view and seller public view page. Seller public view is connect to search products, and user public view is connected to all user reviews
+Shirley Wang - Finished Product Guru Requirements for Mini Amazon Project, created product search, specific product, and wishlist pages, added/tested/implemented additonal bonus features, connected products to user and cart functions
 Chris Cameron - Finished Carts Guru Requirements for Mini Amazon Project (Carts & Orders Pages), added/tested/implemented additonal bonus features, Updated gen.py and the database schema
-Jachin Friday - Finished Sellers Guru Requirements for Mini Amazon Project, added/tested/implemented additonal bonus features 
-Henry Huynh - Finished Social Guru Requirements for Mini Amazon Project, added/tested/implemented additonal bonus features 
+Jachin Friday - Finished Sellers Guru Requirements for Mini Amazon Project, added additonal bonus features including searching  seller inventory and search by price ascending,
+Henry Huynh - Finished Social Guru Requirements for Mini Amazon Project, added/tested/implemented additional bonus features including seller product ratings page, helped modify database schema / gen for user and product reviews
 
 Link to access github Repository, with all code: https://gitlab.oit.duke.edu/mx47/mini-amazon-skeleton
 

@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Sellers;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Carts;
+DROP TABLE IF EXISTS Wishlist;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS Product_Reviews;
@@ -41,6 +42,12 @@ CREATE TABLE Carts (
     uid INT NOT NULL REFERENCES Users(uid),
     product_id INT NOT NULL REFERENCES Products(product_id),
     quantity INT NOT NULL,  
+    PRIMARY KEY(uid, product_id)
+);
+
+CREATE TABLE Wishlist (
+    uid INT NOT NULL REFERENCES Users(uid),
+    product_id INT NOT NULL REFERENCES Products(product_id),
     PRIMARY KEY(uid, product_id)
 );
 
