@@ -208,7 +208,7 @@ def purchaseHistory():
 def seeUser():
     uid = request.args.get('uid')
     user = User.getUser(uid)
-    rating = Seller_Review.get_average_seller_product_rating(current_user.uid)
+    rating = Seller_Review.get_average_seller_product_rating(uid)
     rating = str(rating)[11:-5]
     if rating == '':
         rating = 0.0
