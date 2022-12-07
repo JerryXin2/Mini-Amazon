@@ -166,7 +166,12 @@ def fulfill():
 def getProductRatings():
     if current_user.is_authenticated:
         rating = Seller_Review.get_average_seller_product_rating(current_user.uid)
-        rating = float(str(rating)[11:-5])
+        rating = str(rating)[11:-5]
+        if rating == '':
+            rating = 0.0
+        rating = float(rating)
+        
+        
     else: 
-        rating = None
+        rating = 0.0
     return render_template('sellerProductRating.html', rating = rating)
