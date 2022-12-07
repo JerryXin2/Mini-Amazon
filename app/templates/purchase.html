@@ -56,6 +56,7 @@
       <th scope="col">Order Completed</th>
       <th scope="col">Fulfillment Time</th>
       <th scope="col">Order Again</th>
+      <th scope="col">Review Product</th> 
 
       
     </tr>
@@ -75,6 +76,7 @@
           {{ purchase.fulfillment_time}}
         {% endif %}</td>
         <td><a href="{{ url_for('addcart.addcart', pid=purchase.product_id) }}" type="button" class="btn btn-light"> Add To Cart </a></td>
+        <td><a href="{{ url_for('reviewHome.addProductReview', pid=purchase.product_id) }}" class="btn btn-light"> Add Review </a></td>
       </tr>
     {% endfor %}
   </tbody>
