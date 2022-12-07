@@ -5,74 +5,74 @@ Team members: Jerry Xin, Shirley Wang, Henry Huynh, Jachin Friday, Chris Cameron
 Team name: Pink Parrots
 
 REQUIRED FEATURES: 
-1. Account registry for users with email, password, user name, and password
-2. Account registry for sellers
-3. Account balance
-4. Method to withdraw from balance
-5. Method to add to balance
-6. User purchase search
-7. Display purchase details by row
-8. Products with name, description, price, and image
-9. Product search
-10. Display products with a summary for each product
-11. User cart that lists quantities, unit prices, and total prices
-12. Inventories and balances update at the time of order submission
-13. Cart contents remain after user log off
-14. Order page with final prices
-15. Method that marks the order as fulfilled when all the individual orders in the order are fulfilled
-16. Method to add product to inventory for sellers
-17. Search for orders that are fulfilled or to be fulfilled
-18. Method where sellers can mark orders as fulfilled
-19. Users can submit reviews for products
-20. Users cannot add more than one review for a single product
-21. Users can delete their product reviews
-22. Users can submit reviews for sellers
-23. Users cannot add more than one review for a single seller
-24. Users can delete their seller reviews
-25. Users can see a list of all their own reviews
-26. User can select from list to update reviews
-27. Sellers can see summary ratings for themselves that includes average and number of ratings
-28. Summary ratings for products (includes average and number of ratings)
+1. Account registry for users with email, password, user name, and password, fully functional
+2. Account registry for sellers, fully functional
+3. Account balance, fully functional
+4. Method to withdraw from balance, fully functional
+5. Method to add to balance, fully functional
+6. User purchase search, fully functional
+7. Display purchase details by row, fully functional
+8. Products with name, description, price, and image, fully functional
+9. Product search, fully functional
+10. Display products with a summary for each product, fully functional
+11. User cart that lists quantities, unit prices, and total prices, fully functional
+12. Inventories and balances update at the time of order submission, fully functional
+13. Cart contents remain after user log off, fully functional
+14. Order page with final prices, fully functional
+15. Method that marks the order as fulfilled when all the individual orders in the order are fulfilled, fully functional
+16. Method to add product to inventory for sellers, fully functional
+17. Search for orders that are fulfilled or to be fulfilled, fully functional
+18. Method where sellers can mark orders as fulfilled, fully functional
+19. Users can submit reviews for products, fully functional
+20. Users cannot add more than one review for a single product, fully functional
+21. Users can delete their product reviews, fully functional
+22. Users can submit reviews for sellers, fully functional
+23. Users cannot add more than one review for a single seller, fully functional
+24. Users can delete their seller reviews, fully functional
+25. Users can see a list of all their own reviews, fully functional
+26. User can select from list to update reviews, fully functional
+27. Sellers can see summary ratings for themselves that includes average and number of ratings, fully functional
+28. Summary ratings for products (includes average and number of ratings), fully functional
 
 
 EXTRA FEATURES:
 
-1. Button to set balance to a specific value(as opposed to add/subtract balance) 
+1. Button to set balance to a specific value(as opposed to add/subtract balance), fully functional
     -restrictions implemented: cannot set balance to negative number
 
-2. Ability to search Purchase History Summary
-3. Ability to filter Purchase History Summary by Price Ascending, cross compatible with search
-4. Ability to filter Purchase History Summary by Price Descending, cross compatible with search
-5. Cross compatibility between ability to filter Purchase History Summary by Most Recent and search
+2. Ability to search Purchase History Summary, fully functional
+3. Ability to filter Purchase History Summary by Price Ascending, cross compatible with search, fully functional
+4. Ability to filter Purchase History Summary by Price Descending, cross compatible with search, fully functional
+5. Cross compatibility between ability to filter Purchase History Summary by Most Recent and search, fully functional
 
-6. Button to be able to gift balance to another user, requires user to input other user’s uid and gift amount.
+6. Button to be able to gift balance to another user, requires user to input other user’s uid and gift amount, fully functional
 	-restrictions implemented: cannot give negative amount, and cannot give more than the current user’s account balance
 
-7. Ability to search All Product Reviews
-8. Ability to filter All Product Reviews by Price Ascending, cross compatible with search
-9. Ability to filter All Product Reviews by Price Descending, cross compatible with search
-10. Cross compatibility between ability to filter All Product Reviews by Most Recent and search
+7. Ability to search All Product Reviews, fully functional
+8. Ability to filter All Product Reviews by Price Ascending, cross compatible with search, fully functional
+9. Ability to filter All Product Reviews by Price Descending, cross compatible with search, fully functional
+10. Cross compatibility between ability to filter All Product Reviews by Most Recent and search, fully functional
 
-11. Ability to search All Seller Reviews
-12. Ability to filter All Seller Reviews by Price Ascending, cross compatible with search
-13. Ability to filter All Seller Reviews by Price Descending, cross compatible with search
-14. Cross compatibility between ability to filter All Seller Reviews by Most Recent and search
+11. Ability to search All Seller Reviews, fully functional
+12. Ability to filter All Seller Reviews by Price Ascending, cross compatible with search, fully functional
+13. Ability to filter All Seller Reviews by Price Descending, cross compatible with search, fully functional
+14. Cross compatibility between ability to filter All Seller Reviews by Most Recent and search, fully functional
 
-15. Ability to search Detailed Order Page
-16. Ability to filter Detailed Order Page by Price Ascending, cross compatible with search
-17. Ability to filter Detailed Order Page by Price Descending, cross compatible with search
-18. Cross compatibility between ability to filter Detailed Order Page by Most Recent and search
+15. Ability to search Detailed Order Page, fully functional
+16. Ability to filter Detailed Order Page by Price Ascending, cross compatible with search, fully functional
+17. Ability to filter Detailed Order Page by Price Descending, cross compatible with search, fully functional
+18. Cross compatibility between ability to filter Detailed Order Page by Most Recent and search, fully functional
 
-19. Ability to search Inventory Page
-20. Ability to filter Inventory Page by Price Ascending, cross compatible with search
-21. Ability to filter Inventory Page by Price Descending, cross compatible with search
+19. Ability to search Inventory Page, fully functional
+20. Ability to filter Inventory Page by Price Ascending, cross compatible with search, fully functional
+21. Ability to filter Inventory Page by Price Descending, cross compatible with search, fully functional
 
-22. Ability to filter Product Page by Price Range, cross compatible with all other filters
-23. Ability to filter Product Page by Average Rating, cross compatible with all other filters
-24. Ability to filter Product Page by Categories, cross compatible with all other filters
-25. Added start depiction of ratings for each product
-26. Added a wishlist that is cross compatible to user and and cart pages and functions
-27. Added a button to reorder past orders in Detailed Order Page.
+22. Ability to filter Product Page by Price Range, cross compatible with all other filters, fully functional
+23. Ability to filter Product Page by Average Rating, cross compatible with all other filters, fully functional
+24. Ability to filter Product Page by Categories, cross compatible with all other filters, fully functional
+25. Added start depiction of ratings for each product, fully functional
+26. Added a wishlist that is cross compatible to user and and cart pages and functions, fully functional
+27. Added a button to reorder past orders in Detailed Order Page, fully functional
 
 
 
