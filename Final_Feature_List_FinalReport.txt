@@ -36,6 +36,10 @@ REQUIRED FEATURES:
 
 
 EXTRA FEATURES:
+0. Ability to access User Page from User Review
+0. Ability to access Seller Page from Detailed Product Page
+0. Ability to see Product Reviews from Detailed Product Page
+0. Ability to see Seller Reviews from Detailed Product Page
 
 1. Button to set balance to a specific value(as opposed to add/subtract balance), fully functional
     -restrictions implemented: cannot set balance to negative number
@@ -74,6 +78,7 @@ EXTRA FEATURES:
 25. Ability to filter Product Page by Price Range, cross compatible with all other filters, fully functional
 26. Ability to filter Product Page by Average Rating, cross compatible with all other filters, fully functional
 27. Ability to filter Product Page by Categories, cross compatible with all other filters, fully functional
+28. Ability to see average product review as a Seller visually using stars, fully functional
 
 
 
