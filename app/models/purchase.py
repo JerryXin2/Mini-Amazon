@@ -2,6 +2,8 @@ from flask import current_app as app
 
 from app.models.product import Product
 
+from datetime import datetime
+
 
 class Purchase:
     def __init__(self, order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price, product_name, order_fulfilled):
@@ -91,6 +93,18 @@ ORDER BY order_time DESC
 ''',
                               seller_id=seller_id)
         return [Purchase(*row) for row in rows]
+        
+    @staticmethod
+    def get_all_by_seller_id(seller_id):
+        rows = app.db.execute('''
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+FROM Orders, Products
+WHERE Orders.seller_id = :seller_id
+AND orders.product_id = products.product_id
+ORDER BY order_time DESC
+''',
+                              seller_id=seller_id)
+        return [Purchase(*row) for row in rows]
 
     @staticmethod
     def get_all_by_uid_most_recent(uid, search_key):
@@ -135,10 +149,10 @@ ORDER BY price DESC
     def removeProductsbyFulfillmentStatus(uid, order_id):
         app.db.execute('''
 UPDATE Orders
-SET fulfillment = TRUE
+SET fulfillment = TRUE, fulfillment_time = :fulfillment_time
 WHERE order_id = :order_id
 ''',
-                              uid =uid, order_id=order_id)
+                              uid =uid, order_id=order_id, fulfillment_time = datetime.now())
         
         return 1
 

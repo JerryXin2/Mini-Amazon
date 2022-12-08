@@ -72,10 +72,11 @@ def removeProducts():
 
 @bp.route('/removeProducts2', methods=['GET','POST'])
 def removeProducts2():
+    form = inventoryHistoryForm()
     pid = request.args.get('uid')
     ret = Product.removeProducts2(pid)
     inventory = Product.get_all_by_seller_id(current_user.uid)
-    return render_template('sellerInventory.html',inventory1 = inventory)
+    return render_template('sellerInventory.html', inventory1 = inventory, form = form)
 
 class editProductsForm(FlaskForm):
     old_product_name = StringField('Old Product Name', validators=[DataRequired()])
@@ -131,6 +132,14 @@ def fulfillment():
     else:
         inventory = None
     return render_template('sellerFulfilled.html', inventory1 = inventory)
+
+@bp.route('/allOrders', methods=['GET', 'POST'])
+def allOrders():
+    if current_user.is_authenticated: 
+        inventory = Purchase.get_all_by_seller_id(current_user.uid)
+    else:
+        inventory = None
+    return render_template('sellerAllOrders.html', inventory1 = inventory)
 
 class addQuantityForm(FlaskForm):
     neg = 0

@@ -6,7 +6,7 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField, DecimalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
@@ -27,7 +27,7 @@ def loginview():
 
 class AddBalanceForm(FlaskForm):
     neg = 0
-    add = IntegerField('Additional Balance', validators=[DataRequired()])
+    add = DecimalField('Additional Balance', validators=[DataRequired()])
     submit = SubmitField('Add Balance to Account')
 
 @bp.route('/addBalance', methods = ["GET", "POST"])
@@ -47,7 +47,7 @@ def addBalance():
 
 class SetBalanceForm(FlaskForm):
     negbal = 0
-    set = IntegerField('Set Balance to this number', validators=[DataRequired()])
+    set = DecimalField('Set Balance to this number', validators=[DataRequired()])
     submit = SubmitField('Set Balance')
 
 @bp.route('/setBalance', methods = ["GET", "POST"])
@@ -69,7 +69,7 @@ class GiftBalanceForm(FlaskForm):
     neggift = 0
     overdrawn = 0
     userid = IntegerField('User ID of Gift', validators=[DataRequired()])
-    gift = IntegerField('Amount to Gift', validators=[DataRequired()])
+    gift = DecimalField('Amount to Gift', validators=[DataRequired()])
     submit = SubmitField('Send Gift')
 
 @bp.route('/giftBalance', methods = ["GET", "POST"])
@@ -96,7 +96,7 @@ def giftBalance():
 class WithdrawBalanceForm(FlaskForm):
     overdrawn = 0
     neg = 0
-    withdraw = IntegerField('Withdraw Balance', validators=[DataRequired()])
+    withdraw = DecimalField('Withdraw Balance', validators=[DataRequired()])
     submit = SubmitField('Withdraw Balance From Account')
 
 @bp.route('/withdrawBalance', methods = ["GET", "POST"])
@@ -150,6 +150,20 @@ def changeEmail():
         return render_template('changeEmail.html',
                            form=form)
     return render_template('changeEmail.html', form=form)
+
+class PasswordForm(FlaskForm):
+    passw = StringField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Set New Password')
+
+@bp.route('/changePassword', methods = ["GET", "POST"])
+def changePassword():
+    form = PasswordForm()
+    if form.validate_on_submit():
+        passw = form.passw.data
+        ret = User.changePassword(current_user.uid, passw)
+        return render_template('changePassword.html',
+                           form=form)
+    return render_template('changePassword.html', form=form)
 
 class AddressForm(FlaskForm):
     address = StringField('New Address', validators=[DataRequired()])
