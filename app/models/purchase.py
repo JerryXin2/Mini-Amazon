@@ -93,6 +93,18 @@ ORDER BY order_time DESC
 ''',
                               seller_id=seller_id)
         return [Purchase(*row) for row in rows]
+        
+    @staticmethod
+    def get_all_by_seller_id(seller_id):
+        rows = app.db.execute('''
+SELECT order_id, Orders.superorder_id, Orders.product_id, Orders.seller_id, uid, address, order_time, Orders.quantity, fulfillment, fulfillment_time, Orders.price, Products.product_name, fulfillment
+FROM Orders, Products
+WHERE Orders.seller_id = :seller_id
+AND orders.product_id = products.product_id
+ORDER BY order_time DESC
+''',
+                              seller_id=seller_id)
+        return [Purchase(*row) for row in rows]
 
     @staticmethod
     def get_all_by_uid_most_recent(uid, search_key):
