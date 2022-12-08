@@ -122,6 +122,14 @@ WHERE uid = :uid
 """,
                               uid = uid, email = email)
         return 1
+    def changePassword(uid, passw):
+            app.db.execute("""
+    UPDATE Users
+    SET email = :passw
+    WHERE uid = :uid
+    """,
+                                uid = uid, passw = passw)
+            return 1
     
     def changeAddress(uid, address):
         app.db.execute("""

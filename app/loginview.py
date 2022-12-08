@@ -151,6 +151,20 @@ def changeEmail():
                            form=form)
     return render_template('changeEmail.html', form=form)
 
+class PasswordForm(FlaskForm):
+    passw = StringField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Set New Password')
+
+@bp.route('/changePassword', methods = ["GET", "POST"])
+def changePassword():
+    form = PasswordForm()
+    if form.validate_on_submit():
+        passw = form.passw.data
+        ret = User.changePassword(current_user.uid, passw)
+        return render_template('changePassword.html',
+                           form=form)
+    return render_template('changePassword.html', form=form)
+
 class AddressForm(FlaskForm):
     address = StringField('New Address', validators=[DataRequired()])
     submit = SubmitField('Set New Address')
