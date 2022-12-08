@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <h2>Items in Cart:</h2>
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
@@ -31,5 +30,4 @@
 <h2>Total: {{total}}</h2>
 <h3>Your Balance: {{current_user.balance}}</h3>
 <a href = "{{ url_for('addorder.addorder', total = total) }}" type="button" class="btn btn-dark"> Purchase </a>
-
 {% endblock %}
