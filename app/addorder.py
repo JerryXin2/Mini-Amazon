@@ -42,7 +42,7 @@ def addorder():
     for item in items_in_cart:
         #Check Inventory
         productInfo = Product.get(item.product_id)
-        if(productInfo.quantity < 1 or productInfo.available == False):
+        if(productInfo.quantity < item.quantity or productInfo.available == False):
             print("product not available")
         #Check Balance
         elif(current_user.balance < total):
