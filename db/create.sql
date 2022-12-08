@@ -35,7 +35,8 @@ CREATE TABLE Products (
     image VARCHAR(4095) NOT NULL, --url of image
     price DECIMAL(12,2) NOT NULL CHECK (price > 0),
     available BOOLEAN DEFAULT TRUE,
-    quantity INT NOT NULL CHECK (quantity >= 0)
+    quantity INT NOT NULL CHECK (quantity >= 0),
+    UNIQUE(product_name,description, seller_id)
 );
 
 CREATE TABLE Carts (
