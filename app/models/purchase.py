@@ -2,6 +2,8 @@ from flask import current_app as app
 
 from app.models.product import Product
 
+from datetime import datetime
+
 
 class Purchase:
     def __init__(self, order_id, superorder_id, product_id, seller_id, uid, address, order_time, quantity, fulfillment, fulfillment_time, price, product_name, order_fulfilled):
@@ -135,10 +137,10 @@ ORDER BY price DESC
     def removeProductsbyFulfillmentStatus(uid, order_id):
         app.db.execute('''
 UPDATE Orders
-SET fulfillment = TRUE
+SET fulfillment = TRUE, fulfillment_time = :fulfillment_time
 WHERE order_id = :order_id
 ''',
-                              uid =uid, order_id=order_id)
+                              uid =uid, order_id=order_id, fulfillment_time = datetime.now())
         
         return 1
 
