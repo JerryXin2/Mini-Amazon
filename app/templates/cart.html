@@ -29,11 +29,11 @@
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-   <ul style="color: red;">
+   <h3 style="color: red;">
       {% for message in messages %}
       {{ message }}
       {% endfor %}
-   </ul>
+   </h3>
 {% endif %}
 {% endwith %}
 

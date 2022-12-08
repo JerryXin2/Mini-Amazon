@@ -14,4 +14,15 @@
   </p>
   <p>{{ form.submit() }}</p>
 </form>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+   <h3 style="color: red;">
+      {% for message in messages %}
+      {{ message }}
+      {% endfor %}
+   </h3>
+{% endif %}
+{% endwith %}
+
 {% endblock %}
